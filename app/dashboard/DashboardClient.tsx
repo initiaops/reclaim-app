@@ -139,7 +139,9 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
 
   function loadFromHistory(entry: HistoryEntry) {
     setResult(entry.result as unknown as ExtractionResult)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setTimeout(() => {
+      document.getElementById('extraction-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 50)
   }
 
   const usagePercent = Math.min((usageCount / FREE_LIMIT) * 100, 100)
@@ -281,7 +283,7 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
 
         {/* Results */}
         {result && (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden animate-fade-up">
+          <div id="extraction-results" className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden animate-fade-up">
             {/* Results header */}
             <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
               <div className="flex items-center gap-3">

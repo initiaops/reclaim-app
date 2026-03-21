@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import Link from 'next/link'
+import { SidebarNavLinks, MobileNavLinks } from './SidebarNavLinks'
 
 async function signOut() {
   'use server'
@@ -29,27 +29,12 @@ export default async function DashboardLayout({
 
   const isPro = sub?.plan === 'pro' && sub?.status === 'active'
 
-  const navItems = [
-    { href: '/dashboard', label: 'Dashboard', icon: '⬡' },
-    { href: '/dashboard/account', label: 'Account', icon: '○' },
-    { href: '/dashboard/billing', label: 'Billing', icon: '◇' },
-  ]
-
   return (
     <div className="flex min-h-[calc(100vh-64px)]">
       {/* Sidebar — desktop only */}
       <aside className="hidden lg:flex flex-col w-60 shrink-0 bg-white border-r border-gray-200 sticky top-16 h-[calc(100vh-64px)]">
         <div className="flex-1 px-3 py-6 space-y-1">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-purple-50 hover:text-purple-800 transition-all group"
-            >
-              <span className="text-gray-300 group-hover:text-purple-400 transition-colors text-base">{item.icon}</span>
-              {item.label}
-            </Link>
-          ))}
+          <SidebarNavLinks />
         </div>
 
         {/* User info + sign out */}
@@ -78,17 +63,8 @@ export default async function DashboardLayout({
       </aside>
 
       {/* Mobile nav bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 flex">
-        {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="flex-1 flex flex-col items-center gap-1 py-3 text-gray-500 hover:text-purple-700 transition-colors text-xs font-medium"
-          >
-            <span className="text-lg">{item.icon}</span>
-            {item.label}
-          </Link>
-        ))}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 flex pb-[env(safe-area-inset-bottom)]">
+        <MobileNavLinks />
       </div>
 
       {/* Main content */}

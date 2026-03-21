@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,13 +15,6 @@ export const metadata: Metadata = {
     description: 'Stop manual CRM data entry. RECLAIM extracts everything automatically.',
     type: 'website',
   },
-}
-
-async function signOut() {
-  'use server'
-  const supabase = await createClient()
-  await supabase.auth.signOut()
-  redirect('/')
 }
 
 export default async function RootLayout({
@@ -64,14 +56,6 @@ export default async function RootLayout({
                     >
                       Pricing
                     </Link>
-                    <form action={signOut}>
-                      <button
-                        type="submit"
-                        className="text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors px-3 py-2 rounded-lg hover:bg-gray-100 cursor-pointer"
-                      >
-                        Sign out
-                      </button>
-                    </form>
                   </>
                 ) : (
                   <>
