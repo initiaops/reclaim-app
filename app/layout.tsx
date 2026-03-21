@@ -54,6 +54,12 @@ export default async function RootLayout({
                       Dashboard
                     </Link>
                     <Link
+                      href="/dashboard/account"
+                      className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors"
+                    >
+                      Account
+                    </Link>
+                    <Link
                       href="/dashboard/billing"
                       className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors"
                     >
