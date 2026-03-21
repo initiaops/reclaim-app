@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 
 interface ExtractionResult {
@@ -25,7 +27,11 @@ interface HistoryEntry {
 const FREE_LIMIT = 5
 
 export default function DashboardPage() {
+  const searchParams = useSearchParams()
+  const justUpgraded = searchParams.get('upgraded') === 'true'
+
   const [userEmail, setUserEmail] = useState('')
+  const [isPro, setIsPro] = useState(false)
   const [usageCount, setUsageCount] = useState(0)
   const [transcript, setTranscript] = useState('')
   const [loading, setLoading] = useState(false)
@@ -40,16 +46,25 @@ export default function DashboardPage() {
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
   }
 
-  const fetchUsage = useCallback(async (userId: string) => {
+  const fetchUsageAndPlan = useCallback(async (userId: string) => {
     const supabase = createClient()
-    const { data } = await supabase
-      .from('usage')
-      .select('count')
-      .eq('user_id', userId)
-      .eq('month', getCurrentMonth())
-      .single()
 
-    setUsageCount(data?.count ?? 0)
+    const [{ data: usageRow }, { data: sub }] = await Promise.all([
+      supabase
+        .from('usage')
+        .select('count')
+        .eq('user_id', userId)
+        .eq('month', getCurrentMonth())
+        .single(),
+      supabase
+        .from('subscriptions')
+        .select('plan, status')
+        .eq('user_id', userId)
+        .single(),
+    ])
+
+    setUsageCount(usageRow?.count ?? 0)
+    setIsPro(sub?.plan === 'pro' && sub?.status === 'active')
   }, [])
 
   useEffect(() => {
@@ -57,11 +72,11 @@ export default function DashboardPage() {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) {
         setUserEmail(user.email ?? '')
-        fetchUsage(user.id)
+        fetchUsageAndPlan(user.id)
       }
       setPageReady(true)
     })
-  }, [fetchUsage])
+  }, [fetchUsageAndPlan])
 
   async function handleExtract() {
     if (transcript.trim().length < 50) {
@@ -84,7 +99,7 @@ export default function DashboardPage() {
 
       if (!response.ok) {
         if (response.status === 429) {
-          setError('You have reached your 5 extraction limit for this month. Upgrade to continue.')
+          setError('You have reached your 5 extraction limit for this month. Upgrade to Pro for unlimited extractions.')
         } else {
           setError(data.error ?? 'Something went wrong. Please try again.')
         }
@@ -92,7 +107,7 @@ export default function DashboardPage() {
       }
 
       setResult(data)
-      setUsageCount((prev) => prev + 1)
+      if (!isPro) setUsageCount((prev) => prev + 1)
 
       const entry: HistoryEntry = {
         id: Date.now().toString(),
@@ -150,8 +165,8 @@ export default function DashboardPage() {
   }
 
   const usagePercent = Math.min((usageCount / FREE_LIMIT) * 100, 100)
-  const limitReached = usageCount >= FREE_LIMIT
-  const nearLimit = usageCount >= FREE_LIMIT - 1
+  const limitReached = !isPro && usageCount >= FREE_LIMIT
+  const nearLimit = !isPro && usageCount >= FREE_LIMIT - 1
 
   if (!pageReady) {
     return (
@@ -165,42 +180,86 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 py-10 space-y-8">
 
+        {/* Upgrade success banner */}
+        {justUpgraded && (
+          <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-4 flex items-center gap-3">
+            <span className="text-2xl">🎉</span>
+            <div>
+              <p className="font-semibold text-green-800">Welcome to Pro!</p>
+              <p className="text-sm text-green-700">You now have unlimited extractions. Enjoy!</p>
+            </div>
+          </div>
+        )}
+
         {/* Header */}
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">
-            Welcome back{userEmail ? `, ${userEmail.split('@')[0]}` : ''}
-          </h1>
-          <p className="text-gray-500 mt-1">
-            Paste a transcript below to extract your sales intelligence.
-          </p>
+        <div className="flex items-start justify-between">
+          <div>
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl font-bold text-gray-900">
+                Welcome back{userEmail ? `, ${userEmail.split('@')[0]}` : ''}
+              </h1>
+              {isPro && (
+                <span
+                  className="text-xs font-bold px-2.5 py-1 rounded-full text-white uppercase tracking-wide"
+                  style={{ backgroundColor: 'var(--brand)' }}
+                >
+                  Pro
+                </span>
+              )}
+            </div>
+            <p className="text-gray-500 mt-1">
+              Paste a transcript below to extract your sales intelligence.
+            </p>
+          </div>
         </div>
 
-        {/* Usage counter */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-6">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-sm font-medium text-gray-700">
-              Monthly extractions used
-            </span>
-            <span
-              className={`text-sm font-bold ${nearLimit ? 'text-red-600' : 'text-gray-700'}`}
-            >
-              {usageCount} / {FREE_LIMIT}
-            </span>
+        {/* Usage counter — only shown for Free users */}
+        {isPro ? (
+          <div
+            className="rounded-2xl p-5 flex items-center gap-4"
+            style={{ backgroundColor: '#EDE9FE' }}
+          >
+            <span className="text-2xl">⚡</span>
+            <div>
+              <p className="font-semibold" style={{ color: 'var(--brand)' }}>
+                Pro Plan — Unlimited extractions
+              </p>
+              <p className="text-sm text-purple-700">
+                No monthly limits. Extract as many transcripts as you need.
+              </p>
+            </div>
           </div>
-          <div className="w-full bg-gray-100 rounded-full h-2.5">
-            <div
-              className={`h-2.5 rounded-full transition-all duration-500 ${
-                nearLimit ? 'bg-red-500' : 'bg-purple-600'
-              }`}
-              style={{ width: `${usagePercent}%` }}
-            />
+        ) : (
+          <div className="bg-white rounded-2xl border border-gray-200 p-6">
+            <div className="flex justify-between items-center mb-3">
+              <span className="text-sm font-medium text-gray-700">
+                Monthly extractions used
+              </span>
+              <span
+                className={`text-sm font-bold ${nearLimit ? 'text-red-600' : 'text-gray-700'}`}
+              >
+                {usageCount} / {FREE_LIMIT}
+              </span>
+            </div>
+            <div className="w-full bg-gray-100 rounded-full h-2.5">
+              <div
+                className={`h-2.5 rounded-full transition-all duration-500 ${
+                  nearLimit ? 'bg-red-500' : 'bg-purple-600'
+                }`}
+                style={{ width: `${usagePercent}%` }}
+              />
+            </div>
+            {limitReached && (
+              <p className="mt-3 text-sm text-red-600 font-medium">
+                You&apos;ve reached your free monthly limit.{' '}
+                <Link href="/pricing" className="underline">
+                  Upgrade to Pro
+                </Link>{' '}
+                for unlimited extractions.
+              </p>
+            )}
           </div>
-          {limitReached && (
-            <p className="mt-3 text-sm text-red-600 font-medium">
-              You&apos;ve reached your free monthly limit. Upgrade coming soon — check back next month for your refresh.
-            </p>
-          )}
-        </div>
+        )}
 
         {/* Input area */}
         <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
@@ -366,6 +425,27 @@ export default function DashboardPage() {
                 </button>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* Upgrade banner — only shown to Free users */}
+        {!isPro && (
+          <div className="bg-white rounded-2xl border-2 border-dashed border-purple-200 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <p className="font-semibold text-gray-900">
+                Upgrade to Pro — $49/month
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Remove the 5/month limit. Unlimited extractions, forever.
+              </p>
+            </div>
+            <Link
+              href="/pricing"
+              className="shrink-0 text-white font-semibold px-6 py-3 rounded-xl transition-opacity hover:opacity-90 text-sm"
+              style={{ backgroundColor: 'var(--brand)' }}
+            >
+              See pricing
+            </Link>
           </div>
         )}
       </div>

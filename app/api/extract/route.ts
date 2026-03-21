@@ -22,7 +22,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  // 2. Check usage for the current month
+  // 2. Check plan — Pro users have no limit
+  const { data: sub } = await supabase
+    .from('subscriptions')
+    .select('plan, status')
+    .eq('user_id', user.id)
+    .single()
+
+  const isPro = sub?.plan === 'pro' && sub?.status === 'active'
+
+  // 3. If Free, check monthly usage limit
   const month = getCurrentMonth()
   const { data: usageRow } = await supabase
     .from('usage')
@@ -33,7 +42,7 @@ export async function POST(request: NextRequest) {
 
   const currentCount = usageRow?.count ?? 0
 
-  if (currentCount >= 5) {
+  if (!isPro && currentCount >= 5) {
     return NextResponse.json(
       { error: 'Monthly limit reached' },
       { status: 429 }
