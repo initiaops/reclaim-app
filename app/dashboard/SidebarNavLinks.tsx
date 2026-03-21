@@ -7,6 +7,7 @@ const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: '⬡' },
   { href: '/dashboard/account', label: 'Account', icon: '○' },
   { href: '/dashboard/billing', label: 'Billing', icon: '◇' },
+  { href: '/dashboard/settings', label: 'Settings', icon: '◈' },
 ]
 
 export function SidebarNavLinks() {

@@ -17,29 +17,35 @@ export default async function DashboardPage() {
 
   if (!user) redirect('/login')
 
-  // Fetch plan, usage, and extraction history in parallel — fresh on every page load
-  const [{ data: sub }, { data: usageRow }, { data: historyRows }] = await Promise.all([
-    supabase
-      .from('subscriptions')
-      .select('plan, status')
-      .eq('user_id', user.id)
-      .single(),
-    supabase
-      .from('usage')
-      .select('count')
-      .eq('user_id', user.id)
-      .eq('month', getCurrentMonth())
-      .single(),
-    supabase
-      .from('extractions')
-      .select('id, transcript_excerpt, result, created_at')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false })
-      .limit(5),
-  ])
+  // Fetch plan, usage, extraction history, and CRM connections in parallel
+  const [{ data: sub }, { data: usageRow }, { data: historyRows }, { data: connections }] =
+    await Promise.all([
+      supabase
+        .from('subscriptions')
+        .select('plan, status')
+        .eq('user_id', user.id)
+        .single(),
+      supabase
+        .from('usage')
+        .select('count')
+        .eq('user_id', user.id)
+        .eq('month', getCurrentMonth())
+        .single(),
+      supabase
+        .from('extractions')
+        .select('id, transcript_excerpt, result, created_at')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(5),
+      supabase
+        .from('crm_connections')
+        .select('provider')
+        .eq('user_id', user.id),
+    ])
 
   const isPro = sub?.plan === 'pro' && sub?.status === 'active'
   const usageCount = usageRow?.count ?? 0
+  const hubspotConnected = connections?.some((c) => c.provider === 'hubspot') ?? false
   const history = (historyRows ?? []).map((row) => ({
     id: row.id as string,
     excerpt: (row.transcript_excerpt as string) ?? '',
@@ -54,6 +60,7 @@ export default async function DashboardPage() {
         isPro={isPro}
         initialUsageCount={usageCount}
         initialHistory={history}
+        hubspotConnected={hubspotConnected}
       />
     </Suspense>
   )

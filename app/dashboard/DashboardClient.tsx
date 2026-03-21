@@ -28,6 +28,7 @@ interface Props {
   isPro: boolean
   initialUsageCount: number
   initialHistory: HistoryEntry[]
+  hubspotConnected: boolean
 }
 
 const FREE_LIMIT = 5
@@ -47,7 +48,7 @@ const dealStageColor: Record<string, string> = {
   Unknown: 'bg-gray-100 text-gray-500',
 }
 
-export default function DashboardClient({ userEmail, isPro, initialUsageCount, initialHistory }: Props) {
+export default function DashboardClient({ userEmail, isPro, initialUsageCount, initialHistory, hubspotConnected }: Props) {
   const searchParams = useSearchParams()
   const justUpgraded = searchParams.get('upgraded') === 'true'
 
@@ -58,6 +59,9 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
   const [error, setError] = useState('')
   const [history, setHistory] = useState<HistoryEntry[]>(initialHistory)
   const [copied, setCopied] = useState(false)
+  const [hubspotStatus, setHubspotStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [hubspotDealUrl, setHubspotDealUrl] = useState<string | null>(null)
+  const [hubspotError, setHubspotError] = useState('')
 
   async function handleExtract() {
     if (transcript.trim().length < 50) {
@@ -67,6 +71,9 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
     setError('')
     setLoading(true)
     setResult(null)
+    setHubspotStatus('idle')
+    setHubspotDealUrl(null)
+    setHubspotError('')
 
     try {
       const response = await fetch('/api/extract', {
@@ -135,6 +142,30 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
     a.download = `reclaim-${Date.now()}.txt`
     a.click()
     URL.revokeObjectURL(url)
+  }
+
+  async function handlePushToHubSpot() {
+    if (!result) return
+    setHubspotStatus('loading')
+    setHubspotError('')
+    try {
+      const response = await fetch('/api/crm/hubspot/push', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ extraction: result }),
+      })
+      const data = await response.json()
+      if (!response.ok) {
+        setHubspotError(data.error ?? 'Push failed. Please try again.')
+        setHubspotStatus('error')
+        return
+      }
+      setHubspotDealUrl(data.dealUrl ?? null)
+      setHubspotStatus('success')
+    } catch {
+      setHubspotError('Network error. Please try again.')
+      setHubspotStatus('error')
+    }
   }
 
   function loadFromHistory(entry: HistoryEntry) {
@@ -349,6 +380,63 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
                 </div>
               ))}
             </div>
+
+            {/* Push to HubSpot */}
+            {hubspotConnected && (
+              <div className="border-t border-gray-100 px-6 py-4">
+                {hubspotStatus === 'success' ? (
+                  <div className="flex items-center justify-between gap-4 flex-wrap">
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs shrink-0">✓</div>
+                      <p className="text-sm font-semibold text-green-700">Deal created in HubSpot!</p>
+                    </div>
+                    {hubspotDealUrl && (
+                      <a
+                        href={hubspotDealUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-bold px-4 py-2 rounded-lg border-2 border-orange-200 text-orange-700 bg-orange-50 hover:bg-orange-100 transition-colors"
+                      >
+                        View in HubSpot →
+                      </a>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between gap-4 flex-wrap">
+                    <div>
+                      <p className="text-xs font-semibold text-gray-600">Push to HubSpot CRM</p>
+                      <p className="text-xs text-gray-400 mt-0.5">Creates a deal and contact automatically</p>
+                      {hubspotStatus === 'error' && (
+                        <p className="text-xs text-red-500 mt-1">{hubspotError}</p>
+                      )}
+                    </div>
+                    <button
+                      onClick={handlePushToHubSpot}
+                      disabled={hubspotStatus === 'loading'}
+                      className="flex items-center gap-2 text-xs font-bold px-4 py-2.5 rounded-lg text-white transition-all hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
+                      style={{ backgroundColor: '#FF7A59' }}
+                    >
+                      {hubspotStatus === 'loading' ? (
+                        <>
+                          <svg className="animate-spin h-3.5 w-3.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                          </svg>
+                          Pushing…
+                        </>
+                      ) : (
+                        <>
+                          <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor">
+                            <path d="M18.164 7.93V5.084a2.198 2.198 0 0 0 1.268-1.978V3.07A2.2 2.2 0 0 0 17.234.87h-.037a2.2 2.2 0 0 0-2.198 2.2v.036a2.198 2.198 0 0 0 1.268 1.978V7.93a6.232 6.232 0 0 0-2.963 1.3l-7.814-6.08a2.45 2.45 0 0 0 .08-.594 2.463 2.463 0 1 0-2.463 2.463 2.44 2.44 0 0 0 1.218-.333l7.686 5.978a6.24 6.24 0 0 0 .076 7.17l-2.33 2.33a1.983 1.983 0 0 0-.578-.09 2.003 2.003 0 1 0 2.003 2.003 1.983 1.983 0 0 0-.09-.578l2.302-2.302a6.26 6.26 0 1 0 4.77-11.267zm-.966 9.519a3.268 3.268 0 1 1 0-6.536 3.268 3.268 0 0 1 0 6.536z" />
+                          </svg>
+                          Push to HubSpot
+                        </>
+                      )}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
 
