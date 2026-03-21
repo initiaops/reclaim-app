@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
-import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import Stripe from 'stripe'
 
 // Tell Next.js NOT to parse the body — Stripe needs the raw bytes to verify the signature
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Webhook signature verification failed' }, { status: 400 })
   }
 
-  const supabase = await createClient()
+  const supabase = createAdminClient()
 
   // Handle payment confirmed — upgrade user to Pro
   if (event.type === 'checkout.session.completed') {
