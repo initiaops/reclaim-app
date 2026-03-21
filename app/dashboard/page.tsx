@@ -11,15 +11,14 @@ function getCurrentMonth(): string {
 export default async function DashboardPage() {
   const supabase = await createClient()
 
-  // Get authenticated user — redirect to login if session is missing
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
   if (!user) redirect('/login')
 
-  // Fetch plan and usage in parallel — fresh on every page load
-  const [{ data: sub }, { data: usageRow }] = await Promise.all([
+  // Fetch plan, usage, and extraction history in parallel — fresh on every page load
+  const [{ data: sub }, { data: usageRow }, { data: historyRows }] = await Promise.all([
     supabase
       .from('subscriptions')
       .select('plan, status')
@@ -31,10 +30,22 @@ export default async function DashboardPage() {
       .eq('user_id', user.id)
       .eq('month', getCurrentMonth())
       .single(),
+    supabase
+      .from('extractions')
+      .select('id, transcript_excerpt, result, created_at')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(5),
   ])
 
   const isPro = sub?.plan === 'pro' && sub?.status === 'active'
   const usageCount = usageRow?.count ?? 0
+  const history = (historyRows ?? []).map((row) => ({
+    id: row.id as string,
+    excerpt: (row.transcript_excerpt as string) ?? '',
+    result: row.result as Record<string, unknown>,
+    created_at: row.created_at as string,
+  }))
 
   return (
     <Suspense>
@@ -42,6 +53,7 @@ export default async function DashboardPage() {
         userEmail={user.email ?? ''}
         isPro={isPro}
         initialUsageCount={usageCount}
+        initialHistory={history}
       />
     </Suspense>
   )

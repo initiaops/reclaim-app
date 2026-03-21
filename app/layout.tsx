@@ -8,9 +8,14 @@ import { redirect } from 'next/navigation'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'RECLAIM — AI Sales Intelligence',
+  title: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
   description:
-    'Automatically extract CRM data from your sales calls and emails.',
+    'RECLAIM automatically extracts CRM data from your sales calls and emails. Save 5 hours a week. Try free.',
+  openGraph: {
+    title: 'RECLAIM — AI Sales Intelligence',
+    description: 'Stop manual CRM data entry. RECLAIM extracts everything automatically.',
+    type: 'website',
+  },
 }
 
 async function signOut() {
@@ -33,42 +38,36 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <nav className="border-b border-gray-200 bg-white sticky top-0 z-50">
+        <nav className="border-b border-gray-200 bg-white/90 backdrop-blur-sm sticky top-0 z-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <Link
                 href="/"
-                className="text-xl font-bold tracking-tight"
+                className="text-xl font-black tracking-tight"
                 style={{ color: 'var(--brand)' }}
               >
                 RECLAIM
               </Link>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 sm:gap-4">
                 {user ? (
                   <>
                     <Link
                       href="/dashboard"
-                      className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors"
+                      className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-3 py-2 rounded-lg hover:bg-purple-50"
                     >
                       Dashboard
                     </Link>
                     <Link
-                      href="/dashboard/account"
-                      className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors"
+                      href="/pricing"
+                      className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-3 py-2 rounded-lg hover:bg-purple-50 hidden sm:block"
                     >
-                      Account
-                    </Link>
-                    <Link
-                      href="/dashboard/billing"
-                      className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors"
-                    >
-                      Billing
+                      Pricing
                     </Link>
                     <form action={signOut}>
                       <button
                         type="submit"
-                        className="text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
+                        className="text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors px-3 py-2 rounded-lg hover:bg-gray-100 cursor-pointer"
                       >
                         Sign out
                       </button>
@@ -77,17 +76,23 @@ export default async function RootLayout({
                 ) : (
                   <>
                     <Link
+                      href="/pricing"
+                      className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-3 py-2 hidden sm:block"
+                    >
+                      Pricing
+                    </Link>
+                    <Link
                       href="/login"
-                      className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors"
+                      className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-3 py-2"
                     >
                       Log in
                     </Link>
                     <Link
                       href="/signup"
-                      className="text-sm font-medium text-white px-4 py-2 rounded-lg transition-colors hover:opacity-90"
+                      className="text-sm font-semibold text-white px-4 py-2 rounded-lg transition-all hover:opacity-90 hover:shadow-md"
                       style={{ backgroundColor: 'var(--brand)' }}
                     >
-                      Sign up
+                      Start free
                     </Link>
                   </>
                 )}

@@ -18,26 +18,36 @@ interface ExtractionResult {
 
 interface HistoryEntry {
   id: string
-  timestamp: string
   excerpt: string
-  result: ExtractionResult
+  result: Record<string, unknown>
+  created_at: string
 }
 
 interface Props {
   userEmail: string
   isPro: boolean
   initialUsageCount: number
+  initialHistory: HistoryEntry[]
 }
 
 const FREE_LIMIT = 5
 
 const sentimentConfig = {
-  positive: { label: 'Positive', bg: 'bg-green-100', text: 'text-green-800' },
-  neutral: { label: 'Neutral', bg: 'bg-yellow-100', text: 'text-yellow-800' },
-  negative: { label: 'Negative', bg: 'bg-red-100', text: 'text-red-800' },
+  positive: { label: 'Positive', bg: 'bg-green-100', text: 'text-green-700', dot: 'bg-green-400' },
+  neutral: { label: 'Neutral', bg: 'bg-yellow-100', text: 'text-yellow-700', dot: 'bg-yellow-400' },
+  negative: { label: 'Negative', bg: 'bg-red-100', text: 'text-red-700', dot: 'bg-red-400' },
 }
 
-export default function DashboardClient({ userEmail, isPro, initialUsageCount }: Props) {
+const dealStageColor: Record<string, string> = {
+  Prospecting: 'bg-gray-100 text-gray-600',
+  Discovery: 'bg-blue-100 text-blue-700',
+  Proposal: 'bg-purple-100 text-purple-700',
+  Negotiation: 'bg-orange-100 text-orange-700',
+  Closing: 'bg-green-100 text-green-700',
+  Unknown: 'bg-gray-100 text-gray-500',
+}
+
+export default function DashboardClient({ userEmail, isPro, initialUsageCount, initialHistory }: Props) {
   const searchParams = useSearchParams()
   const justUpgraded = searchParams.get('upgraded') === 'true'
 
@@ -46,7 +56,7 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount }:
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<ExtractionResult | null>(null)
   const [error, setError] = useState('')
-  const [history, setHistory] = useState<HistoryEntry[]>([])
+  const [history, setHistory] = useState<HistoryEntry[]>(initialHistory)
   const [copied, setCopied] = useState(false)
 
   async function handleExtract() {
@@ -54,7 +64,6 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount }:
       setError('Please paste a longer transcript (at least 50 characters).')
       return
     }
-
     setError('')
     setLoading(true)
     setResult(null)
@@ -65,28 +74,27 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount }:
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ transcript }),
       })
-
       const data = await response.json()
 
       if (!response.ok) {
-        if (response.status === 429) {
-          setError('You have reached your 5 extraction limit for this month. Upgrade to Pro for unlimited extractions.')
-        } else {
-          setError(data.error ?? 'Something went wrong. Please try again.')
-        }
+        setError(
+          response.status === 429
+            ? 'Monthly limit reached. Upgrade to Pro for unlimited extractions.'
+            : data.error ?? 'Something went wrong. Please try again.'
+        )
         return
       }
 
       setResult(data)
       if (!isPro) setUsageCount((prev) => prev + 1)
 
-      const entry: HistoryEntry = {
-        id: Date.now().toString(),
-        timestamp: new Date().toLocaleTimeString(),
-        excerpt: transcript.slice(0, 80) + (transcript.length > 80 ? '…' : ''),
+      const newEntry: HistoryEntry = {
+        id: `local-${Date.now()}`,
+        excerpt: transcript.slice(0, 200),
         result: data,
+        created_at: new Date().toISOString(),
       }
-      setHistory((prev) => [entry, ...prev].slice(0, 5))
+      setHistory((prev) => [newEntry, ...prev].slice(0, 5))
     } catch {
       setError('Network error. Please check your connection and try again.')
     } finally {
@@ -111,7 +119,7 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount }:
     ].join('\n')
   }
 
-  function handleCopyAll() {
+  function handleCopy() {
     if (!result) return
     navigator.clipboard.writeText(formatResultAsText(result))
     setCopied(true)
@@ -124,229 +132,283 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount }:
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `reclaim-extract-${Date.now()}.txt`
+    a.download = `reclaim-${Date.now()}.txt`
     a.click()
     URL.revokeObjectURL(url)
+  }
+
+  function loadFromHistory(entry: HistoryEntry) {
+    setResult(entry.result as unknown as ExtractionResult)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const usagePercent = Math.min((usageCount / FREE_LIMIT) * 100, 100)
   const limitReached = !isPro && usageCount >= FREE_LIMIT
   const nearLimit = !isPro && usageCount >= FREE_LIMIT - 1
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 py-10 space-y-8">
+  const sentiment = result?.sentiment ?? 'neutral'
+  const sentimentCfg = sentimentConfig[sentiment] ?? sentimentConfig.neutral
+  const stageCss = dealStageColor[result?.deal_stage ?? 'Unknown'] ?? dealStageColor.Unknown
 
-        {/* Upgrade success banner */}
+  return (
+    <div className="min-h-screen bg-gray-50/60">
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
+
+        {/* Upgrade success */}
         {justUpgraded && (
-          <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-4 flex items-center gap-3">
-            <span className="text-2xl">🎉</span>
+          <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-4 flex items-center gap-4 animate-fade-up">
+            <span className="text-3xl">🎉</span>
             <div>
-              <p className="font-semibold text-green-800">Welcome to Pro!</p>
-              <p className="text-sm text-green-700">You now have unlimited extractions. Enjoy!</p>
+              <p className="font-bold text-green-800">Welcome to Pro!</p>
+              <p className="text-sm text-green-600 mt-0.5">Unlimited extractions are now active on your account.</p>
             </div>
           </div>
         )}
 
         {/* Header */}
-        <div className="flex items-start justify-between">
+        <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold text-gray-900">
-                Welcome back{userEmail ? `, ${userEmail.split('@')[0]}` : ''}
+              <h1 className="text-xl font-black text-gray-900">
+                {userEmail ? userEmail.split('@')[0] : 'Dashboard'}
               </h1>
               {isPro && (
-                <span
-                  className="text-xs font-bold px-2.5 py-1 rounded-full text-white uppercase tracking-wide"
-                  style={{ backgroundColor: 'var(--brand)' }}
-                >
+                <span className="text-[10px] font-black px-2 py-0.5 rounded-full text-white uppercase tracking-widest"
+                  style={{ backgroundColor: 'var(--brand)' }}>
                   Pro
                 </span>
               )}
             </div>
-            <p className="text-gray-500 mt-1">
-              Paste a transcript below to extract your sales intelligence.
-            </p>
+            <p className="text-sm text-gray-400 mt-0.5">{userEmail}</p>
           </div>
+          {!isPro && (
+            <Link href="/pricing"
+              className="text-xs font-bold px-3 py-1.5 rounded-full border border-purple-200 transition-all hover:bg-purple-50"
+              style={{ color: 'var(--brand)' }}>
+              Upgrade ↗
+            </Link>
+          )}
         </div>
 
         {/* Plan status */}
         {isPro ? (
-          <div
-            className="rounded-2xl p-5 flex items-center gap-4"
-            style={{ backgroundColor: '#EDE9FE' }}
-          >
-            <span className="text-2xl">⚡</span>
+          <div className="rounded-2xl p-4 flex items-center gap-3 border border-purple-200"
+            style={{ backgroundColor: '#F5F3FF' }}>
+            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm shrink-0"
+              style={{ backgroundColor: 'var(--brand)' }}>⚡</div>
             <div>
-              <p className="font-semibold" style={{ color: 'var(--brand)' }}>
-                Pro Plan — Unlimited extractions
-              </p>
-              <p className="text-sm text-purple-700">
-                No monthly limits. Extract as many transcripts as you need.
-              </p>
+              <p className="font-bold text-sm" style={{ color: 'var(--brand)' }}>Pro Plan — Unlimited extractions</p>
+              <p className="text-xs text-purple-500 mt-0.5">No monthly limits. Extract as much as you need.</p>
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-2xl border border-gray-200 p-6">
+          <div className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
             <div className="flex justify-between items-center mb-3">
-              <span className="text-sm font-medium text-gray-700">
-                Monthly extractions used
-              </span>
-              <span className={`text-sm font-bold ${nearLimit ? 'text-red-600' : 'text-gray-700'}`}>
-                {usageCount} / {FREE_LIMIT}
+              <span className="text-sm font-semibold text-gray-700">Monthly extractions</span>
+              <span className={`text-sm font-black ${nearLimit ? 'text-red-500' : 'text-gray-600'}`}>
+                {usageCount} <span className="text-gray-300 font-normal">/</span> {FREE_LIMIT}
               </span>
             </div>
-            <div className="w-full bg-gray-100 rounded-full h-2.5">
+            <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
               <div
-                className={`h-2.5 rounded-full transition-all duration-500 ${nearLimit ? 'bg-red-500' : 'bg-purple-600'}`}
+                className={`h-2 rounded-full transition-all duration-700 ease-out ${nearLimit ? 'bg-red-400' : 'bg-purple-500'}`}
                 style={{ width: `${usagePercent}%` }}
               />
             </div>
             {limitReached && (
-              <p className="mt-3 text-sm text-red-600 font-medium">
-                You&apos;ve reached your free monthly limit.{' '}
-                <Link href="/pricing" className="underline">Upgrade to Pro</Link>{' '}
-                for unlimited extractions.
+              <p className="mt-3 text-xs text-red-500 font-medium">
+                Monthly limit reached.{' '}
+                <Link href="/pricing" className="underline underline-offset-2 font-bold">Upgrade to Pro</Link>
+                {' '}for unlimited extractions.
               </p>
             )}
           </div>
         )}
 
-        {/* Input area */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
-          <label htmlFor="transcript" className="block text-sm font-semibold text-gray-800">
-            Paste your sales call transcript or email thread
-          </label>
-          <textarea
-            id="transcript"
-            value={transcript}
-            onChange={(e) => setTranscript(e.target.value)}
-            placeholder="Paste your sales call transcript or email thread here..."
-            rows={10}
-            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 resize-y placeholder:text-gray-400"
-            style={{ minHeight: '200px' }}
-            disabled={limitReached}
-          />
+        {/* Extraction input */}
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div className="px-5 pt-5 pb-4">
+            <label htmlFor="transcript" className="block text-sm font-bold text-gray-800 mb-3">
+              Paste your sales call transcript or email thread
+            </label>
+            <textarea
+              id="transcript"
+              value={transcript}
+              onChange={(e) => setTranscript(e.target.value)}
+              placeholder="Paste your sales call transcript or email thread here...&#10;&#10;Any length, any format. The AI will extract the key data automatically."
+              rows={9}
+              disabled={limitReached}
+              className="w-full text-sm text-gray-700 placeholder:text-gray-300 focus:outline-none resize-none leading-relaxed"
+              style={{ minHeight: '200px' }}
+            />
+          </div>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3">
+            <div className="mx-5 mb-4 bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3">
               {error}
             </div>
           )}
 
-          <button
-            onClick={handleExtract}
-            disabled={loading || limitReached || transcript.trim().length === 0}
-            title={limitReached ? 'Monthly limit reached' : undefined}
-            className="w-full text-white font-semibold py-3.5 rounded-xl transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            style={{ backgroundColor: 'var(--brand)' }}
-          >
-            {loading ? (
-              <>
-                <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                </svg>
-                Extracting…
-              </>
-            ) : limitReached ? 'Monthly limit reached' : 'Extract Intelligence'}
-          </button>
+          <div className="border-t border-gray-100 px-5 py-4 flex items-center justify-between gap-4">
+            <p className="text-xs text-gray-300">
+              {transcript.length > 0 ? `${transcript.length} characters` : 'Minimum 50 characters'}
+            </p>
+            <button
+              onClick={handleExtract}
+              disabled={loading || limitReached || transcript.trim().length < 50}
+              className="flex items-center gap-2.5 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all hover:opacity-90 hover:shadow-md active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
+              style={{ backgroundColor: 'var(--brand)' }}
+            >
+              {loading ? (
+                <>
+                  <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                  </svg>
+                  Extracting…
+                </>
+              ) : limitReached ? (
+                'Limit reached'
+              ) : (
+                <>
+                  <span>Extract Intelligence</span>
+                  <span className="opacity-70">→</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Results */}
         {result && (
-          <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-gray-900">Extraction Results</h2>
-              <div className="flex gap-3">
-                <button
-                  onClick={handleCopyAll}
-                  className="text-sm font-medium px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
-                >
-                  {copied ? '✓ Copied!' : 'Copy all as text'}
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden animate-fade-up">
+            {/* Results header */}
+            <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <h2 className="font-black text-gray-900">Extraction Results</h2>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={handleCopy}
+                  className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-all">
+                  {copied ? '✓ Copied!' : 'Copy text'}
                 </button>
-                <button
-                  onClick={handleDownload}
-                  className="text-sm font-medium px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
-                >
-                  Download .txt
+                <button onClick={handleDownload}
+                  className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-all">
+                  Download
                 </button>
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              {[
-                { label: 'Opportunity Name', value: result.opportunity_name },
-                { label: 'Budget / Pricing Discussed', value: result.budget },
-                { label: 'Decision Maker / Economic Buyer', value: result.decision_maker },
-                { label: 'Key Pain Points', value: result.pain_points },
-                { label: 'Identified Next Steps', value: result.next_steps },
-                { label: 'Deal Stage', value: result.deal_stage },
-                { label: 'Competitors Mentioned', value: result.competitors },
-              ].map(({ label, value }) => (
-                <div key={label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">{label}</p>
-                  <p className="text-sm text-gray-800 leading-relaxed">{value}</p>
-                </div>
-              ))}
-
-              <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Overall Sentiment</p>
-                {(() => {
-                  const cfg = sentimentConfig[result.sentiment] ?? sentimentConfig.neutral
-                  return (
-                    <span className={`inline-block text-sm font-semibold px-3 py-1 rounded-full ${cfg.bg} ${cfg.text}`}>
-                      {cfg.label}
-                    </span>
-                  )
-                })()}
+            {/* Top stats row */}
+            <div className="px-6 pt-5 pb-4 grid grid-cols-3 gap-4 border-b border-gray-50">
+              {/* Sentiment */}
+              <div>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Sentiment</p>
+                <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full ${sentimentCfg.bg} ${sentimentCfg.text}`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${sentimentCfg.dot}`} />
+                  {sentimentCfg.label}
+                </span>
               </div>
-
-              <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">AI Confidence Score</p>
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 bg-gray-200 rounded-full h-2">
-                    <div className="h-2 rounded-full bg-purple-600" style={{ width: `${result.confidence}%` }} />
+              {/* Deal stage */}
+              <div>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Deal Stage</p>
+                <span className={`inline-block text-xs font-bold px-2.5 py-1 rounded-full ${stageCss}`}>
+                  {result.deal_stage}
+                </span>
+              </div>
+              {/* Confidence */}
+              <div>
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">AI Confidence</p>
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 bg-gray-100 rounded-full h-1.5">
+                    <div className="h-1.5 rounded-full bg-purple-500" style={{ width: `${result.confidence}%` }} />
                   </div>
-                  <span className="text-sm font-bold text-gray-700">{result.confidence}%</span>
+                  <span className="text-xs font-black text-gray-700">{result.confidence}%</span>
                 </div>
               </div>
             </div>
-          </div>
-        )}
 
-        {/* Session history */}
-        {history.length > 0 && (
-          <div className="bg-white rounded-2xl border border-gray-200 p-6">
-            <h2 className="text-lg font-bold text-gray-900 mb-4">Recent extractions this session</h2>
-            <div className="space-y-3">
-              {history.map((entry) => (
-                <button
-                  key={entry.id}
-                  onClick={() => setResult(entry.result)}
-                  className="w-full text-left bg-gray-50 hover:bg-purple-50 border border-gray-100 hover:border-purple-200 rounded-xl px-4 py-3 transition-colors"
-                >
-                  <p className="text-xs text-gray-400 mb-1">{entry.timestamp}</p>
-                  <p className="text-sm text-gray-700 truncate">{entry.excerpt}</p>
-                </button>
+            {/* Detail cards */}
+            <div className="p-5 grid sm:grid-cols-2 gap-3">
+              {[
+                { label: 'Opportunity Name', value: result.opportunity_name, icon: '🏢' },
+                { label: 'Budget / Pricing', value: result.budget, icon: '💰' },
+                { label: 'Decision Maker', value: result.decision_maker, icon: '👤' },
+                { label: 'Key Pain Points', value: result.pain_points, icon: '🎯' },
+                { label: 'Next Steps', value: result.next_steps, icon: '📅' },
+                { label: 'Competitors', value: result.competitors, icon: '⚔️' },
+              ].map(({ label, value, icon }) => (
+                <div key={label} className="bg-gray-50 rounded-xl p-4 border border-gray-100 hover:border-purple-100 transition-colors">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                    <span>{icon}</span> {label}
+                  </p>
+                  <p className="text-sm text-gray-800 leading-relaxed font-medium">{value}</p>
+                </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* Upgrade banner — only for Free users */}
-        {!isPro && (
-          <div className="bg-white rounded-2xl border-2 border-dashed border-purple-200 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <p className="font-semibold text-gray-900">Upgrade to Pro — $49/month</p>
-              <p className="text-sm text-gray-500 mt-1">Remove the 5/month limit. Unlimited extractions, forever.</p>
+        {/* Extraction history */}
+        {history.length > 0 && (
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-100">
+              <h2 className="font-black text-gray-900 text-sm">Recent Extractions</h2>
+              <p className="text-xs text-gray-400 mt-0.5">
+                {isPro ? 'Saved to your account' : 'Last 5 from this session'}
+              </p>
             </div>
-            <Link
-              href="/pricing"
-              className="shrink-0 text-white font-semibold px-6 py-3 rounded-xl transition-opacity hover:opacity-90 text-sm"
-              style={{ backgroundColor: 'var(--brand)' }}
-            >
-              See pricing
+            <div className="divide-y divide-gray-50">
+              {history.map((entry) => {
+                const r = entry.result as Partial<ExtractionResult>
+                const date = new Date(entry.created_at)
+                const timeLabel = entry.id.startsWith('local-')
+                  ? 'Just now'
+                  : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+                    ' · ' + date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+
+                return (
+                  <button
+                    key={entry.id}
+                    onClick={() => loadFromHistory(entry)}
+                    className="w-full text-left px-6 py-4 hover:bg-purple-50/50 transition-colors group"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-gray-800 truncate group-hover:text-purple-800 transition-colors">
+                          {r.opportunity_name ?? 'Unknown opportunity'}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-0.5 truncate">{entry.excerpt}</p>
+                      </div>
+                      <div className="shrink-0 text-right">
+                        <p className="text-xs text-gray-400">{timeLabel}</p>
+                        {r.deal_stage && (
+                          <span className={`inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${dealStageColor[r.deal_stage] ?? dealStageColor.Unknown}`}>
+                            {r.deal_stage}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Upgrade banner — free users only */}
+        {!isPro && (
+          <div className="rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-2 border-dashed border-purple-200"
+            style={{ backgroundColor: '#F5F3FF' }}>
+            <div>
+              <p className="font-black text-gray-900">Upgrade to Pro — $49/month</p>
+              <p className="text-sm text-gray-500 mt-1">Unlimited extractions + persistent history. Cancel anytime.</p>
+            </div>
+            <Link href="/pricing"
+              className="shrink-0 text-white font-bold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 text-sm"
+              style={{ backgroundColor: 'var(--brand)' }}>
+              See pricing →
             </Link>
           </div>
         )}

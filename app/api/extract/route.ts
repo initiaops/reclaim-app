@@ -114,6 +114,13 @@ Do not include any text before or after the JSON. Only return the JSON object.`,
     { onConflict: 'user_id,month' }
   )
 
-  // 6. Return the result
+  // 6. Save to extraction history (best-effort — don't fail the request if this errors)
+  await supabase.from('extractions').insert({
+    user_id: user.id,
+    transcript_excerpt: transcript.slice(0, 200),
+    result: parsed,
+  })
+
+  // 7. Return the result
   return NextResponse.json(parsed)
 }
