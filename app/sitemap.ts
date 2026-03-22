@@ -1,48 +1,48 @@
 import { MetadataRoute } from 'next'
 
-const BASE = 'https://www.getreclaimapp.com'
+export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: `${BASE}/`,
-      lastModified: new Date(),
+      url: 'https://www.getreclaimapp.com',
+      lastModified: '2025-03-01',
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: `${BASE}/pricing`,
-      lastModified: new Date(),
+      url: 'https://www.getreclaimapp.com/pricing',
+      lastModified: '2025-03-01',
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${BASE}/guide`,
-      lastModified: new Date(),
+      url: 'https://www.getreclaimapp.com/guide',
+      lastModified: '2025-03-01',
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${BASE}/signup`,
-      lastModified: new Date(),
+      url: 'https://www.getreclaimapp.com/signup',
+      lastModified: '2025-03-01',
       changeFrequency: 'yearly',
       priority: 0.7,
     },
     {
-      url: `${BASE}/login`,
-      lastModified: new Date(),
+      url: 'https://www.getreclaimapp.com/login',
+      lastModified: '2025-03-01',
       changeFrequency: 'yearly',
       priority: 0.5,
     },
     {
-      url: `${BASE}/privacy`,
-      lastModified: new Date(),
+      url: 'https://www.getreclaimapp.com/privacy',
+      lastModified: '2025-03-01',
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
-      url: `${BASE}/terms`,
-      lastModified: new Date(),
+      url: 'https://www.getreclaimapp.com/terms',
+      lastModified: '2025-03-01',
       changeFrequency: 'yearly',
       priority: 0.3,
     },
