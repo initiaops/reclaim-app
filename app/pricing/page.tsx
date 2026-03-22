@@ -53,7 +53,7 @@ export default async function PricingPage() {
                 </div>
               ))}
               <div className="pt-2 border-t border-gray-100 mt-4 space-y-3">
-                {['Unlimited extractions', 'Priority support', 'CRM sync (coming soon)'].map((f) => (
+                {['Unlimited extractions', 'Priority support', 'HubSpot CRM sync'].map((f) => (
                   <div key={f} className="flex items-center gap-3 text-sm text-gray-300">
                     <span className="w-5 h-5 rounded-full bg-gray-100 text-gray-300 flex items-center justify-center text-xs font-bold shrink-0">✗</span>
                     {f}
@@ -94,7 +94,7 @@ export default async function PricingPage() {
                 'Persistent extraction history',
                 'Priority email & chat support',
                 'Early access to new features',
-                'CRM sync (coming soon)',
+                'HubSpot CRM sync included',
               ].map((f) => (
                 <div key={f} className="flex items-center gap-3 text-sm text-white">
                   <span className="w-5 h-5 rounded-full bg-yellow-400 text-yellow-900 flex items-center justify-center text-xs font-bold shrink-0">✓</span>
@@ -164,7 +164,7 @@ export default async function PricingPage() {
                 { feature: 'Extraction history (saved)', free: '—', pro: 'Last 50' },
                 { feature: 'AI confidence score', free: '✓', pro: '✓' },
                 { feature: 'Support', free: 'Email', pro: 'Priority' },
-                { feature: 'CRM sync', free: '—', pro: 'Coming soon' },
+                { feature: 'HubSpot CRM sync', free: '—', pro: '✓ Included' },
                 { feature: 'Early access to features', free: '—', pro: '✓' },
               ].map(({ feature, free, pro }, i) => (
                 <tr key={feature} className={`border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>

@@ -99,7 +99,7 @@ export default async function BillingPage() {
               'All 9 CRM fields extracted automatically',
               'Copy & download results in one click',
               'Priority email support',
-              'CRM sync — coming soon',
+              'HubSpot CRM sync — one click deal creation',
               'Early access to new features',
             ].map((item) => (
               <li key={item} className="flex items-center gap-3 text-sm text-gray-700">
