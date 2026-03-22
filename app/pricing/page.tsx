@@ -1,5 +1,25 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+
+export const metadata: Metadata = {
+  title: 'Pricing — RECLAIM AI Sales Tool | Free & Pro Plans',
+  description:
+    'Start free with 5 extractions per month. Upgrade to Pro for $49/month for unlimited extractions and HubSpot CRM sync.',
+  alternates: { canonical: '/pricing' },
+  openGraph: {
+    title: 'Pricing — RECLAIM AI Sales Tool | Free & Pro Plans',
+    description:
+      'Start free with 5 extractions per month. Upgrade to Pro for $49/month for unlimited extractions and HubSpot CRM sync.',
+    url: 'https://www.getreclaimapp.com/pricing',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pricing — RECLAIM AI Sales Tool | Free & Pro Plans',
+    description:
+      'Start free with 5 extractions per month. Upgrade to Pro for $49/month for unlimited extractions and HubSpot CRM sync.',
+  },
+}
 
 export default async function PricingPage() {
   const supabase = await createClient()

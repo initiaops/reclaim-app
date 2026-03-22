@@ -1,5 +1,14 @@
-export const metadata = {
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
   title: 'Privacy Policy — RECLAIM',
+  description: 'Read the RECLAIM privacy policy. Learn how we collect, use, and protect your data.',
+  alternates: { canonical: '/privacy' },
+  openGraph: {
+    title: 'Privacy Policy — RECLAIM',
+    description: 'Read the RECLAIM privacy policy.',
+    url: 'https://www.getreclaimapp.com/privacy',
+  },
 }
 
 export default function PrivacyPage() {

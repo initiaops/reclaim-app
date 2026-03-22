@@ -1,8 +1,54 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
+  description:
+    'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Save 5 hours a week. Free to try.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
+    description:
+      'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Save 5 hours a week. Free to try.',
+    url: 'https://www.getreclaimapp.com',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
+    description:
+      'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Save 5 hours a week.',
+  },
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'RECLAIM',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  url: 'https://www.getreclaimapp.com',
+  description:
+    'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Save 5 hours a week. Free to try.',
+  offers: {
+    '@type': 'Offer',
+    price: '49',
+    priceCurrency: 'USD',
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: '49',
+      priceCurrency: 'USD',
+      unitText: 'MONTH',
+    },
+  },
+}
 
 export default function Home() {
   return (
     <div className="bg-white overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       {/* ── HERO ─────────────────────────────────── */}
       <section className="hero-gradient pt-20 pb-24 px-4">
@@ -324,6 +370,29 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── WHY RECLAIM (SEO) ────────────────────── */}
+      <section className="py-20 px-4 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl font-black text-gray-900 mb-10 text-center">
+            Why sales teams choose RECLAIM
+          </h2>
+          <div className="space-y-8 text-gray-600 text-sm leading-relaxed">
+            <div>
+              <h3 className="font-bold text-gray-900 text-base mb-2">The end of manual CRM data entry</h3>
+              <p>Most sales reps spend 30–60 minutes after every call doing manual CRM data entry — typing up notes, filling in deal stages, and updating contact records. RECLAIM replaces that entirely. Paste your sales call transcript and our AI sales intelligence engine extracts every field automatically: who the decision maker is, what budget was mentioned, what pain points came up, and exactly what next steps were agreed. No more manual data entry. No more missed information.</p>
+            </div>
+            <div>
+              <h3 className="font-bold text-gray-900 text-base mb-2">Built for HubSpot CRM automation and every major pipeline</h3>
+              <p>RECLAIM maps to the way professional sales teams already work. Whether your team runs MEDDIC, BANT, or a custom qualification framework, the fields RECLAIM extracts — decision maker, budget, pain points, next steps, deal stage — align directly with what your CRM needs. With HubSpot CRM automation built in, you can push a complete deal record with one click and never touch HubSpot manually again. Deal stage tracking stays accurate because the data comes from the actual conversation, not from memory.</p>
+            </div>
+            <div>
+              <h3 className="font-bold text-gray-900 text-base mb-2">The fastest way to improve sales rep productivity</h3>
+              <p>The best sales teams win because their reps spend more time selling and less time on admin. RECLAIM gives every rep back 5+ hours a week — time that goes directly into more calls, better follow-ups, and faster closes. Better data in your CRM also means better pipeline visibility for managers, more accurate forecasting, and coaching conversations grounded in real call content rather than what a rep remembers to log hours later.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── FOOTER ───────────────────────────────── */}
       <footer className="border-t border-gray-200 py-12 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
@@ -335,6 +404,7 @@ export default function Home() {
 
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-gray-500">
               <Link href="/pricing" className="hover:text-purple-700 transition-colors">Pricing</Link>
+              <Link href="/guide" className="hover:text-purple-700 transition-colors">Guide</Link>
               <Link href="/login" className="hover:text-purple-700 transition-colors">Log in</Link>
               <Link href="/signup" className="hover:text-purple-700 transition-colors">Sign up</Link>
               <Link href="/privacy" className="hover:text-purple-700 transition-colors">Privacy Policy</Link>

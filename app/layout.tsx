@@ -4,16 +4,38 @@ import './globals.css'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 export const metadata: Metadata = {
-  title: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
+  metadataBase: new URL('https://www.getreclaimapp.com'),
+  title: {
+    default: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
+    template: '%s',
+  },
   description:
-    'RECLAIM automatically extracts CRM data from your sales calls and emails. Save 5 hours a week. Try free.',
+    'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Save 5 hours a week. Free to try.',
   openGraph: {
-    title: 'RECLAIM — AI Sales Intelligence',
-    description: 'Stop manual CRM data entry. RECLAIM extracts everything automatically.',
+    title: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
+    description:
+      'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Save 5 hours a week. Free to try.',
+    url: 'https://www.getreclaimapp.com',
+    siteName: 'RECLAIM',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'RECLAIM — AI Sales Intelligence',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
+    description:
+      'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Save 5 hours a week.',
+    images: ['/og-image.png'],
   },
 }
 

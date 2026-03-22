@@ -1,5 +1,14 @@
-export const metadata = {
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
   title: 'Terms of Service — RECLAIM',
+  description: 'Read the RECLAIM terms of service. Understand your rights and responsibilities when using our AI sales intelligence tool.',
+  alternates: { canonical: '/terms' },
+  openGraph: {
+    title: 'Terms of Service — RECLAIM',
+    description: 'Read the RECLAIM terms of service.',
+    url: 'https://www.getreclaimapp.com/terms',
+  },
 }
 
 export default function TermsPage() {
