@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     ],
   },
   verification: {
-    google: '645758800c2be810',
+    google: '76unokSJOHqKJryxHzmMc4mVf5Jye5EDTcTsruEbHS4',
   },
   twitter: {
     card: 'summary_large_image',
