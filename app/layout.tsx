@@ -30,6 +30,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  verification: {
+    google: '645758800c2be810',
+  },
   twitter: {
     card: 'summary_large_image',
     title: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
