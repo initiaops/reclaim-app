@@ -81,7 +81,11 @@ Return ONLY a valid JSON object with these exact fields:
   "deal_stage": "your assessment: Prospecting / Discovery / Proposal / Negotiation / Closing / Unknown",
   "competitors": "any competitor products or companies mentioned, or None mentioned",
   "sentiment": "positive or neutral or negative",
-  "confidence": a number from 0 to 100 representing how confident you are in this extraction based on the quality of the input
+  "confidence": a number from 0 to 100 representing how confident you are in this extraction based on the quality of the input,
+  "buying_signals": "specific positive signals the prospect showed — enthusiasm, urgency, budget confirmation, strong agreement, leaning-forward moments. Quote the transcript where possible. Say 'None detected' if absent.",
+  "risk_signals": "hesitations, objections, budget concerns, competitor preference, timeline pushback, or red flags. Quote the transcript where possible. Say 'None detected' if absent.",
+  "relationship_dynamics": "the rapport level and emotional tone — was there warmth, trust, formality, tension? How did the conversation feel? Keep to 1-2 sentences. Say 'Unclear' if insufficient context.",
+  "recommended_actions": "based on everything in this conversation, what should the sales rep do next and why? Be specific, practical, and prioritized. 2-4 actionable items."
 }
 
 Do not include any text before or after the JSON. Only return the JSON object.`,

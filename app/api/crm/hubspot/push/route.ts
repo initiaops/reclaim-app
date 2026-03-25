@@ -132,6 +132,9 @@ export async function POST(request: NextRequest) {
   if (extraction.competitors && extraction.competitors !== 'None mentioned') {
     descParts.push(`Competitors:\n${extraction.competitors}`)
   }
+  if (extraction.notes && extraction.notes.trim()) {
+    descParts.push(`Rep Notes:\n${extraction.notes}`)
+  }
   descParts.push(`Sentiment: ${extraction.sentiment ?? 'neutral'}`)
   descParts.push(`Extracted by RECLAIM`)
 

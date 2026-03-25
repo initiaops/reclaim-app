@@ -14,6 +14,10 @@ interface ExtractionResult {
   competitors: string
   sentiment: 'positive' | 'neutral' | 'negative'
   confidence: number
+  buying_signals: string
+  risk_signals: string
+  relationship_dynamics: string
+  recommended_actions: string
 }
 
 interface HistoryEntry {
@@ -35,33 +39,105 @@ const FREE_LIMIT = 5
 
 const sentimentConfig = {
   positive: { label: 'Positive', bg: 'bg-green-100', text: 'text-green-700', dot: 'bg-green-400' },
-  neutral: { label: 'Neutral', bg: 'bg-yellow-100', text: 'text-yellow-700', dot: 'bg-yellow-400' },
-  negative: { label: 'Negative', bg: 'bg-red-100', text: 'text-red-700', dot: 'bg-red-400' },
+  neutral:  { label: 'Neutral',  bg: 'bg-yellow-100', text: 'text-yellow-700', dot: 'bg-yellow-400' },
+  negative: { label: 'Negative', bg: 'bg-red-100',    text: 'text-red-700',   dot: 'bg-red-400' },
 }
 
 const dealStageColor: Record<string, string> = {
   Prospecting: 'bg-gray-100 text-gray-600',
-  Discovery: 'bg-blue-100 text-blue-700',
-  Proposal: 'bg-purple-100 text-purple-700',
+  Discovery:   'bg-blue-100 text-blue-700',
+  Proposal:    'bg-purple-100 text-purple-700',
   Negotiation: 'bg-orange-100 text-orange-700',
-  Closing: 'bg-green-100 text-green-700',
-  Unknown: 'bg-gray-100 text-gray-500',
+  Closing:     'bg-green-100 text-green-700',
+  Unknown:     'bg-gray-100 text-gray-500',
 }
 
-export default function DashboardClient({ userEmail, isPro, initialUsageCount, initialHistory, hubspotConnected }: Props) {
+const editableFields = [
+  { field: 'opportunity_name', label: 'Opportunity Name', icon: '🏢' },
+  { field: 'budget',           label: 'Budget / Pricing', icon: '💰' },
+  { field: 'decision_maker',   label: 'Decision Maker',   icon: '👤' },
+  { field: 'pain_points',      label: 'Key Pain Points',  icon: '🎯' },
+  { field: 'next_steps',       label: 'Next Steps',       icon: '📅' },
+  { field: 'competitors',      label: 'Competitors',      icon: '⚔️' },
+]
+
+const insightFields = [
+  { field: 'buying_signals',       label: 'Buying Signals',         icon: '📈', color: 'text-green-700',  bg: 'border-green-100' },
+  { field: 'risk_signals',         label: 'Risk Signals',           icon: '⚠️', color: 'text-red-700',    bg: 'border-red-100' },
+  { field: 'relationship_dynamics',label: 'Relationship Dynamics',  icon: '🤝', color: 'text-blue-700',   bg: 'border-blue-100' },
+  { field: 'recommended_actions',  label: 'Recommended Actions',    icon: '🎯', color: 'text-purple-700', bg: 'border-purple-100' },
+]
+
+export default function DashboardClient({
+  userEmail, isPro, initialUsageCount, initialHistory, hubspotConnected,
+}: Props) {
   const searchParams = useSearchParams()
   const justUpgraded = searchParams.get('upgraded') === 'true'
 
-  const [usageCount, setUsageCount] = useState(initialUsageCount)
-  const [transcript, setTranscript] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState<ExtractionResult | null>(null)
-  const [error, setError] = useState('')
-  const [history, setHistory] = useState<HistoryEntry[]>(initialHistory)
-  const [copied, setCopied] = useState(false)
-  const [hubspotStatus, setHubspotStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [usageCount, setUsageCount]         = useState(initialUsageCount)
+  const [transcript, setTranscript]         = useState('')
+  const [loading, setLoading]               = useState(false)
+  const [result, setResult]                 = useState<ExtractionResult | null>(null)
+  const [editedResult, setEditedResult]     = useState<Record<string, string>>({})
+  const [editedFields, setEditedFields]     = useState<Set<string>>(new Set())
+  const [notes, setNotes]                   = useState('')
+  const [error, setError]                   = useState('')
+  const [history, setHistory]               = useState<HistoryEntry[]>(initialHistory)
+  const [expandedHistoryId, setExpandedHistoryId] = useState<string | null>(null)
+  const [copied, setCopied]                 = useState(false)
+  const [hubspotStatus, setHubspotStatus]   = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [hubspotDealUrl, setHubspotDealUrl] = useState<string | null>(null)
-  const [hubspotError, setHubspotError] = useState('')
+  const [hubspotError, setHubspotError]     = useState('')
+
+  // ── Helpers ────────────────────────────────────────────────────────
+
+  function initEdits(r: ExtractionResult) {
+    const asStrings: Record<string, string> = {}
+    for (const [k, v] of Object.entries(r)) {
+      asStrings[k] = String(v ?? '')
+    }
+    setEditedResult(asStrings)
+    setEditedFields(new Set())
+    setNotes('')
+  }
+
+  function updateField(field: string, value: string) {
+    setEditedResult(prev => ({ ...prev, [field]: value }))
+    const original = result ? String((result as unknown as Record<string, unknown>)[field] ?? '') : ''
+    if (value !== original) {
+      setEditedFields(prev => new Set(prev).add(field))
+    } else {
+      setEditedFields(prev => { const s = new Set(prev); s.delete(field); return s })
+    }
+  }
+
+  function formatResultAsText(): string {
+    if (!result) return ''
+    return [
+      'RECLAIM — Sales Intelligence Extract',
+      `Generated: ${new Date().toLocaleString()}`,
+      '',
+      '=== CRM DATA ===',
+      `Opportunity Name: ${editedResult.opportunity_name ?? result.opportunity_name}`,
+      `Budget / Pricing: ${editedResult.budget ?? result.budget}`,
+      `Decision Maker: ${editedResult.decision_maker ?? result.decision_maker}`,
+      `Key Pain Points: ${editedResult.pain_points ?? result.pain_points}`,
+      `Next Steps: ${editedResult.next_steps ?? result.next_steps}`,
+      `Deal Stage: ${editedResult.deal_stage ?? result.deal_stage}`,
+      `Competitors: ${editedResult.competitors ?? result.competitors}`,
+      `Sentiment: ${editedResult.sentiment ?? result.sentiment}`,
+      `AI Confidence: ${result.confidence}%`,
+      ...(notes.trim() ? ['', `Rep Notes: ${notes}`] : []),
+      '',
+      '=== AI INSIGHTS ===',
+      `Buying Signals: ${result.buying_signals}`,
+      `Risk Signals: ${result.risk_signals}`,
+      `Relationship Dynamics: ${result.relationship_dynamics}`,
+      `Recommended Actions: ${result.recommended_actions}`,
+    ].join('\n')
+  }
+
+  // ── Actions ────────────────────────────────────────────────────────
 
   async function handleExtract() {
     if (transcript.trim().length < 50) {
@@ -93,15 +169,13 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
       }
 
       setResult(data)
-      if (!isPro) setUsageCount((prev) => prev + 1)
+      initEdits(data)
+      if (!isPro) setUsageCount(prev => prev + 1)
 
-      const newEntry: HistoryEntry = {
-        id: `local-${Date.now()}`,
-        excerpt: transcript.slice(0, 200),
-        result: data,
-        created_at: new Date().toISOString(),
-      }
-      setHistory((prev) => [newEntry, ...prev].slice(0, 5))
+      setHistory(prev => [
+        { id: `local-${Date.now()}`, excerpt: transcript.slice(0, 200), result: data, created_at: new Date().toISOString() },
+        ...prev,
+      ].slice(0, 10))
     } catch {
       setError('Network error. Please check your connection and try again.')
     } finally {
@@ -109,35 +183,18 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
     }
   }
 
-  function formatResultAsText(r: ExtractionResult): string {
-    return [
-      `RECLAIM — Sales Intelligence Extract`,
-      `Generated: ${new Date().toLocaleString()}`,
-      ``,
-      `Opportunity Name: ${r.opportunity_name}`,
-      `Budget / Pricing: ${r.budget}`,
-      `Decision Maker: ${r.decision_maker}`,
-      `Key Pain Points: ${r.pain_points}`,
-      `Next Steps: ${r.next_steps}`,
-      `Deal Stage: ${r.deal_stage}`,
-      `Competitors: ${r.competitors}`,
-      `Sentiment: ${r.sentiment}`,
-      `AI Confidence: ${r.confidence}%`,
-    ].join('\n')
-  }
-
   function handleCopy() {
     if (!result) return
-    navigator.clipboard.writeText(formatResultAsText(result))
+    navigator.clipboard.writeText(formatResultAsText())
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
   function handleDownload() {
     if (!result) return
-    const blob = new Blob([formatResultAsText(result)], { type: 'text/plain' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
+    const blob = new Blob([formatResultAsText()], { type: 'text/plain' })
+    const url  = URL.createObjectURL(blob)
+    const a    = document.createElement('a')
     a.href = url
     a.download = `reclaim-${Date.now()}.txt`
     a.click()
@@ -152,7 +209,13 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
       const response = await fetch('/api/crm/hubspot/push', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ extraction: result }),
+        body: JSON.stringify({
+          extraction: {
+            ...editedResult,
+            confidence: result.confidence,
+            ...(notes.trim() ? { notes } : {}),
+          },
+        }),
       })
       const data = await response.json()
       if (!response.ok) {
@@ -169,27 +232,50 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
   }
 
   function loadFromHistory(entry: HistoryEntry) {
-    setResult(entry.result as unknown as ExtractionResult)
+    const r = entry.result as unknown as ExtractionResult
+    setResult(r)
+    initEdits(r)
+    setHubspotStatus('idle')
+    setHubspotDealUrl(null)
+    setHubspotError('')
     setTimeout(() => {
       document.getElementById('extraction-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }, 50)
   }
 
-  const usagePercent = Math.min((usageCount / FREE_LIMIT) * 100, 100)
-  const limitReached = !isPro && usageCount >= FREE_LIMIT
-  const nearLimit = !isPro && usageCount >= FREE_LIMIT - 1
+  async function handleDeleteHistory(id: string) {
+    setHistory(prev => prev.filter(e => e.id !== id))
+    if (expandedHistoryId === id) setExpandedHistoryId(null)
+    if (!id.startsWith('local-')) {
+      await fetch(`/api/extractions/${id}`, { method: 'DELETE' })
+    }
+  }
 
-  const sentiment = result?.sentiment ?? 'neutral'
-  const sentimentCfg = sentimentConfig[sentiment] ?? sentimentConfig.neutral
-  const stageCss = dealStageColor[result?.deal_stage ?? 'Unknown'] ?? dealStageColor.Unknown
+  // ── Derived state ──────────────────────────────────────────────────
+
+  const usagePercent  = Math.min((usageCount / FREE_LIMIT) * 100, 100)
+  const limitReached  = !isPro && usageCount >= FREE_LIMIT
+  const nearLimit     = !isPro && usageCount >= FREE_LIMIT - 1
+
+  const currentSentiment  = (editedResult.sentiment ?? result?.sentiment ?? 'neutral') as keyof typeof sentimentConfig
+  const currentDealStage  = editedResult.deal_stage ?? result?.deal_stage ?? 'Unknown'
+  const sentimentCfg      = sentimentConfig[currentSentiment] ?? sentimentConfig.neutral
+  const stageCss          = dealStageColor[currentDealStage] ?? dealStageColor.Unknown
+
+  const hasInsights = result && insightFields.some(({ field }) => {
+    const v = (result as unknown as Record<string, unknown>)[field] as string
+    return v && v !== 'None detected' && v !== 'Unclear'
+  })
+
+  // ── Render ─────────────────────────────────────────────────────────
 
   return (
     <div className="min-h-screen bg-gray-50/60">
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
 
-        {/* Upgrade success */}
+        {/* Upgrade success banner */}
         {justUpgraded && (
-          <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-4 flex items-center gap-4 animate-fade-up">
+          <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-4 flex items-center gap-4">
             <span className="text-3xl">🎉</span>
             <div>
               <p className="font-bold text-green-800">Welcome to Pro!</p>
@@ -207,9 +293,7 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
               </h1>
               {isPro && (
                 <span className="text-[10px] font-black px-2 py-0.5 rounded-full text-white uppercase tracking-widest"
-                  style={{ backgroundColor: 'var(--brand)' }}>
-                  Pro
-                </span>
+                  style={{ backgroundColor: 'var(--brand)' }}>Pro</span>
               )}
             </div>
             <p className="text-sm text-gray-400 mt-0.5">{userEmail}</p>
@@ -225,8 +309,7 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
 
         {/* Plan status */}
         {isPro ? (
-          <div className="rounded-2xl p-4 flex items-center gap-3 border border-purple-200"
-            style={{ backgroundColor: '#F5F3FF' }}>
+          <div className="rounded-2xl p-4 flex items-center gap-3 border border-purple-200" style={{ backgroundColor: '#F5F3FF' }}>
             <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm shrink-0"
               style={{ backgroundColor: 'var(--brand)' }}>⚡</div>
             <div>
@@ -243,10 +326,8 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
               </span>
             </div>
             <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
-              <div
-                className={`h-2 rounded-full transition-all duration-700 ease-out ${nearLimit ? 'bg-red-400' : 'bg-purple-500'}`}
-                style={{ width: `${usagePercent}%` }}
-              />
+              <div className={`h-2 rounded-full transition-all duration-700 ease-out ${nearLimit ? 'bg-red-400' : 'bg-purple-500'}`}
+                style={{ width: `${usagePercent}%` }} />
             </div>
             {limitReached && (
               <p className="mt-3 text-xs text-red-500 font-medium">
@@ -267,7 +348,7 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
             <textarea
               id="transcript"
               value={transcript}
-              onChange={(e) => setTranscript(e.target.value)}
+              onChange={e => setTranscript(e.target.value)}
               placeholder="Paste your sales call transcript or email thread here...&#10;&#10;Any length, any format. The AI will extract the key data automatically."
               rows={9}
               disabled={limitReached}
@@ -289,7 +370,7 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
             <button
               onClick={handleExtract}
               disabled={loading || limitReached || transcript.trim().length < 50}
-              className="flex items-center gap-2.5 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all hover:opacity-90 hover:shadow-md active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
+              className="flex items-center gap-2.5 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all hover:opacity-90 hover:shadow-md active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
               style={{ backgroundColor: 'var(--brand)' }}
             >
               {loading ? (
@@ -300,26 +381,27 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
                   </svg>
                   Extracting…
                 </>
-              ) : limitReached ? (
-                'Limit reached'
-              ) : (
-                <>
-                  <span>Extract Intelligence</span>
-                  <span className="opacity-70">→</span>
-                </>
+              ) : limitReached ? 'Limit reached' : (
+                <><span>Extract Intelligence</span><span className="opacity-70">→</span></>
               )}
             </button>
           </div>
         </div>
 
-        {/* Results */}
+        {/* ── Results ── */}
         {result && (
           <div id="extraction-results" className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden animate-fade-up">
-            {/* Results header */}
+
+            {/* Header */}
             <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 <h2 className="font-black text-gray-900">Extraction Results</h2>
+                {editedFields.size > 0 && (
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-600 uppercase tracking-wide">
+                    {editedFields.size} edited
+                  </span>
+                )}
               </div>
               <div className="flex gap-2">
                 <button onClick={handleCopy}
@@ -333,9 +415,8 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
               </div>
             </div>
 
-            {/* Top stats row */}
+            {/* Stats row */}
             <div className="px-6 pt-5 pb-4 grid grid-cols-3 gap-4 border-b border-gray-50">
-              {/* Sentiment */}
               <div>
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Sentiment</p>
                 <span className={`inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full ${sentimentCfg.bg} ${sentimentCfg.text}`}>
@@ -343,14 +424,12 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
                   {sentimentCfg.label}
                 </span>
               </div>
-              {/* Deal stage */}
               <div>
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">Deal Stage</p>
                 <span className={`inline-block text-xs font-bold px-2.5 py-1 rounded-full ${stageCss}`}>
-                  {result.deal_stage}
+                  {currentDealStage}
                 </span>
               </div>
-              {/* Confidence */}
               <div>
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">AI Confidence</p>
                 <div className="flex items-center gap-2">
@@ -362,24 +441,71 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
               </div>
             </div>
 
-            {/* Detail cards */}
+            {/* Editable CRM field cards */}
             <div className="p-5 grid sm:grid-cols-2 gap-3">
-              {[
-                { label: 'Opportunity Name', value: result.opportunity_name, icon: '🏢' },
-                { label: 'Budget / Pricing', value: result.budget, icon: '💰' },
-                { label: 'Decision Maker', value: result.decision_maker, icon: '👤' },
-                { label: 'Key Pain Points', value: result.pain_points, icon: '🎯' },
-                { label: 'Next Steps', value: result.next_steps, icon: '📅' },
-                { label: 'Competitors', value: result.competitors, icon: '⚔️' },
-              ].map(({ label, value, icon }) => (
-                <div key={label} className="bg-gray-50 rounded-xl p-4 border border-gray-100 hover:border-purple-100 transition-colors">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
-                    <span>{icon}</span> {label}
-                  </p>
-                  <p className="text-sm text-gray-800 leading-relaxed font-medium">{value}</p>
+              {editableFields.map(({ field, label, icon }) => (
+                <div key={field} className="bg-gray-50 rounded-xl p-4 border border-gray-100 hover:border-purple-100 transition-colors">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
+                      <span>{icon}</span> {label}
+                    </p>
+                    {editedFields.has(field) && (
+                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-600 uppercase tracking-wide shrink-0">
+                        Edited
+                      </span>
+                    )}
+                  </div>
+                  <textarea
+                    value={editedResult[field] ?? ''}
+                    onChange={e => updateField(field, e.target.value)}
+                    rows={2}
+                    className="w-full text-sm text-gray-800 leading-relaxed font-medium bg-transparent resize-none focus:outline-none focus:ring-1 focus:ring-purple-200 rounded-lg p-1 -m-1 transition-all"
+                  />
                 </div>
               ))}
             </div>
+
+            {/* Notes */}
+            <div className="px-5 pb-5">
+              <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 hover:border-purple-100 transition-colors">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                  <span>📝</span> Rep Notes
+                  <span className="font-normal text-gray-300 normal-case tracking-normal text-[10px]">— your observations (included in HubSpot push)</span>
+                </p>
+                <textarea
+                  value={notes}
+                  onChange={e => setNotes(e.target.value)}
+                  rows={3}
+                  placeholder="Add your own context, observations, or follow-up notes here..."
+                  className="w-full text-sm text-gray-800 leading-relaxed font-medium bg-transparent resize-none focus:outline-none placeholder:text-gray-300"
+                />
+              </div>
+            </div>
+
+            {/* AI Insights */}
+            {hasInsights && (
+              <div className="border-t border-gray-100">
+                <div className="px-6 py-3.5 border-b border-purple-50 flex items-center gap-2" style={{ backgroundColor: '#F5F3FF' }}>
+                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--brand)' }} />
+                  <h3 className="font-black text-sm" style={{ color: 'var(--brand)' }}>AI Insights</h3>
+                  <span className="text-xs text-purple-400">— for the rep, not the CRM</span>
+                </div>
+                <div className="p-5 grid sm:grid-cols-2 gap-3" style={{ backgroundColor: '#FDFCFF' }}>
+                  {insightFields.map(({ field, label, icon, color, bg }) => {
+                    const value = (result as unknown as Record<string, unknown>)[field] as string
+                    if (!value || value === 'None detected' || value === 'Unclear') return null
+                    return (
+                      <div key={field} className={`rounded-xl p-4 border bg-white ${bg}`}>
+                        <p className={`text-[10px] font-bold uppercase tracking-widest mb-1.5 flex items-center gap-1.5 ${color}`}>
+                          <span>{icon}</span> {label}
+                        </p>
+                        <p className="text-sm text-gray-700 leading-relaxed">{value}</p>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Push to HubSpot */}
             {hubspotConnected && (
@@ -391,12 +517,8 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
                       <p className="text-sm font-semibold text-green-700">Deal created in HubSpot!</p>
                     </div>
                     {hubspotDealUrl && (
-                      <a
-                        href={hubspotDealUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs font-bold px-4 py-2 rounded-lg border-2 border-orange-200 text-orange-700 bg-orange-50 hover:bg-orange-100 transition-colors"
-                      >
+                      <a href={hubspotDealUrl} target="_blank" rel="noopener noreferrer"
+                        className="text-xs font-bold px-4 py-2 rounded-lg border-2 border-orange-200 text-orange-700 bg-orange-50 hover:bg-orange-100 transition-colors">
                         View in HubSpot →
                       </a>
                     )}
@@ -405,7 +527,10 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
                   <div className="flex items-center justify-between gap-4 flex-wrap">
                     <div>
                       <p className="text-xs font-semibold text-gray-600">Push to HubSpot CRM</p>
-                      <p className="text-xs text-gray-400 mt-0.5">Creates a deal and contact automatically</p>
+                      <p className="text-xs text-gray-400 mt-0.5">
+                        Creates a deal using your {editedFields.size > 0 ? 'edited' : 'extracted'} values
+                        {notes.trim() ? ' + rep notes' : ''}
+                      </p>
                       {hubspotStatus === 'error' && (
                         <p className="text-xs text-red-500 mt-1">{hubspotError}</p>
                       )}
@@ -440,54 +565,98 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
           </div>
         )}
 
-        {/* Extraction history */}
+        {/* ── Extraction history ── */}
         {history.length > 0 && (
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-100">
               <h2 className="font-black text-gray-900 text-sm">Recent Extractions</h2>
               <p className="text-xs text-gray-400 mt-0.5">
-                {isPro ? 'Saved to your account' : 'Last 5 from this session'}
+                {history.length} saved extraction{history.length !== 1 ? 's' : ''}. Click any row to expand.
               </p>
             </div>
             <div className="divide-y divide-gray-50">
               {history.map((entry) => {
                 const r = entry.result as Partial<ExtractionResult>
                 const date = new Date(entry.created_at)
+                const isExpanded = expandedHistoryId === entry.id
                 const timeLabel = entry.id.startsWith('local-')
                   ? 'Just now'
                   : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
                     ' · ' + date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
 
                 return (
-                  <button
-                    key={entry.id}
-                    onClick={() => loadFromHistory(entry)}
-                    className="w-full text-left px-6 py-4 hover:bg-purple-50/50 transition-colors group"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold text-gray-800 truncate group-hover:text-purple-800 transition-colors">
-                          {r.opportunity_name ?? 'Unknown opportunity'}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-0.5 truncate">{entry.excerpt}</p>
-                      </div>
-                      <div className="shrink-0 text-right">
-                        <p className="text-xs text-gray-400">{timeLabel}</p>
-                        {r.deal_stage && (
-                          <span className={`inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${dealStageColor[r.deal_stage] ?? dealStageColor.Unknown}`}>
-                            {r.deal_stage}
+                  <div key={entry.id}>
+                    <button
+                      onClick={() => setExpandedHistoryId(isExpanded ? null : entry.id)}
+                      className="w-full text-left px-6 py-4 hover:bg-purple-50/50 transition-colors group"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="min-w-0 flex items-center gap-2">
+                          <span className={`text-[10px] text-gray-300 shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>
+                            ▶
                           </span>
-                        )}
+                          <div className="min-w-0">
+                            <p className="text-sm font-semibold text-gray-800 truncate group-hover:text-purple-800 transition-colors">
+                              {r.opportunity_name ?? 'Unknown opportunity'}
+                            </p>
+                            <p className="text-xs text-gray-400 mt-0.5 truncate">{entry.excerpt}</p>
+                          </div>
+                        </div>
+                        <div className="shrink-0 text-right">
+                          <p className="text-xs text-gray-400">{timeLabel}</p>
+                          {r.deal_stage && (
+                            <span className={`inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${dealStageColor[r.deal_stage] ?? dealStageColor.Unknown}`}>
+                              {r.deal_stage}
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </button>
+                    </button>
+
+                    {isExpanded && (
+                      <div className="px-6 pb-5 border-t border-gray-50 bg-gray-50/50">
+                        <div className="pt-4 grid sm:grid-cols-2 gap-2 mb-4">
+                          {[
+                            { label: 'Budget',          value: r.budget },
+                            { label: 'Decision Maker',  value: r.decision_maker },
+                            { label: 'Pain Points',     value: r.pain_points },
+                            { label: 'Next Steps',      value: r.next_steps },
+                            { label: 'Competitors',     value: r.competitors },
+                            { label: 'Sentiment',       value: r.sentiment },
+                          ]
+                            .filter(f => f.value && f.value !== 'Not discussed' && f.value !== 'Not identified' && f.value !== 'None mentioned')
+                            .map(({ label, value }) => (
+                              <div key={label} className="bg-white rounded-xl p-3 border border-gray-100">
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1">{label}</p>
+                                <p className="text-xs text-gray-700 font-medium leading-relaxed">{value}</p>
+                              </div>
+                            ))}
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => loadFromHistory(entry)}
+                            className="text-xs font-bold px-4 py-2 rounded-lg text-white transition-all hover:opacity-90"
+                            style={{ backgroundColor: 'var(--brand)' }}
+                          >
+                            Re-load results
+                          </button>
+                          <button
+                            onClick={() => handleDeleteHistory(entry.id)}
+                            className="text-xs font-semibold px-4 py-2 rounded-lg border border-gray-200 text-gray-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50 transition-all"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 )
               })}
             </div>
           </div>
         )}
 
-        {/* Upgrade banner — free users only */}
+        {/* Upgrade banner */}
         {!isPro && (
           <div className="rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-2 border-dashed border-purple-200"
             style={{ backgroundColor: '#F5F3FF' }}>
@@ -502,6 +671,7 @@ export default function DashboardClient({ userEmail, isPro, initialUsageCount, i
             </Link>
           </div>
         )}
+
       </div>
     </div>
   )

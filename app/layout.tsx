@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
@@ -111,6 +112,18 @@ export default async function RootLayout({
         </nav>
 
         <main>{children}</main>
+
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-PSP19Q4RK4"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-PSP19Q4RK4');
+        `}</Script>
       </body>
     </html>
   )

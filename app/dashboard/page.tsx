@@ -36,7 +36,7 @@ export default async function DashboardPage() {
         .select('id, transcript_excerpt, result, created_at')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
-        .limit(5),
+        .limit(10),
       supabase
         .from('crm_connections')
         .select('provider')
