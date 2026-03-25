@@ -406,6 +406,7 @@ export default function Home() {
               <Link href="/pricing" className="hover:text-purple-700 transition-colors">Pricing</Link>
               <Link href="/guide" className="hover:text-purple-700 transition-colors">Guide</Link>
               <Link href="/blog" className="hover:text-purple-700 transition-colors">Blog</Link>
+              <Link href="/contact" className="hover:text-purple-700 transition-colors">Contact</Link>
               <Link href="/login" className="hover:text-purple-700 transition-colors">Log in</Link>
               <Link href="/signup" className="hover:text-purple-700 transition-colors">Sign up</Link>
               <Link href="/privacy" className="hover:text-purple-700 transition-colors">Privacy Policy</Link>

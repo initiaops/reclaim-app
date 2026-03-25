@@ -99,6 +99,9 @@ export default async function RootLayout({
                     <Link href="/blog" className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-2.5 py-2 rounded-lg hover:bg-purple-50 hidden md:block">
                       Blog
                     </Link>
+                    <Link href="/contact" className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-2.5 py-2 rounded-lg hover:bg-purple-50 hidden md:block">
+                      Contact
+                    </Link>
                     {user.email === 'initiaops@gmail.com' && (
                       <Link href="/admin" className="text-sm font-bold px-2.5 py-2 rounded-lg hidden md:block"
                         style={{ color: 'var(--brand)', backgroundColor: '#EDE9FE' }}>
@@ -121,6 +124,9 @@ export default async function RootLayout({
                     </Link>
                     <Link href="/blog" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
                       Blog
+                    </Link>
+                    <Link href="/contact" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
+                      Contact
                     </Link>
                     <Link href="/pricing" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
                       Pricing
