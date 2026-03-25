@@ -78,6 +78,9 @@ export default async function RootLayout({
               <div className="flex items-center gap-1 flex-wrap justify-end">
                 {user ? (
                   <>
+                    <Link href="/" className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-2.5 py-2 rounded-lg hover:bg-purple-50 hidden sm:block">
+                      Home
+                    </Link>
                     <Link href="/dashboard" className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-2.5 py-2 rounded-lg hover:bg-purple-50">
                       Dashboard
                     </Link>
