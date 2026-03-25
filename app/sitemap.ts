@@ -35,6 +35,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
     {
+      url: 'https://www.getreclaimapp.com/blog',
+      lastModified: '2025-03-20',
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://www.getreclaimapp.com/blog/automate-crm-data-entry',
+      lastModified: '2025-03-10',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: 'https://www.getreclaimapp.com/blog/best-ai-tools-for-sales-reps-2025',
+      lastModified: '2025-03-15',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: 'https://www.getreclaimapp.com/blog/how-to-extract-meddic-from-sales-calls',
+      lastModified: '2025-03-20',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: 'https://www.getreclaimapp.com/privacy',
       lastModified: '2025-03-01',
       changeFrequency: 'yearly',
