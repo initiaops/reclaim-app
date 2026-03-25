@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import ContactForm from './ContactForm'
 
 export const metadata: Metadata = {
@@ -46,16 +45,19 @@ export default function ContactPage() {
             <div className="bg-white rounded-2xl border border-gray-200 p-7">
               {/* Avatar + name */}
               <div className="flex items-center gap-4 mb-5">
-                <div className="shrink-0" style={{ borderRadius: '50%', padding: '3px', background: '#4C1D95', display: 'inline-block' }}>
-                  <Image
-                    src="/kunal.jpg"
-                    alt="Kunal Kothari"
-                    width={96}
-                    height={96}
-                    className="rounded-full block"
-                    style={{ width: 96, height: 96, objectFit: 'cover' }}
-                  />
-                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/kunal.jpg"
+                  alt="Kunal Kothari"
+                  style={{
+                    width: 96,
+                    height: 96,
+                    borderRadius: '50%',
+                    border: '3px solid #4C1D95',
+                    objectFit: 'cover',
+                    flexShrink: 0,
+                  }}
+                />
                 <div>
                   <p className="text-lg font-black text-gray-900">Kunal Kothari</p>
                   <p className="text-sm text-gray-500 leading-snug">
