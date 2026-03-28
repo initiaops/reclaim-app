@@ -37,6 +37,30 @@ const posts = [
     date: 'March 20, 2025',
     tag: 'Sales Methodology',
   },
+  {
+    slug: 'hubspot-crm-tips-small-business',
+    title: 'HubSpot CRM Tips for Small Sales Teams',
+    description: 'Most small teams set up HubSpot wrong and wonder why no one uses it. Here are the tips that actually move the needle — pipeline setup, automation, and adoption.',
+    readTime: '7 min read',
+    date: 'April 1, 2025',
+    tag: 'CRM Automation',
+  },
+  {
+    slug: 'what-is-meddic-sales-framework',
+    title: 'What Is MEDDIC? The Sales Framework Explained',
+    description: 'MEDDIC is the qualification framework used by the world\'s top B2B sales teams. Here\'s what each element means, how to use it in discovery, and why it works.',
+    readTime: '9 min read',
+    date: 'April 5, 2025',
+    tag: 'Sales Methodology',
+  },
+  {
+    slug: 'sales-call-transcript-software',
+    title: 'Sales Call Transcript Software — Top Options Compared',
+    description: 'A practical comparison of Gong, Fireflies, Otter, RECLAIM, and more — what each tool actually does, what it costs, and which type of team it fits.',
+    readTime: '8 min read',
+    date: 'April 10, 2025',
+    tag: 'AI Tools',
+  },
 ]
 
 export default function BlogIndexPage() {

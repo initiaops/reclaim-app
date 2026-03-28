@@ -59,6 +59,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: 'https://www.getreclaimapp.com/blog/hubspot-crm-tips-small-business',
+      lastModified: '2025-04-01',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: 'https://www.getreclaimapp.com/blog/what-is-meddic-sales-framework',
+      lastModified: '2025-04-05',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: 'https://www.getreclaimapp.com/blog/sales-call-transcript-software',
+      lastModified: '2025-04-10',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
       url: 'https://www.getreclaimapp.com/privacy',
       lastModified: '2025-03-01',
       changeFrequency: 'yearly',
