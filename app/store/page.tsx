@@ -82,7 +82,7 @@ export default function StorePage() {
 
               <div className="mt-auto">
                 <a
-                  href="https://gumroad.com/l/reclaim-playbook"
+                  href="https://initia.gumroad.com/l/pajpkn"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full text-center text-sm font-bold text-white py-3.5 rounded-xl transition-all hover:opacity-90 hover:shadow-md"
