@@ -88,6 +88,7 @@ export default function DashboardClient({
   const [hubspotStatus, setHubspotStatus]   = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [hubspotDealUrl, setHubspotDealUrl] = useState<string | null>(null)
   const [hubspotError, setHubspotError]     = useState('')
+  const [hubspotQuality, setHubspotQuality] = useState<{ score: number; total: number; fields: { label: string; populated: boolean }[] } | null>(null)
 
   // ── Helpers ────────────────────────────────────────────────────────
 
@@ -224,6 +225,7 @@ export default function DashboardClient({
         return
       }
       setHubspotDealUrl(data.dealUrl ?? null)
+      setHubspotQuality(data.qualityScore ?? null)
       setHubspotStatus('success')
     } catch {
       setHubspotError('Network error. Please try again.')
@@ -237,6 +239,7 @@ export default function DashboardClient({
     initEdits(r)
     setHubspotStatus('idle')
     setHubspotDealUrl(null)
+    setHubspotQuality(null)
     setHubspotError('')
     setTimeout(() => {
       document.getElementById('extraction-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -511,16 +514,32 @@ export default function DashboardClient({
             {hubspotConnected && (
               <div className="border-t border-gray-100 px-6 py-4">
                 {hubspotStatus === 'success' ? (
-                  <div className="flex items-center justify-between gap-4 flex-wrap">
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs shrink-0">✓</div>
-                      <p className="text-sm font-semibold text-green-700">Deal created in HubSpot!</p>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between gap-4 flex-wrap">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs shrink-0">✓</div>
+                        <p className="text-sm font-semibold text-green-700">Deal created in HubSpot!</p>
+                      </div>
+                      {hubspotDealUrl && (
+                        <a href={hubspotDealUrl} target="_blank" rel="noopener noreferrer"
+                          className="text-xs font-bold px-4 py-2 rounded-lg border-2 border-orange-200 text-orange-700 bg-orange-50 hover:bg-orange-100 transition-colors">
+                          View in HubSpot →
+                        </a>
+                      )}
                     </div>
-                    {hubspotDealUrl && (
-                      <a href={hubspotDealUrl} target="_blank" rel="noopener noreferrer"
-                        className="text-xs font-bold px-4 py-2 rounded-lg border-2 border-orange-200 text-orange-700 bg-orange-50 hover:bg-orange-100 transition-colors">
-                        View in HubSpot →
-                      </a>
+                    {hubspotQuality && (
+                      <div className="bg-gray-50 rounded-xl px-4 py-3 border border-gray-100">
+                        <p className="text-xs font-bold text-gray-500 mb-2">
+                          Data Quality: {hubspotQuality.score}/{hubspotQuality.total} fields populated
+                        </p>
+                        <div className="flex flex-wrap gap-x-3 gap-y-1">
+                          {hubspotQuality.fields.map(f => (
+                            <span key={f.label} className={`text-xs ${f.populated ? 'text-green-600' : 'text-gray-300'}`}>
+                              {f.populated ? '✓' : '✗'} {f.label}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     )}
                   </div>
                 ) : (
