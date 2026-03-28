@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import ProUpgradeSection from './ProUpgradeSection'
 
 export const metadata: Metadata = {
   title: 'Pricing — RECLAIM AI Sales Tool | Free & Pro Plans',
@@ -124,13 +125,7 @@ export default async function PricingPage() {
             </div>
 
             {user ? (
-              <a
-                href="/api/stripe/checkout"
-                className="block text-center font-black py-4 rounded-xl bg-white hover:bg-gray-50 transition-all shadow-lg hover:shadow-xl text-lg"
-                style={{ color: 'var(--brand)' }}
-              >
-                Upgrade to Pro — $49/mo
-              </a>
+              <ProUpgradeSection />
             ) : (
               <Link
                 href="/signup"

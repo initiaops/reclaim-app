@@ -35,6 +35,7 @@ export async function GET(request: NextRequest) {
       },
     ],
     customer_email: user.email,
+    allow_promotion_codes: true,
     metadata: {
       user_id: user.id,
     },
