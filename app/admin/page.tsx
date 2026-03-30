@@ -31,12 +31,21 @@ function getLast6Months(): string[] {
 }
 
 export default async function AdminPage() {
-  // ── Auth gate ─────────────────────────────────────────────────
+  // ── Auth gate (layout already verified, this is belt-and-suspenders) ──
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user || user.email !== ADMIN_EMAIL) redirect('/dashboard')
+  if (!user) redirect('/login')
 
   const admin = createAdminClient()
+
+  // Double-check role from DB
+  const { data: myRole } = await admin
+    .from('subscriptions')
+    .select('role')
+    .eq('user_id', user.id)
+    .single()
+
+  if (myRole?.role !== 'admin' && user.email !== ADMIN_EMAIL) redirect('/dashboard')
   const currentMonth = (() => {
     const n = new Date()
     return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}`
@@ -52,7 +61,7 @@ export default async function AdminPage() {
     { data: topUsersThisMonth },
   ] = await Promise.all([
     admin.auth.admin.listUsers({ perPage: 1000 }),
-    admin.from('subscriptions').select('user_id, plan, status, created_at'),
+    admin.from('subscriptions').select('user_id, plan, status, role, created_at'),
     admin.from('extractions').select('*', { count: 'exact', head: true }),
     admin.from('extractions')
       .select('*', { count: 'exact', head: true })
@@ -96,14 +105,25 @@ export default async function AdminPage() {
     return { ym, revenue, vercel: COST_VERCEL, supabase: COST_SUPABASE, openai, namecheap: COST_NAMECHEAP, stripe, net, extractions: extractionsThisMonth }
   })
 
-  // ── Top 5 users with emails ───────────────────────────────────
+  // ── Top 5 users with emails + roles ──────────────────────────
   const emailById: Record<string, string> = {}
   for (const u of allUsers ?? []) {
     emailById[u.id] = u.email ?? u.id.slice(0, 8) + '…'
   }
+
+  // Build plan + role lookups keyed by user_id
+  const planById: Record<string, string> = {}
+  const roleById: Record<string, string> = {}
+  for (const s of subs) {
+    planById[s.user_id] = s.plan ?? 'free'
+    roleById[s.user_id] = (s as Record<string, string>).role ?? 'user'
+  }
+
   const top5 = (topUsersThisMonth ?? []).map(row => ({
     email: emailById[row.user_id] ?? row.user_id.slice(0, 8) + '…',
     count: row.count,
+    isAdmin: roleById[row.user_id] === 'admin' || emailById[row.user_id] === ADMIN_EMAIL,
+    isPro: planById[row.user_id] === 'pro',
   }))
 
   // ── Avg extractions per user per month ────────────────────────
@@ -227,7 +247,21 @@ export default async function AdminPage() {
                         {i + 1}
                       </span>
                       <span className="flex-1 text-sm text-gray-700 truncate font-medium">{u.email}</span>
-                      <span className="text-sm font-black text-gray-900">{u.count} ext</span>
+                      {u.isAdmin ? (
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full shrink-0"
+                          style={{ backgroundColor: '#EDE9FE', color: 'var(--brand)' }}>
+                          🔑 Admin
+                        </span>
+                      ) : u.isPro ? (
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-100 shrink-0">
+                          👤 Pro
+                        </span>
+                      ) : (
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-400 shrink-0">
+                          Free
+                        </span>
+                      )}
+                      <span className="text-sm font-black text-gray-900 shrink-0">{u.count} ext</span>
                     </div>
                   ))}
                 </div>
