@@ -5,6 +5,7 @@ import './globals.css'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
@@ -167,6 +168,9 @@ export default async function RootLayout({
           gtag('js', new Date());
           gtag('config', 'G-PSP19Q4RK4');
         `}</Script>
+
+        {/* Vercel Web Analytics */}
+        <Analytics />
       </body>
     </html>
   )
