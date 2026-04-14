@@ -46,14 +46,19 @@ export async function GET(request: NextRequest) {
   const expiresAt = new Date(Date.now() + (tokens.expires_in ?? 3600) * 1000).toISOString()
 
   const admin = createAdminClient()
-  await admin.from('calendar_connections').upsert({
+  const { error: upsertError } = await admin.from('calendar_connections').upsert({
     user_id:          userId,
+    provider:         'google',
     access_token:     tokens.access_token,
     refresh_token:    tokens.refresh_token ?? null,
     token_expires_at: expiresAt,
     email:            userInfo.email ?? null,
-    connected_at:     new Date().toISOString(),
-  }, { onConflict: 'user_id' })
+  }, { onConflict: 'user_id,provider' })
+
+  if (upsertError) {
+    console.error('calendar_connections upsert error:', upsertError)
+    return NextResponse.redirect(new URL('/dashboard/settings?calendar=error', appOrigin))
+  }
 
   return NextResponse.redirect(
     new URL('/dashboard/settings?calendar=connected', appOrigin)
