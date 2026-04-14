@@ -1,66 +1,66 @@
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 import { createClient } from '@/lib/supabase/server'
-import DashboardClient from './DashboardClient'
+import OpsDashboardClient from './OpsDashboardClient'
 
-function getCurrentMonth(): string {
+function startOfMonth(): string {
   const now = new Date()
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+  return new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
 }
 
 export default async function DashboardPage() {
   const supabase = await createClient()
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
+  const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  // Fetch plan, usage, extraction history, and CRM connections in parallel
-  const [{ data: sub }, { data: usageRow }, { data: historyRows }, { data: connections }] =
-    await Promise.all([
-      supabase
-        .from('subscriptions')
-        .select('plan, status')
-        .eq('user_id', user.id)
-        .single(),
-      supabase
-        .from('usage')
-        .select('count')
-        .eq('user_id', user.id)
-        .eq('month', getCurrentMonth())
-        .single(),
-      supabase
-        .from('extractions')
-        .select('id, transcript_excerpt, result, created_at')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(10),
-      supabase
-        .from('crm_connections')
-        .select('provider')
-        .eq('user_id', user.id),
-    ])
+  const [
+    { data: sub },
+    { count: opsCount },
+    { data: recentOpsRows },
+    { data: profile },
+  ] = await Promise.all([
+    supabase
+      .from('subscriptions')
+      .select('plan, status')
+      .eq('user_id', user.id)
+      .single(),
+    supabase
+      .from('extractions')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('mode', 'ops')
+      .gte('created_at', startOfMonth()),
+    supabase
+      .from('extractions')
+      .select('id, result, created_at')
+      .eq('user_id', user.id)
+      .eq('mode', 'ops')
+      .order('created_at', { ascending: false })
+      .limit(3),
+    supabase
+      .from('profiles')
+      .select('default_team_size, default_industry')
+      .eq('user_id', user.id)
+      .single(),
+  ])
 
   const isPro = sub?.plan === 'pro' && sub?.status === 'active'
-  const usageCount = usageRow?.count ?? 0
-  const hubspotConnected = connections?.some((c) => c.provider === 'hubspot') ?? false
-  const history = (historyRows ?? []).map((row) => ({
+
+  const recentAudits = (recentOpsRows ?? []).map(row => ({
     id: row.id as string,
-    excerpt: (row.transcript_excerpt as string) ?? '',
-    result: row.result as Record<string, unknown>,
     created_at: row.created_at as string,
+    result: row.result as Record<string, unknown>,
   }))
 
   return (
     <Suspense>
-      <DashboardClient
+      <OpsDashboardClient
         userEmail={user.email ?? ''}
         isPro={isPro}
-        initialUsageCount={usageCount}
-        initialHistory={history}
-        hubspotConnected={hubspotConnected}
+        opsUsageCount={opsCount ?? 0}
+        recentAudits={recentAudits}
+        defaultTeamSize={String(profile?.default_team_size ?? '')}
+        defaultIndustry={profile?.default_industry ?? ''}
       />
     </Suspense>
   )
