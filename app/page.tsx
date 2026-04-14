@@ -305,46 +305,80 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── CONTACT ───────────────────────────────────────────────────────── */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-black text-gray-900 mb-3">Get in touch</h2>
+            <p className="text-gray-500 text-lg max-w-xl mx-auto">
+              Questions about RECLAIM 2.0, early access, or partnership opportunities?
+              Reach out directly.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-5 mb-8">
+            {/* Email */}
+            <a
+              href="mailto:initiaops@gmail.com"
+              className="rounded-2xl border border-gray-100 bg-gray-50 p-6 flex items-start gap-4 hover:border-purple-200 hover:bg-purple-50 transition-all group"
+            >
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+                style={{ backgroundColor: '#EEEDFE' }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+              </div>
+              <div>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">Email</p>
+                <p className="font-semibold text-gray-900 group-hover:text-purple-700 transition-colors">initiaops@gmail.com</p>
+                <p className="text-xs text-gray-400 mt-1">Usually responds within 24 hours</p>
+              </div>
+            </a>
+
+            {/* LinkedIn */}
+            <a
+              href="https://www.linkedin.com/in/kkothari-1/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-2xl border border-gray-100 bg-gray-50 p-6 flex items-start gap-4 hover:border-purple-200 hover:bg-purple-50 transition-all group"
+            >
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5 font-black text-sm"
+                style={{ backgroundColor: '#EEEDFE', color: '#534AB7' }}
+              >
+                in
+              </div>
+              <div>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">LinkedIn</p>
+                <p className="font-semibold text-gray-900 group-hover:text-purple-700 transition-colors">Kunal Kothari</p>
+                <p className="text-xs text-gray-400 mt-1">Connect for ops and BizOps discussions</p>
+              </div>
+            </a>
+          </div>
+
+          <p className="text-center text-sm text-gray-400">
+            Prefer a call?{' '}
+            <Link href="/contact" className="hover:text-purple-700 transition-colors underline underline-offset-2">
+              Book a 20-minute intro at getreclaimapp.com/contact
+            </Link>
+          </p>
+        </div>
+      </section>
+
       {/* ── FOOTER ────────────────────────────────────────────────────────── */}
-      <footer className="border-t border-gray-100 py-12 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-10">
-            <div>
-              <p className="text-xl font-black mb-1" style={{ color: '#534AB7' }}>RECLAIM</p>
-              <p className="text-gray-400 text-sm max-w-xs leading-relaxed">
-                Operational intelligence for revenue and ops teams. Know what&apos;s in your pipeline. Act on it.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-3 text-sm text-gray-500">
-              <div className="space-y-3">
-                <p className="font-bold text-gray-900 text-xs uppercase tracking-wide mb-1">Product</p>
-                <Link href="/#how-it-works" className="block hover:text-purple-700 transition-colors">How it works</Link>
-                <Link href="/pricing" className="block hover:text-purple-700 transition-colors">Pricing</Link>
-                <Link href="/guide" className="block hover:text-purple-700 transition-colors">Guide</Link>
-              </div>
-              <div className="space-y-3">
-                <p className="font-bold text-gray-900 text-xs uppercase tracking-wide mb-1">Company</p>
-                <Link href="/about" className="block hover:text-purple-700 transition-colors">About</Link>
-                <Link href="/blog" className="block hover:text-purple-700 transition-colors">Blog</Link>
-                <Link href="/contact" className="block hover:text-purple-700 transition-colors">Contact</Link>
-              </div>
-              <div className="space-y-3">
-                <p className="font-bold text-gray-900 text-xs uppercase tracking-wide mb-1">Resources</p>
-                <Link href="/store" className="block hover:text-purple-700 transition-colors">Store</Link>
-                <Link href="/login" className="block hover:text-purple-700 transition-colors">Log in</Link>
-                <Link href="/signup" className="block hover:text-purple-700 transition-colors">Sign up</Link>
-              </div>
-            </div>
+      <footer className="border-t border-gray-100 py-10 px-4 bg-white">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+          <p className="font-semibold text-gray-700">RECLAIM 2.0 by Initia Ops LLC</p>
+          <div className="flex flex-wrap justify-center gap-6">
+            <Link href="/privacy" className="hover:text-gray-700 transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-gray-700 transition-colors">Terms</Link>
+            <Link href="/blog" className="hover:text-gray-700 transition-colors">Blog</Link>
+            <Link href="/contact" className="hover:text-gray-700 transition-colors">Contact</Link>
           </div>
-
-          <div className="border-t border-gray-100 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-            <p>© 2025 RECLAIM · Initia Ops LLC. All rights reserved.</p>
-            <div className="flex gap-6">
-              <Link href="/privacy" className="hover:text-gray-700 transition-colors">Privacy</Link>
-              <Link href="/terms" className="hover:text-gray-700 transition-colors">Terms</Link>
-            </div>
-          </div>
+          <p>© 2026 Initia Ops LLC. All rights reserved.</p>
         </div>
       </footer>
     </div>

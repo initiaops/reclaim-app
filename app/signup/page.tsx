@@ -80,10 +80,11 @@ export default function SignupPage() {
             className="text-2xl font-bold mb-2"
             style={{ color: 'var(--brand)' }}
           >
-            RECLAIM
+            Join the RECLAIM 2.0 waitlist
           </h1>
-          <p className="text-gray-600">
-            Create your free account. No credit card needed.
+          <p className="text-gray-600 text-sm leading-relaxed">
+            Get early access to operational intelligence for BizOps and ops leaders.
+            Free for the first 90 days.
           </p>
         </div>
 
