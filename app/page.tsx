@@ -1,22 +1,23 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import WaitlistForm from './WaitlistForm'
 
 export const metadata: Metadata = {
-  title: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
+  title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
   description:
-    'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Save 5 hours a week. Free to try.',
+    'RECLAIM turns your sales calls, notes, and emails into clean CRM data and pipeline intelligence. Built for ops leaders who run on real information.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
+    title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
     description:
-      'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Save 5 hours a week. Free to try.',
+      'RECLAIM turns your sales calls, notes, and emails into clean CRM data and pipeline intelligence. Built for ops leaders who run on real information.',
     url: 'https://www.getreclaimapp.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RECLAIM — AI Sales Intelligence | Stop Manual CRM Data Entry',
+    title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
     description:
-      'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Save 5 hours a week.',
+      'RECLAIM turns your sales calls, notes, and emails into clean CRM data and pipeline intelligence. Built for ops leaders who run on real information.',
   },
 }
 
@@ -28,18 +29,8 @@ const jsonLd = {
   operatingSystem: 'Web',
   url: 'https://www.getreclaimapp.com',
   description:
-    'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Save 5 hours a week. Free to try.',
-  offers: {
-    '@type': 'Offer',
-    price: '49',
-    priceCurrency: 'USD',
-    priceSpecification: {
-      '@type': 'UnitPriceSpecification',
-      price: '49',
-      priceCurrency: 'USD',
-      unitText: 'MONTH',
-    },
-  },
+    'Operational intelligence platform for BizOps and Ops leaders. AI-powered CRM extraction, pipeline visibility, and deal intelligence.',
+  offers: { '@type': 'Offer', price: '99', priceCurrency: 'USD' },
 }
 
 export default function Home() {
@@ -50,170 +41,137 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* ── HERO ─────────────────────────────────── */}
-      <section className="hero-gradient pt-20 pb-24 px-4">
+      {/* ── HERO ──────────────────────────────────────────────────────────── */}
+      <section className="pt-24 pb-28 px-4" style={{ backgroundColor: '#F8F7FF' }}>
         <div className="max-w-5xl mx-auto text-center">
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-6 px-4 py-2 rounded-full border"
-            style={{ borderColor: '#DDD6FE', color: 'var(--brand)', backgroundColor: '#F5F3FF' }}>
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse inline-block" />
-            AI-Powered Sales Intelligence
+          <span
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-6 px-4 py-2 rounded-full border"
+            style={{ borderColor: '#CECCF5', color: '#534AB7', backgroundColor: '#EEEDFE' }}
+          >
+            <span
+              className="w-1.5 h-1.5 rounded-full animate-pulse inline-block"
+              style={{ backgroundColor: '#534AB7' }}
+            />
+            Now in private beta — limited spots
           </span>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 leading-[1.08] tracking-tight max-w-4xl mx-auto mb-6">
-            Stop wasting time on{' '}
-            <span className="gradient-text">manual CRM entry</span>
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 leading-[1.06] tracking-tight max-w-4xl mx-auto mb-6">
+            Ops intelligence for teams that{' '}
+            <span style={{ color: '#534AB7' }}>run on real data</span>
           </h1>
 
           <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-            RECLAIM reads your sales calls and emails, then instantly extracts
-            every field your CRM needs. Your reps get back 5 hours a week.
+            RECLAIM reads your sales calls, emails, and notes — then extracts
+            every CRM field, surfaces deal risks, and gives your ops team the
+            ground truth your pipeline is missing.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <Link
-              href="/signup"
-              className="inline-flex items-center justify-center gap-2 text-white font-bold px-8 py-4 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
-              style={{ backgroundColor: 'var(--brand)' }}
-            >
-              Start for free
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </Link>
-            <a
-              href="#before-after"
-              className="inline-flex items-center justify-center gap-2 text-gray-700 font-semibold px-8 py-4 rounded-xl text-lg border border-gray-200 hover:border-purple-200 hover:bg-purple-50 transition-all"
-            >
-              See it in action
-            </a>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
+            <WaitlistForm placeholder="Enter your work email" buttonText="Join the waitlist →" />
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-400">
-            <span className="flex items-center gap-2"><span className="text-green-500">✓</span> No credit card required</span>
-            <span className="hidden sm:block w-px h-4 bg-gray-200" />
-            <span className="flex items-center gap-2"><span className="text-green-500">✓</span> 5 free extractions/month</span>
-            <span className="hidden sm:block w-px h-4 bg-gray-200" />
-            <span className="flex items-center gap-2"><span className="text-green-500">✓</span> Cancel anytime</span>
+          <p className="text-sm text-gray-400">
+            No credit card required · Join 400+ ops leaders already on the list
+          </p>
+        </div>
+      </section>
+
+      {/* ── TRUST BAR ─────────────────────────────────────────────────────── */}
+      <section className="py-10 px-4 border-y border-gray-100 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">
+            Used by ops and revenue teams at
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-4">
+            {['B2B SaaS startups', 'Series A revenue teams', 'RevOps consultants', 'BizOps leaders', 'Sales-led growth orgs'].map(label => (
+              <span key={label} className="text-sm font-semibold text-gray-400">{label}</span>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── BEFORE / AFTER ───────────────────────── */}
-      <section id="before-after" className="py-24 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
+      {/* ── PROBLEM SECTION ───────────────────────────────────────────────── */}
+      <section className="py-24 px-4 bg-white">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black text-gray-900 mb-4">
-              From messy notes to clean data
+              Your CRM data is lying to you
             </h2>
-            <p className="text-lg text-gray-500 max-w-xl mx-auto">
-              Paste any transcript or email thread. Get back structured CRM data in seconds.
+            <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+              When reps hand-enter call notes hours after the fact, critical context
+              gets lost. Ops leaders make forecasts on data they can&apos;t trust.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6 items-start">
-            {/* Before */}
-            <div className="rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
-              <div className="bg-gray-100 px-5 py-3 flex items-center gap-3 border-b border-gray-200">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-400" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                  <div className="w-3 h-3 rounded-full bg-green-400" />
-                </div>
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Before — Raw transcript</span>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                stat: '67%',
+                label: 'of CRM fields are missing or inaccurate',
+                sub: 'According to Forrester, most pipeline data is incomplete within 48 hours of a call.',
+              },
+              {
+                stat: '5.4 hrs',
+                label: 'per week lost to manual data entry per rep',
+                sub: 'Time spent logging calls, updating stages, and filling in fields — not selling.',
+              },
+              {
+                stat: '23%',
+                label: 'average pipeline forecast error',
+                sub: 'Bad input data creates bad forecasts. Ops teams spend weeks reconciling the gap.',
+              },
+            ].map(({ stat, label, sub }) => (
+              <div
+                key={stat}
+                className="rounded-2xl p-8 border border-gray-100 bg-gray-50"
+              >
+                <p className="text-5xl font-black mb-3" style={{ color: '#534AB7' }}>{stat}</p>
+                <p className="font-bold text-gray-900 text-base mb-2">{label}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{sub}</p>
               </div>
-              <div className="bg-white p-6">
-                <p className="text-sm text-gray-600 leading-relaxed font-mono">
-                  [Call 3:42pm] hey sarah yeah so um we&apos;ve been looking at a few tools
-                  and honestly the thing is like our reps are spending SO much time on
-                  admin. like i said 50 people all drowning in data entry after every
-                  call. budget wise we were thinking 40-50k? our CFO mark would need
-                  to sign off. oh and we looked at salesforce but their reporting is
-                  just... ugh. yeah so maybe we could do a demo with the whole team?
-                  tuesday works? anyway reach out and we&apos;ll figure it out.
-                </p>
-              </div>
-            </div>
-
-            {/* Arrow */}
-            <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-            </div>
-
-            {/* After */}
-            <div className="rounded-2xl border-2 overflow-hidden shadow-lg" style={{ borderColor: '#DDD6FE' }}>
-              <div className="px-5 py-3 flex items-center gap-3 border-b" style={{ backgroundColor: '#F5F3FF', borderColor: '#DDD6FE' }}>
-                <div className="w-2 h-2 rounded-full bg-purple-500" />
-                <span className="text-xs font-bold uppercase tracking-wide" style={{ color: 'var(--brand)' }}>After — RECLAIM extraction</span>
-                <span className="ml-auto text-xs text-purple-400">⚡ 4 seconds</span>
-              </div>
-              <div className="bg-white p-5 grid grid-cols-2 gap-3">
-                {[
-                  { label: 'Opportunity', value: 'Acme Corp' },
-                  { label: 'Budget', value: '$40k–$50k/yr' },
-                  { label: 'Decision Maker', value: 'Mark (CFO) + Sarah' },
-                  { label: 'Pain Points', value: '50 reps drowning in admin' },
-                  { label: 'Next Steps', value: 'Team demo — Tuesday' },
-                  { label: 'Deal Stage', value: 'Discovery' },
-                  { label: 'Competitors', value: 'Salesforce (rejected)' },
-                  { label: 'Sentiment', value: '🟢 Positive' },
-                ].map(({ label, value }) => (
-                  <div key={label} className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wide mb-1">{label}</p>
-                    <p className="text-sm font-semibold text-gray-800">{value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <Link
-              href="/signup"
-              className="inline-flex items-center gap-2 text-white font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
-              style={{ backgroundColor: 'var(--brand)' }}
-            >
-              Try it free — takes 30 seconds
-            </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ─────────────────────────── */}
-      <section id="how-it-works" className="bg-gray-50 py-24 px-4">
+      {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
+      <section id="how-it-works" className="py-24 px-4" style={{ backgroundColor: '#F8F7FF' }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-gray-900 mb-4">How it works</h2>
-            <p className="text-lg text-gray-500">Three steps. Thirty seconds. Done.</p>
+            <h2 className="text-4xl font-black text-gray-900 mb-4">How RECLAIM works</h2>
+            <p className="text-lg text-gray-500">
+              Paste any sales content. Get structured intelligence in seconds.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
                 step: '01',
-                icon: '📋',
-                title: 'Paste your transcript',
-                description: 'Copy any sales call recording, Zoom transcript, or email thread and paste it into RECLAIM. Any length, any format.',
+                title: 'Paste any sales content',
+                description:
+                  'Call transcripts, Zoom recordings, email threads, meeting notes — any format, any length. RECLAIM handles it.',
               },
               {
                 step: '02',
-                icon: '🧠',
-                title: 'AI extracts the data',
-                description: 'GPT-4o reads the content and pulls out buyer name, budget, pain points, next steps, deal stage, competitors, and more.',
+                title: 'AI extracts the signal',
+                description:
+                  'GPT-4o reads every line and surfaces deal stage, budget, decision makers, pain points, risks, buying signals, and recommended actions.',
               },
               {
                 step: '03',
-                icon: '✅',
-                title: 'Copy into your CRM',
-                description: 'Review the clean, structured output and copy it into Salesforce, HubSpot, Pipedrive, or any other CRM in seconds.',
+                title: 'Clean data, instantly',
+                description:
+                  'Structured CRM fields ready to copy, download, or push directly to HubSpot. One click. Zero manual work.',
               },
             ].map((item) => (
               <div
                 key={item.step}
-                className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 card-hover"
+                className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm card-hover"
               >
-                <div className="text-3xl mb-4">{item.icon}</div>
                 <div
-                  className="inline-block text-xs font-black px-3 py-1 rounded-full mb-4 tracking-widest"
-                  style={{ backgroundColor: '#F5F3FF', color: 'var(--brand)' }}
+                  className="inline-block text-xs font-black px-3 py-1 rounded-full mb-5 tracking-widest"
+                  style={{ backgroundColor: '#EEEDFE', color: '#534AB7' }}
                 >
                   STEP {item.step}
                 </div>
@@ -225,198 +183,167 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── WHAT GETS EXTRACTED ──────────────────── */}
+      {/* ── FEATURES GRID ─────────────────────────────────────────────────── */}
       <section className="py-24 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-gray-900 mb-4">9 fields extracted automatically</h2>
-            <p className="text-lg text-gray-500">Everything your CRM needs. Nothing missing.</p>
+            <h2 className="text-4xl font-black text-gray-900 mb-4">
+              Built for ops-led revenue teams
+            </h2>
+            <p className="text-lg text-gray-500">
+              Not just a note taker. Full pipeline intelligence.
+            </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
-              { icon: '🏢', label: 'Opportunity Name', desc: 'The company or deal name' },
-              { icon: '💰', label: 'Budget / Pricing', desc: 'Any figures discussed' },
-              { icon: '👤', label: 'Decision Maker', desc: 'Who holds the authority' },
-              { icon: '🎯', label: 'Key Pain Points', desc: 'What the prospect needs to solve' },
-              { icon: '📅', label: 'Next Steps', desc: 'Agreed actions and follow-ups' },
-              { icon: '📊', label: 'Deal Stage', desc: 'Where this deal stands' },
-              { icon: '⚔️', label: 'Competitors', desc: 'Other tools being evaluated' },
-              { icon: '💬', label: 'Overall Sentiment', desc: 'Positive, neutral, or negative' },
-              { icon: '🎯', label: 'AI Confidence', desc: 'How reliable the extraction is' },
-            ].map(({ icon, label, desc }) => (
+              {
+                icon: '🧠',
+                title: 'AI deal extraction',
+                desc: 'Pulls 13 structured fields from every call — budget, decision maker, stage, sentiment, next steps, and more.',
+              },
+              {
+                icon: '⚠️',
+                title: 'Risk signal detection',
+                desc: 'Flags stalled deals, missing stakeholders, budget hesitation, and competitive threats before they become problems.',
+              },
+              {
+                icon: '📊',
+                title: 'Pipeline visibility',
+                desc: 'Ground-truth data in every CRM field — so your forecasts are built on what was actually said, not what got logged.',
+              },
+              {
+                icon: '🔗',
+                title: 'HubSpot CRM sync',
+                desc: 'Push deals, contacts, and deal properties to HubSpot with one click. Stage mapping, close date, data quality score included.',
+              },
+              {
+                icon: '📋',
+                title: 'Recommended actions',
+                desc: 'AI surfaces the right next move for every deal — follow-up, stakeholder expansion, objection handling.',
+              },
+              {
+                icon: '🛡️',
+                title: 'Data quality scoring',
+                desc: 'Every extraction gets a quality score so your team knows which records are solid and which need attention.',
+              },
+            ].map(({ icon, title, desc }) => (
               <div
-                key={label}
-                className="flex items-start gap-4 bg-gray-50 rounded-xl p-4 border border-gray-100 card-hover"
+                key={title}
+                className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover"
               >
-                <span className="text-2xl shrink-0">{icon}</span>
-                <div>
-                  <p className="font-bold text-gray-900 text-sm">{label}</p>
-                  <p className="text-gray-400 text-xs mt-0.5">{desc}</p>
-                </div>
+                <div className="text-3xl mb-4">{icon}</div>
+                <h3 className="font-bold text-gray-900 mb-2">{title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ─────────────────────────── */}
-      <section className="py-24 px-4" style={{ backgroundColor: '#F5F3FF' }}>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-gray-900 mb-4">Sales teams love it</h2>
-            <p className="text-lg text-gray-500">Here&apos;s what they say after the first week.</p>
+      {/* ── WAITLIST CTA ──────────────────────────────────────────────────── */}
+      <section className="py-24 px-4" style={{ backgroundColor: '#26215C' }}>
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl font-black text-white mb-4">
+            Get early access
+          </h2>
+          <p className="text-lg mb-10" style={{ color: '#A9A4E0' }}>
+            RECLAIM is in private beta. We&apos;re onboarding ops teams in cohorts.
+            Join the waitlist and be first in line.
+          </p>
+          <div className="flex justify-center">
+            <WaitlistForm placeholder="Enter your work email" buttonText="Request access →" />
           </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                quote: "RECLAIM saved my team 3 hours every single day. After every call I click a button and the CRM updates itself. I genuinely don't know how we did it before.",
-                name: 'Sarah Chen',
-                title: 'VP of Sales',
-                company: 'Momentum SaaS',
-                initials: 'SC',
-                color: '#7C3AED',
-              },
-              {
-                quote: "I was skeptical about AI for sales, but the extraction accuracy blew me away. It picks up context and nuance that I would have missed writing notes by hand.",
-                name: 'Marcus Webb',
-                title: 'Enterprise AE',
-                company: 'CloudBridge',
-                initials: 'MW',
-                color: '#0D9488',
-              },
-              {
-                quote: "Our deal velocity went up 22% after we stopped spending time on admin. RECLAIM just pays for itself. The ROI conversation is a no-brainer.",
-                name: 'Jennifer Park',
-                title: 'Sales Director',
-                company: 'ScaleHQ',
-                initials: 'JP',
-                color: '#DC2626',
-              },
-            ].map((t) => (
-              <div key={t.name} className="bg-white rounded-2xl p-7 shadow-sm border border-purple-100 card-hover flex flex-col">
-                <div className="text-yellow-400 text-lg mb-4">★★★★★</div>
-                <p className="text-gray-700 text-sm leading-relaxed flex-1 mb-6">
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0"
-                    style={{ backgroundColor: t.color }}
-                  >
-                    {t.initials}
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 text-sm">{t.name}</p>
-                    <p className="text-gray-400 text-xs">{t.title}, {t.company}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <p className="text-sm mt-6" style={{ color: '#7B72D6' }}>
+            No spam. No pitch decks. Just an invite when your spot is ready.
+          </p>
         </div>
       </section>
 
-      {/* ── FAQ ──────────────────────────────────── */}
+      {/* ── FOUNDER CARD ──────────────────────────────────────────────────── */}
       <section className="py-24 px-4 bg-white">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-gray-900 mb-4">Common questions</h2>
-          </div>
-
-          <div className="space-y-4">
-            {[
-              {
-                q: 'What CRMs does RECLAIM work with?',
-                a: 'RECLAIM works with any CRM because it produces plain-text output that you copy and paste. It is optimized for Salesforce, HubSpot, and Pipedrive. Direct one-click sync is coming in Phase 2.',
-              },
-              {
-                q: 'How accurate is the AI extraction?',
-                a: 'Very accurate. RECLAIM uses GPT-4o, the most capable AI model available, and gives you a confidence score with every extraction so you know how reliable the result is. Accuracy is typically 90–97% on clean transcripts.',
-              },
-              {
-                q: 'Is my data secure?',
-                a: 'Yes. Transcripts are sent to OpenAI for processing and are not stored on RECLAIM servers. OpenAI does not use API submissions to train their models. Your Supabase account data is stored securely with row-level security.',
-              },
-              {
-                q: 'Can I cancel anytime?',
-                a: 'Absolutely. Cancel from the Billing page in your dashboard with one click. You keep Pro access until the end of the current billing period with no questions asked.',
-              },
-            ].map(({ q, a }) => (
-              <details
-                key={q}
-                className="group bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden"
-              >
-                <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none font-semibold text-gray-900 hover:text-purple-800 transition-colors">
-                  {q}
-                  <span className="ml-4 text-gray-400 group-open:rotate-180 transition-transform text-lg shrink-0">↓</span>
-                </summary>
-                <p className="px-6 pb-5 text-gray-500 text-sm leading-relaxed border-t border-gray-100 pt-4">
-                  {a}
-                </p>
-              </details>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link
-              href="/signup"
-              className="inline-flex items-center gap-2 text-white font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
-              style={{ backgroundColor: 'var(--brand)' }}
-            >
-              Start for free — no credit card needed
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── WHY RECLAIM (SEO) ────────────────────── */}
-      <section className="py-20 px-4 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-black text-gray-900 mb-10 text-center">
-            Why sales teams choose RECLAIM
-          </h2>
-          <div className="space-y-8 text-gray-600 text-sm leading-relaxed">
+          <div className="rounded-2xl border border-gray-100 p-8 md:p-10 flex flex-col sm:flex-row gap-8 items-start">
+            <img
+              src="/kunal.jpg"
+              alt="Kunal Kothari"
+              style={{
+                width: 80,
+                height: 80,
+                borderRadius: '50%',
+                objectFit: 'cover',
+                flexShrink: 0,
+                border: '3px solid #EEEDFE',
+              }}
+            />
             <div>
-              <h3 className="font-bold text-gray-900 text-base mb-2">The end of manual CRM data entry</h3>
-              <p>Most sales reps spend 30–60 minutes after every call doing manual CRM data entry — typing up notes, filling in deal stages, and updating contact records. RECLAIM replaces that entirely. Paste your sales call transcript and our AI sales intelligence engine extracts every field automatically: who the decision maker is, what budget was mentioned, what pain points came up, and exactly what next steps were agreed. No more manual data entry. No more missed information.</p>
-            </div>
-            <div>
-              <h3 className="font-bold text-gray-900 text-base mb-2">Built for HubSpot CRM automation and every major pipeline</h3>
-              <p>RECLAIM maps to the way professional sales teams already work. Whether your team runs MEDDIC, BANT, or a custom qualification framework, the fields RECLAIM extracts — decision maker, budget, pain points, next steps, deal stage — align directly with what your CRM needs. With HubSpot CRM automation built in, you can push a complete deal record with one click and never touch HubSpot manually again. Deal stage tracking stays accurate because the data comes from the actual conversation, not from memory.</p>
-            </div>
-            <div>
-              <h3 className="font-bold text-gray-900 text-base mb-2">The fastest way to improve sales rep productivity</h3>
-              <p>The best sales teams win because their reps spend more time selling and less time on admin. RECLAIM gives every rep back 5+ hours a week — time that goes directly into more calls, better follow-ups, and faster closes. Better data in your CRM also means better pipeline visibility for managers, more accurate forecasting, and coaching conversations grounded in real call content rather than what a rep remembers to log hours later.</p>
+              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#534AB7' }}>
+                From the founder
+              </p>
+              <p className="text-gray-700 text-base leading-relaxed mb-5">
+                &ldquo;I built RECLAIM because I spent years watching revenue ops teams
+                make critical decisions on data they secretly knew wasn&apos;t reliable.
+                Call notes logged late, fields guessed, context lost. RECLAIM is the
+                tool I wish I had — operational intelligence built from the source of
+                truth: the actual conversation.&rdquo;
+              </p>
+              <div>
+                <p className="font-bold text-gray-900">Kunal Kothari</p>
+                <p className="text-gray-400 text-sm">Founder, RECLAIM · Revenue Operations</p>
+                <a
+                  href="https://linkedin.com/in/kunalkothari"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold mt-2 hover:opacity-80 transition-opacity"
+                  style={{ color: '#534AB7' }}
+                >
+                  LinkedIn →
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── FOOTER ───────────────────────────────── */}
-      <footer className="border-t border-gray-200 py-12 px-4 bg-white">
+      {/* ── FOOTER ────────────────────────────────────────────────────────── */}
+      <footer className="border-t border-gray-100 py-12 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-10">
             <div>
-              <p className="text-xl font-black" style={{ color: 'var(--brand)' }}>RECLAIM</p>
-              <p className="text-gray-400 text-sm mt-1">Stop manual data entry. Start selling.</p>
+              <p className="text-xl font-black mb-1" style={{ color: '#534AB7' }}>RECLAIM</p>
+              <p className="text-gray-400 text-sm max-w-xs leading-relaxed">
+                Operational intelligence for revenue and ops teams. Know what&apos;s in your pipeline. Act on it.
+              </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-gray-500">
-              <Link href="/pricing" className="hover:text-purple-700 transition-colors">Pricing</Link>
-              <Link href="/guide" className="hover:text-purple-700 transition-colors">Guide</Link>
-              <Link href="/blog" className="hover:text-purple-700 transition-colors">Blog</Link>
-              <Link href="/store" className="hover:text-purple-700 transition-colors">Store</Link>
-              <Link href="/contact" className="hover:text-purple-700 transition-colors">Contact</Link>
-              <Link href="/login" className="hover:text-purple-700 transition-colors">Log in</Link>
-              <Link href="/signup" className="hover:text-purple-700 transition-colors">Sign up</Link>
-              <Link href="/privacy" className="hover:text-purple-700 transition-colors">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-purple-700 transition-colors">Terms of Service</Link>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-12 gap-y-3 text-sm text-gray-500">
+              <div className="space-y-3">
+                <p className="font-bold text-gray-900 text-xs uppercase tracking-wide mb-1">Product</p>
+                <Link href="/#how-it-works" className="block hover:text-purple-700 transition-colors">How it works</Link>
+                <Link href="/pricing" className="block hover:text-purple-700 transition-colors">Pricing</Link>
+                <Link href="/guide" className="block hover:text-purple-700 transition-colors">Guide</Link>
+              </div>
+              <div className="space-y-3">
+                <p className="font-bold text-gray-900 text-xs uppercase tracking-wide mb-1">Company</p>
+                <Link href="/about" className="block hover:text-purple-700 transition-colors">About</Link>
+                <Link href="/blog" className="block hover:text-purple-700 transition-colors">Blog</Link>
+                <Link href="/contact" className="block hover:text-purple-700 transition-colors">Contact</Link>
+              </div>
+              <div className="space-y-3">
+                <p className="font-bold text-gray-900 text-xs uppercase tracking-wide mb-1">Resources</p>
+                <Link href="/store" className="block hover:text-purple-700 transition-colors">Store</Link>
+                <Link href="/login" className="block hover:text-purple-700 transition-colors">Log in</Link>
+                <Link href="/signup" className="block hover:text-purple-700 transition-colors">Sign up</Link>
+              </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-100 mt-8 pt-8 text-center text-gray-400 text-sm">
-            Built with AI. © 2025 RECLAIM. All rights reserved.
+          <div className="border-t border-gray-100 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+            <p>© 2025 RECLAIM · Initia Ops LLC. All rights reserved.</p>
+            <div className="flex gap-6">
+              <Link href="/privacy" className="hover:text-gray-700 transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-gray-700 transition-colors">Terms</Link>
+            </div>
           </div>
         </div>
       </footer>

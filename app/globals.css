@@ -3,8 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --brand: #4C1D95;
-  --brand-light: #7C3AED;
+  --brand: #534AB7;
+  --brand-light: #7B72D6;
 }
 
 @theme inline {
@@ -52,7 +52,7 @@ a, button {
 }
 .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px -8px rgba(76, 29, 149, 0.15);
+  box-shadow: 0 12px 40px -8px rgba(83, 74, 183, 0.15);
 }
 
 /* Button press effect */
@@ -62,7 +62,7 @@ button:active, a:active {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #4C1D95 0%, #7C3AED 100%);
+  background: linear-gradient(135deg, #534AB7 0%, #7B72D6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -70,7 +70,7 @@ button:active, a:active {
 
 /* Hero gradient background */
 .hero-gradient {
-  background: linear-gradient(160deg, #F5F3FF 0%, #EDE9FE 30%, #ffffff 70%);
+  background: linear-gradient(160deg, #F8F7FF 0%, #EEEDFE 30%, #ffffff 70%);
 }
 
 /* Scrollbar styling */
