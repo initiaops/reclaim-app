@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 import { createClient } from '@/lib/supabase/server'
 import OpsDashboardClient from './OpsDashboardClient'
+import { computeCalendarAnalytics } from '@/lib/calendar-analytics'
 
 function startOfMonth(): string {
   const now = new Date()
@@ -13,11 +14,15 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
+  const since28Days = new Date(Date.now() - 28 * 24 * 60 * 60 * 1000).toISOString()
+
   const [
     { data: sub },
     { count: opsCount },
     { data: recentOpsRows },
     { data: profile },
+    { data: calendarConn },
+    { data: calendarEvents },
   ] = await Promise.all([
     supabase
       .from('subscriptions')
@@ -42,6 +47,16 @@ export default async function DashboardPage() {
       .select('default_team_size, default_industry')
       .eq('user_id', user.id)
       .single(),
+    supabase
+      .from('calendar_connections')
+      .select('email')
+      .eq('user_id', user.id)
+      .single(),
+    supabase
+      .from('calendar_events')
+      .select('event_id, title, start_time, end_time, duration_minutes, attendee_count, category, is_recurring')
+      .eq('user_id', user.id)
+      .gte('start_time', since28Days),
   ])
 
   const isPro = sub?.plan === 'pro' && sub?.status === 'active'
@@ -52,6 +67,11 @@ export default async function DashboardPage() {
     result: row.result as Record<string, unknown>,
   }))
 
+  const calendarConnected = !!calendarConn
+  const calendarAnalytics = calendarEvents && calendarEvents.length > 0
+    ? computeCalendarAnalytics(calendarEvents)
+    : null
+
   return (
     <Suspense>
       <OpsDashboardClient
@@ -61,6 +81,8 @@ export default async function DashboardPage() {
         recentAudits={recentAudits}
         defaultTeamSize={String(profile?.default_team_size ?? '')}
         defaultIndustry={profile?.default_industry ?? ''}
+        calendarConnected={calendarConnected}
+        calendarAnalytics={calendarAnalytics}
       />
     </Suspense>
   )

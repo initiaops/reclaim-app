@@ -78,6 +78,7 @@ export async function POST(request: NextRequest) {
   const body = await request.json()
   const transcript: string = body?.transcript ?? ''
   const mode: string = body?.mode === 'ops' ? 'ops' : 'crm'
+  const calendarAnalytics = body?.calendarAnalytics ?? null
 
   if (!transcript || transcript.trim().length < 50) {
     return NextResponse.json(
@@ -128,6 +129,25 @@ export async function POST(request: NextRequest) {
   // 5. Call OpenAI
   const systemPrompt = mode === 'ops' ? OPS_SYSTEM_PROMPT : CRM_SYSTEM_PROMPT
 
+  // For ops mode, prepend calendar summary to the user message if available
+  let userContent = transcript
+  if (mode === 'ops' && calendarAnalytics) {
+    const calSection = [
+      '--- GOOGLE CALENDAR DATA (last 4 weeks, authoritative) ---',
+      `Meetings per week: ${calendarAnalytics.meetings_per_week}`,
+      `Total meeting hours: ${calendarAnalytics.total_meeting_hours}`,
+      `Admin tax (calendar): ${calendarAnalytics.admin_tax_pct}%`,
+      `Focus blocks per week: ${calendarAnalytics.focus_blocks_per_week}`,
+      `Busiest day: ${calendarAnalytics.busiest_day}`,
+      calendarAnalytics.risk_signals?.length
+        ? `Calendar risk signals: ${calendarAnalytics.risk_signals.map((r: { risk: string }) => r.risk).join('; ')}`
+        : '',
+      '--- END CALENDAR DATA ---',
+      '',
+    ].filter(Boolean).join('\n')
+    userContent = calSection + transcript
+  }
+
   let parsed: Record<string, unknown>
   try {
     const completion = await openai.chat.completions.create({
@@ -135,7 +155,7 @@ export async function POST(request: NextRequest) {
       temperature: 0.2,
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: transcript },
+        { role: 'user', content: userContent },
       ],
     })
 

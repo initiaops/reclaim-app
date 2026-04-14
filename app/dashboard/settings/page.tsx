@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import APIKeySection from './APIKeySection'
 import AuditPreferencesForm from './AuditPreferencesForm'
+import CalendarCard from './CalendarCard'
 
 async function disconnectHubSpot() {
   'use server'
@@ -28,10 +29,12 @@ export default async function SettingsPage({
     { data: sub },
     { data: connections },
     { data: profile },
+    { data: calendarConn },
   ] = await Promise.all([
     supabase.from('subscriptions').select('plan, status').eq('user_id', user.id).single(),
     supabase.from('crm_connections').select('provider, hub_id, hub_domain').eq('user_id', user.id),
     supabase.from('profiles').select('default_team_size, default_industry, audit_reminder, audit_reminder_day').eq('user_id', user.id).single(),
+    supabase.from('calendar_connections').select('email, last_synced_at, event_count').eq('user_id', user.id).single(),
   ])
 
   const isPro = sub?.plan === 'pro' && sub?.status === 'active'
@@ -63,11 +66,20 @@ export default async function SettingsPage({
             </div>
           </div>
         )}
+        {params.connected === 'calendar' && (
+          <div className="bg-green-50 border border-green-200 rounded-2xl px-6 py-4 flex items-center gap-4">
+            <div className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 shrink-0">✓</div>
+            <div>
+              <p className="font-bold text-green-800">Google Calendar connected!</p>
+              <p className="text-sm text-green-600 mt-0.5">Your meeting data will appear in the dashboard after the first sync.</p>
+            </div>
+          </div>
+        )}
         {params.error && (
           <div className="bg-red-50 border border-red-200 rounded-2xl px-6 py-4">
             <p className="font-bold text-red-800">Connection failed</p>
             <p className="text-sm text-red-600 mt-1">
-              {params.error === 'cancelled' ? 'You cancelled the HubSpot authorization.' : 'Something went wrong. Please try again.'}
+              {params.error === 'cancelled' ? 'You cancelled the authorization.' : 'Something went wrong. Please try again.'}
             </p>
           </div>
         )}
@@ -83,23 +95,13 @@ export default async function SettingsPage({
 
           <div className="divide-y divide-gray-50">
 
-            {/* Google Calendar — coming soon */}
-            <div className="px-6 py-5 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-sm font-black text-blue-600 shrink-0">
-                  G
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 text-sm">Google Calendar</p>
-                  <p className="text-xs text-gray-400 mt-0.5">
-                    Auto-detect meeting load and time allocation from your calendar
-                  </p>
-                </div>
-              </div>
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 text-gray-400 shrink-0">
-                Coming soon
-              </span>
-            </div>
+            {/* Google Calendar */}
+            <CalendarCard
+              connected={!!calendarConn}
+              email={calendarConn?.email ?? null}
+              lastSyncedAt={calendarConn?.last_synced_at ?? null}
+              eventCount={calendarConn?.event_count ?? 0}
+            />
 
             {/* Slack — coming soon */}
             <div className="px-6 py-5 flex items-center justify-between gap-4">

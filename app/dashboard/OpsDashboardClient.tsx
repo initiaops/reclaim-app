@@ -2,6 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import CalendarInsightsPanel from './CalendarInsightsPanel'
+import type { CalendarAnalytics } from '@/lib/calendar-analytics'
+import { buildCalendarSummary } from '@/lib/calendar-analytics'
 
 interface RiskSignal {
   risk: string
@@ -44,6 +47,8 @@ interface Props {
   recentAudits: AuditHistory[]
   defaultTeamSize: string
   defaultIndustry: string
+  calendarConnected: boolean
+  calendarAnalytics: CalendarAnalytics | null
 }
 
 const FREE_OPS_LIMIT = 1
@@ -76,8 +81,10 @@ function taxColor(pct: number) {
 
 export default function OpsDashboardClient({
   userEmail, isPro, opsUsageCount, recentAudits, defaultTeamSize, defaultIndustry,
+  calendarConnected, calendarAnalytics,
 }: Props) {
-  const [description, setDescription] = useState('')
+  const calendarPrefix = calendarAnalytics ? buildCalendarSummary(calendarAnalytics) : ''
+  const [description, setDescription] = useState(calendarPrefix)
   const [teamSize, setTeamSize]       = useState(defaultTeamSize)
   const [industry, setIndustry]       = useState(defaultIndustry)
   const [loading, setLoading]         = useState(false)
@@ -116,7 +123,7 @@ export default function OpsDashboardClient({
       const res  = await fetch('/api/extract', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ transcript: content, mode: 'ops' }),
+        body: JSON.stringify({ transcript: content, mode: 'ops', calendarAnalytics }),
       })
       const data = await res.json()
       if (!res.ok) { setError(data.error ?? 'Something went wrong.'); return }
@@ -193,6 +200,14 @@ export default function OpsDashboardClient({
             <p className="text-xs text-gray-400">Auto-generated from your audit data</p>
           </div>
         </div>
+
+        {/* ── Calendar Insights ───────────────────────────────────────── */}
+        {calendarConnected && calendarAnalytics && (
+          <CalendarInsightsPanel
+            analytics={calendarAnalytics}
+            onRunAudit={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}
+          />
+        )}
 
         {/* ── Two-column layout ───────────────────────────────────────── */}
         <div className="grid lg:grid-cols-5 gap-6">
