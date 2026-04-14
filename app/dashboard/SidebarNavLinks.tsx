@@ -8,6 +8,7 @@ const navItems = [
   { href: '/dashboard/account', label: 'Account', icon: '○' },
   { href: '/dashboard/billing', label: 'Billing', icon: '◇' },
   { href: '/dashboard/settings', label: 'Settings', icon: '◈' },
+  { href: '/guide', label: 'Guide', icon: '?' },
 ]
 
 export function SidebarNavLinks() {

@@ -90,6 +90,9 @@ export default async function RootLayout({
                     <Link href="/dashboard/settings" className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-2.5 py-2 rounded-lg hover:bg-purple-50 hidden md:block">
                       Settings
                     </Link>
+                    <Link href="/guide" className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-2.5 py-2 rounded-lg hover:bg-purple-50 hidden md:block">
+                      Guide
+                    </Link>
                     <Link href="/blog" className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-2.5 py-2 rounded-lg hover:bg-purple-50 hidden md:block">
                       Blog
                     </Link>
@@ -112,6 +115,9 @@ export default async function RootLayout({
                     </Link>
                     <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
                       About
+                    </Link>
+                    <Link href="/guide" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
+                      Guide
                     </Link>
                     <Link href="/blog" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
                       Blog
