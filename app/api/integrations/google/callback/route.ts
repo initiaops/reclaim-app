@@ -7,7 +7,9 @@ export async function GET(request: NextRequest) {
   const userId = searchParams.get('state')
   const error  = searchParams.get('error')
 
-  const appOrigin = new URL(process.env.GOOGLE_REDIRECT_URI!).origin
+  const appOrigin = process.env.NEXT_PUBLIC_SITE_URL
+    ?? (process.env.GOOGLE_REDIRECT_URI ? new URL(process.env.GOOGLE_REDIRECT_URI).origin : null)
+    ?? `https://${request.headers.get('host') ?? 'localhost:3000'}`
 
   if (error || !code || !userId) {
     return NextResponse.redirect(
