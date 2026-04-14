@@ -3,21 +3,21 @@ import Link from 'next/link'
 import WaitlistForm from './WaitlistForm'
 
 export const metadata: Metadata = {
-  title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
+  title: 'RECLAIM 2.0 — Operational Intelligence for BizOps & Ops Leaders',
   description:
-    'RECLAIM turns your sales calls, notes, and emails into clean CRM data and pipeline intelligence. Built for ops leaders who run on real information.',
+    'Stop guessing where your team\'s time goes. RECLAIM maps actual capacity, identifies administrative overhead, and tells you where to redirect bandwidth.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
+    title: 'RECLAIM 2.0 — Operational Intelligence for BizOps & Ops Leaders',
     description:
-      'RECLAIM turns your sales calls, notes, and emails into clean CRM data and pipeline intelligence. Built for ops leaders who run on real information.',
+      'Stop guessing where your team\'s time goes. RECLAIM maps actual capacity, identifies administrative overhead, and tells you where to redirect bandwidth.',
     url: 'https://www.getreclaimapp.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
+    title: 'RECLAIM 2.0 — Operational Intelligence for BizOps & Ops Leaders',
     description:
-      'RECLAIM turns your sales calls, notes, and emails into clean CRM data and pipeline intelligence. Built for ops leaders who run on real information.',
+      'Stop guessing where your team\'s time goes. RECLAIM maps actual capacity, identifies administrative overhead, and tells you where to redirect bandwidth.',
   },
 }
 
@@ -29,7 +29,7 @@ const jsonLd = {
   operatingSystem: 'Web',
   url: 'https://www.getreclaimapp.com',
   description:
-    'Operational intelligence platform for BizOps and Ops leaders. AI-powered CRM extraction, pipeline visibility, and deal intelligence.',
+    'Operational intelligence platform for BizOps and Ops leaders. Capacity audits, administrative tax scoring, and reallocation recommendations grounded in real calendar data.',
   offers: { '@type': 'Offer', price: '99', priceCurrency: 'USD' },
 }
 
@@ -56,14 +56,13 @@ export default function Home() {
           </span>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 leading-[1.06] tracking-tight max-w-4xl mx-auto mb-6">
-            Ops intelligence for teams that{' '}
-            <span style={{ color: '#534AB7' }}>run on real data</span>
+            Stop guessing where your{' '}
+            <span style={{ color: '#534AB7' }}>team&apos;s time goes</span>
           </h1>
 
           <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-            RECLAIM reads your sales calls, emails, and notes — then extracts
-            every CRM field, surfaces deal risks, and gives your ops team the
-            ground truth your pipeline is missing.
+            RECLAIM maps your team&apos;s actual capacity, identifies administrative overhead,
+            and tells you exactly where to redirect bandwidth to drive higher-ROI outcomes.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
@@ -71,7 +70,7 @@ export default function Home() {
           </div>
 
           <p className="text-sm text-gray-400">
-            No credit card required · Join 400+ ops leaders already on the list
+            No credit card required · Free early access · Built by an ops leader
           </p>
         </div>
       </section>
@@ -80,10 +79,10 @@ export default function Home() {
       <section className="py-10 px-4 border-y border-gray-100 bg-white">
         <div className="max-w-5xl mx-auto">
           <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">
-            Used by ops and revenue teams at
+            Built for ops teams in
           </p>
           <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-4">
-            {['B2B SaaS startups', 'Series A revenue teams', 'RevOps consultants', 'BizOps leaders', 'Sales-led growth orgs'].map(label => (
+            {['Aerospace & Defense', 'BizOps Leaders', 'Program Operations', 'Manufacturing', 'B2B SaaS'].map(label => (
               <span key={label} className="text-sm font-semibold text-gray-400">{label}</span>
             ))}
           </div>
@@ -95,30 +94,30 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black text-gray-900 mb-4">
-              Your CRM data is lying to you
+              Your team&apos;s capacity is invisible
             </h2>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-              When reps hand-enter call notes hours after the fact, critical context
-              gets lost. Ops leaders make forecasts on data they can&apos;t trust.
+              Most ops leaders make resourcing decisions worth millions of dollars using gut
+              feel, quarterly surveys, and spreadsheets that don&apos;t survive Monday morning.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                stat: '67%',
-                label: 'of CRM fields are missing or inaccurate',
-                sub: 'According to Forrester, most pipeline data is incomplete within 48 hours of a call.',
+                stat: '72%',
+                label: 'of team bandwidth goes to low-ROI administrative work',
+                sub: 'Hidden in meetings, status reporting, and manual coordination that could be automated or eliminated.',
               },
               {
-                stat: '5.4 hrs',
-                label: 'per week lost to manual data entry per rep',
-                sub: 'Time spent logging calls, updating stages, and filling in fields — not selling.',
+                stat: '$1M+',
+                label: 'annual cost of misallocated capacity at a 50-person ops team',
+                sub: 'Hidden in plain sight — and fixable.',
               },
               {
-                stat: '23%',
-                label: 'average pipeline forecast error',
-                sub: 'Bad input data creates bad forecasts. Ops teams spend weeks reconciling the gap.',
+                stat: '0',
+                label: 'tools exist today that show ops leaders actual vs intended capacity allocation',
+                sub: 'Until now.',
               },
             ].map(({ stat, label, sub }) => (
               <div
@@ -140,7 +139,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black text-gray-900 mb-4">How RECLAIM works</h2>
             <p className="text-lg text-gray-500">
-              Paste any sales content. Get structured intelligence in seconds.
+              From workload description to actionable intelligence in under 60 seconds.
             </p>
           </div>
 
@@ -148,21 +147,21 @@ export default function Home() {
             {[
               {
                 step: '01',
-                title: 'Paste any sales content',
+                title: 'Describe your team\'s workload',
                 description:
-                  'Call transcripts, Zoom recordings, email threads, meeting notes — any format, any length. RECLAIM handles it.',
+                  'Share your team\'s current state — active projects, time allocation, and what\'s feeling stuck. Connect Google Calendar for automatic data instead of self-reporting.',
               },
               {
                 step: '02',
-                title: 'AI extracts the signal',
+                title: 'Get your Capacity Audit',
                 description:
-                  'GPT-4o reads every line and surfaces deal stage, budget, decision makers, pain points, risks, buying signals, and recommended actions.',
+                  'RECLAIM maps where your team\'s time actually goes vs where it should — broken down by role, project type, and administrative overhead percentage.',
               },
               {
                 step: '03',
-                title: 'Clean data, instantly',
+                title: 'Act on the intelligence',
                 description:
-                  'Structured CRM fields ready to copy, download, or push directly to HubSpot. One click. Zero manual work.',
+                  'Receive specific reallocation recommendations with dollar-value attached, risk signals ranked by severity, and a leadership-ready weekly ops brief.',
               },
             ].map((item) => (
               <div
@@ -188,55 +187,76 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black text-gray-900 mb-4">
-              Built for ops-led revenue teams
+              Built for ops leaders who run on real data
             </h2>
             <p className="text-lg text-gray-500">
-              Not just a note taker. Full pipeline intelligence.
+              Not another dashboard. Actionable capacity intelligence.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              {
-                icon: '🧠',
-                title: 'AI deal extraction',
-                desc: 'Pulls 13 structured fields from every call — budget, decision maker, stage, sentiment, next steps, and more.',
-              },
-              {
-                icon: '⚠️',
-                title: 'Risk signal detection',
-                desc: 'Flags stalled deals, missing stakeholders, budget hesitation, and competitive threats before they become problems.',
-              },
-              {
-                icon: '📊',
-                title: 'Pipeline visibility',
-                desc: 'Ground-truth data in every CRM field — so your forecasts are built on what was actually said, not what got logged.',
-              },
-              {
-                icon: '🔗',
-                title: 'HubSpot CRM sync',
-                desc: 'Push deals, contacts, and deal properties to HubSpot with one click. Stage mapping, close date, data quality score included.',
-              },
-              {
-                icon: '📋',
-                title: 'Recommended actions',
-                desc: 'AI surfaces the right next move for every deal — follow-up, stakeholder expansion, objection handling.',
-              },
-              {
-                icon: '🛡️',
-                title: 'Data quality scoring',
-                desc: 'Every extraction gets a quality score so your team knows which records are solid and which need attention.',
-              },
-            ].map(({ icon, title, desc }) => (
-              <div
-                key={title}
-                className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover"
-              >
-                <div className="text-3xl mb-4">{icon}</div>
-                <h3 className="font-bold text-gray-900 mb-2">{title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{desc}</p>
+            <div
+              className="rounded-2xl p-6 border-2 card-hover"
+              style={{ borderColor: '#534AB7', backgroundColor: '#F8F7FF' }}
+            >
+              <div className="text-3xl mb-4">🗺️</div>
+              <h3 className="font-bold text-gray-900 mb-2">Capacity Intelligence Map</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">
+                Live view of actual vs intended bandwidth allocation across your team —
+                updated weekly from real calendar and project data.
+              </p>
+            </div>
+
+            <div className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover">
+              <div className="text-3xl mb-4">📊</div>
+              <h3 className="font-bold text-gray-900 mb-2">Administrative Tax Score</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">
+                The exact percentage of your team&apos;s time going to work that shouldn&apos;t
+                require a human. Quantified, tracked, and reducible.
+              </p>
+            </div>
+
+            <div className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover">
+              <div className="text-3xl mb-4">⚡</div>
+              <h3 className="font-bold text-gray-900 mb-2">Reallocation Recommendations</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">
+                Specific actions with dollar value attached: eliminate this process,
+                automate that workflow, redirect this person&apos;s focus.
+              </p>
+            </div>
+
+            <div className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover">
+              <div className="text-3xl mb-4">📋</div>
+              <h3 className="font-bold text-gray-900 mb-2">Weekly Ops Brief</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">
+                Monday morning leadership report — auto-generated, written in plain English,
+                ready to share. No manual prep required.
+              </p>
+            </div>
+
+            <div className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover">
+              <div className="text-3xl mb-4">📅</div>
+              <div className="flex items-center gap-2 mb-2">
+                <h3 className="font-bold text-gray-900">Google Calendar Integration</h3>
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700">Now available</span>
               </div>
-            ))}
+              <p className="text-gray-500 text-sm leading-relaxed">
+                Connect your calendar and get real meeting load analysis, focus time
+                tracking, and administrative overhead — automatically.
+              </p>
+            </div>
+
+            <div className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover">
+              <div className="text-3xl mb-4">🏭</div>
+              <div className="flex items-center gap-2 mb-2">
+                <h3 className="font-bold text-gray-900">Vendor Intelligence</h3>
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">Coming Q3 2026</span>
+              </div>
+              <p className="text-gray-500 text-sm leading-relaxed">
+                Supplier health scores, SOW compliance tracking, and early warning signals
+                for procurement and program ops teams.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -281,17 +301,16 @@ export default function Home() {
                 From the founder
               </p>
               <p className="text-gray-700 text-base leading-relaxed mb-5">
-                &ldquo;I built RECLAIM because I spent years watching revenue ops teams
-                make critical decisions on data they secretly knew wasn&apos;t reliable.
-                Call notes logged late, fields guessed, context lost. RECLAIM is the
-                tool I wish I had — operational intelligence built from the source of
-                truth: the actual conversation.&rdquo;
+                &ldquo;I spent 7 years at Pratt &amp; Whitney managing $5M+ supplier portfolios and
+                building capacity models for leadership. The problem I kept running into: no one
+                could tell me where the team&apos;s time actually went vs where we thought it went.
+                RECLAIM is the answer to that question.&rdquo;
               </p>
               <div>
                 <p className="font-bold text-gray-900">Kunal Kothari</p>
-                <p className="text-gray-400 text-sm">Founder, RECLAIM · Revenue Operations</p>
+                <p className="text-gray-400 text-sm">Founder, RECLAIM · Strategy & Operations · Initia Ops LLC</p>
                 <a
-                  href="https://linkedin.com/in/kunalkothari"
+                  href="https://www.linkedin.com/in/kkothari-1/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-sm font-semibold mt-2 hover:opacity-80 transition-opacity"

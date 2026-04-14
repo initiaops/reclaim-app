@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 export default function MEDDICPost() {
   return (
     <div className="bg-white min-h-screen">
+      <div className="bg-amber-50 border-b border-amber-200 px-4 py-3"><div className="max-w-2xl mx-auto text-sm text-amber-800"><span className="font-bold">Note:</span> This post was written during RECLAIM's initial CRM extraction phase. Our current product focuses on operational capacity intelligence for BizOps and ops leaders. <a href="/" className="underline font-semibold hover:text-amber-900">Learn more at getreclaimapp.com</a></div></div>
       <div className="max-w-2xl mx-auto px-4 py-16">
 
         {/* Back link */}

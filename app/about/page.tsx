@@ -3,9 +3,9 @@ import Link from 'next/link'
 import WaitlistForm from '../WaitlistForm'
 
 export const metadata: Metadata = {
-  title: 'About — RECLAIM | Operational Intelligence for Revenue Teams',
+  title: 'About — RECLAIM 2.0 | Built by an Ops Leader',
   description:
-    'RECLAIM was built for ops leaders who are tired of making decisions on bad pipeline data. Learn about our mission and the team behind it.',
+    'RECLAIM was built by a 7-year aerospace ops veteran who couldn\'t find a tool that quantified where his team\'s time actually went. So he built it.',
   alternates: { canonical: '/about' },
 }
 
@@ -26,9 +26,10 @@ export default function AboutPage() {
             Built by ops people,<br className="hidden sm:block" /> for ops people
           </h1>
           <p className="text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto">
-            RECLAIM exists because the most important data in your business —
-            what was actually said in your sales calls — was never making it
-            into your CRM.
+            RECLAIM exists because the most capable ops leaders in the world are making
+            resourcing decisions based on incomplete information — not because they&apos;re not
+            smart enough, but because no tool has ever given them a clear view of where
+            their team&apos;s capacity actually goes.
           </p>
         </div>
       </section>
@@ -39,20 +40,15 @@ export default function AboutPage() {
           <div className="prose prose-gray max-w-none">
             <h2 className="text-3xl font-black text-gray-900 mb-6">Our mission</h2>
             <p className="text-gray-600 text-lg leading-relaxed mb-6">
-              Revenue ops teams are drowning in spreadsheets, pipeline reviews, and
-              forecast calls — all built on data they know is incomplete. Reps log
-              calls hours late. Fields get guessed. Context disappears. And the ops
-              leader sits in a QBR defending numbers they don&apos;t fully trust.
-            </p>
-            <p className="text-gray-600 text-lg leading-relaxed mb-6">
-              RECLAIM&apos;s mission is to give every ops team access to ground-truth
-              intelligence — extracted automatically from the conversations that
-              actually determine whether a deal closes.
+              Most organizations have no quantified view of where their team&apos;s time actually
+              goes. Leaders rely on gut feel, anecdotal evidence, and quarterly surveys to make
+              resourcing decisions worth millions of dollars. The result: burnout, misaligned
+              priorities, and headcount requests that can&apos;t be defended with data.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
-              When the data is right, everything else gets easier: forecasts, coaching,
-              territory planning, headcount decisions. That&apos;s what operational
-              intelligence should deliver.
+              RECLAIM&apos;s mission is to give every ops leader a clear, quantified, real-time
+              view of their team&apos;s capacity — so they can make resourcing decisions with
+              confidence instead of instinct.
             </p>
           </div>
         </div>
@@ -65,24 +61,24 @@ export default function AboutPage() {
           <div className="grid sm:grid-cols-2 gap-5">
             {[
               {
-                icon: '🎯',
-                title: 'Source of truth over averages',
-                desc: 'Real intelligence comes from what was said in the call, not what a rep remembered to type in three hours later.',
+                icon: '📐',
+                title: 'Quantified over qualitative',
+                desc: 'Every insight comes with a number attached. Gut feel is the problem we\'re solving — not a feature we support.',
               },
               {
-                icon: '⚡',
-                title: 'Speed and accuracy together',
-                desc: "A CRM update shouldn't take 20 minutes. It should happen in 20 seconds. And it should be more accurate than the manual version.",
-              },
-              {
-                icon: '🔍',
-                title: 'Transparency in every extraction',
-                desc: 'Every field comes with a confidence score so ops teams know which records to trust and which need a second look.',
+                icon: '📅',
+                title: 'Real data over self-reporting',
+                desc: 'Connecting to your actual calendar and project data produces better intelligence than asking people to describe their own workload.',
               },
               {
                 icon: '🏗️',
-                title: 'Built for operators, not just sellers',
-                desc: "Reps benefit. But the real leverage is with the RevOps and BizOps leaders who need reliable data to run the business.",
+                title: 'Ops-first thinking',
+                desc: 'Built by someone who ran the systems, not just studied them. Every feature comes from a real problem faced in real operations work.',
+              },
+              {
+                icon: '🔩',
+                title: 'Boring is beautiful',
+                desc: 'We build sustainable, reliable tools ops leaders can depend on — not flashy features that don\'t survive contact with operational reality.',
               },
             ].map(({ icon, title, desc }) => (
               <div
@@ -117,21 +113,29 @@ export default function AboutPage() {
             />
             <div>
               <p className="font-black text-gray-900 text-xl">Kunal Kothari</p>
-              <p className="text-sm mb-4" style={{ color: '#534AB7' }}>Founder & CEO</p>
+              <p className="text-sm mb-4" style={{ color: '#534AB7' }}>
+                Founder · Strategy & Operations · Initia Ops LLC
+              </p>
               <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                Kunal has spent his career in revenue operations, sales strategy, and
-                go-to-market at fast-growing B2B companies. He built RECLAIM after
-                watching ops teams repeatedly fail to get reliable pipeline data from
-                their sales reps — not because the reps were lazy, but because the
-                tooling made manual logging the only option.
+                Before building RECLAIM, Kunal spent 7 years at Pratt &amp; Whitney / RTX in
+                aerospace operations — owning program management and governance for a $5M+
+                outsourced supplier portfolio across 20+ global vendors, designing capacity
+                models and executive dashboards, and leading cross-functional process improvement
+                initiatives that standardized workflows and reduced overhead across global teams.
+              </p>
+              <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                Armed with an MBA from the University of Connecticut and dual degrees in
+                engineering and business, he brings operational rigor to every product decision.
               </p>
               <p className="text-gray-600 text-sm leading-relaxed mb-5">
-                RECLAIM is his answer: operational intelligence that happens automatically,
-                so the humans can focus on decisions instead of data entry.
+                The problem he kept running into: leadership always wanted to know where the
+                team&apos;s time was going, and there was never a clean answer. Spreadsheets, gut
+                feel, anecdotal evidence — nothing quantified, nothing defensible, nothing that
+                could actually change a resourcing decision. RECLAIM is the answer to that problem.
               </p>
               <div className="flex gap-4">
                 <a
-                  href="https://linkedin.com/in/kunalkothari"
+                  href="https://www.linkedin.com/in/kkothari-1/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-sm font-semibold hover:opacity-80 transition-opacity"

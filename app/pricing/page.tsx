@@ -4,14 +4,14 @@ import { createClient } from '@/lib/supabase/server'
 import WaitlistForm from '../WaitlistForm'
 
 export const metadata: Metadata = {
-  title: 'Pricing — RECLAIM | Starter, Pro & Founder Plans',
+  title: 'Pricing — RECLAIM 2.0 | Start Free',
   description:
-    'Start free. Upgrade to Pro for $99/month. Or lock in lifetime access as a Founder for $349 — one payment, forever.',
+    'Free capacity audit included. Pro at $99/month or $349 lifetime. Built for BizOps and ops leaders.',
   alternates: { canonical: '/pricing' },
   openGraph: {
-    title: 'Pricing — RECLAIM | Starter, Pro & Founder Plans',
+    title: 'Pricing — RECLAIM 2.0 | Start Free',
     description:
-      'Start free. Upgrade to Pro for $99/month. Or lock in lifetime access as a Founder for $349 — one payment, forever.',
+      'Free capacity audit included. Pro at $99/month or $349 lifetime. Built for BizOps and ops leaders.',
     url: 'https://www.getreclaimapp.com/pricing',
   },
 }
@@ -35,7 +35,7 @@ export default async function PricingPage() {
           Simple, transparent pricing
         </h1>
         <p className="text-xl text-gray-500 max-w-xl mx-auto">
-          Start free. Scale when you&apos;re ready. Lock in lifetime access while it lasts.
+          Start free while we&apos;re in early access. Lock in founder pricing before public launch.
         </p>
       </div>
 
@@ -57,10 +57,10 @@ export default async function PricingPage() {
             <div className="space-y-3 mb-8 flex-1">
               <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">What&apos;s included</p>
               {[
-                '5 extractions per month',
-                'All 13 CRM fields',
-                'Copy & download results',
-                'AI confidence score',
+                '1 capacity audit per month',
+                'Administrative tax score',
+                'Basic reallocation report',
+                'Calendar insights (connect Google Calendar)',
                 'Email support',
               ].map(f => (
                 <div key={f} className="flex items-center gap-3 text-sm text-gray-700">
@@ -69,9 +69,9 @@ export default async function PricingPage() {
                 </div>
               ))}
               <div className="pt-2 border-t border-gray-100 mt-4 space-y-3">
-                {['Unlimited extractions', 'Extraction history', 'HubSpot CRM sync', 'Risk & signal detection'].map(f => (
+                {['Unlimited audits', 'Weekly ops brief', 'Risk signals dashboard', 'Vendor intelligence module'].map(f => (
                   <div key={f} className="flex items-center gap-3 text-sm text-gray-300">
-                    <span className="w-5 h-5 rounded-full bg-gray-100 text-gray-300 flex items-center justify-center text-xs font-bold shrink-0">✗</span>
+                    <span className="w-5 h-5 rounded-full bg-gray-100 text-gray-300 flex items-center justify-center text-xs font-bold shrink-0">—</span>
                     {f}
                   </div>
                 ))}
@@ -97,7 +97,7 @@ export default async function PricingPage() {
 
             <div className="mb-8">
               <h2 className="text-2xl font-black text-white mb-1">Pro</h2>
-              <p className="text-purple-200 text-sm">For active rev ops teams</p>
+              <p className="text-purple-200 text-sm">For active ops teams</p>
               <div className="mt-4">
                 <span className="text-5xl font-black text-white">$99</span>
                 <span className="text-purple-300 ml-2">/ month</span>
@@ -107,15 +107,13 @@ export default async function PricingPage() {
             <div className="space-y-3 mb-8 flex-1">
               <p className="text-xs font-bold text-purple-300 uppercase tracking-wide">Everything in Starter, plus</p>
               {[
-                'Unlimited extractions',
-                'All 13 CRM fields',
-                'Extraction history (last 50)',
-                'Risk & buying signal detection',
-                'Recommended actions',
-                'HubSpot CRM sync (1-click)',
-                'Data quality scoring',
-                'Priority email & chat support',
-                'Early access to new features',
+                'Unlimited capacity audits',
+                'Weekly ops brief (auto-generated)',
+                'Google Calendar integration',
+                'Reallocation recommendations with $ value',
+                'Risk signals dashboard',
+                'Vendor intelligence module (Q3 2026)',
+                'Priority support',
               ].map(f => (
                 <div key={f} className="flex items-center gap-3 text-sm text-white">
                   <span className="w-5 h-5 rounded-full bg-yellow-400 text-yellow-900 flex items-center justify-center text-xs font-bold shrink-0">✓</span>
@@ -168,12 +166,12 @@ export default async function PricingPage() {
             <div className="space-y-3 mb-8 flex-1">
               <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Everything in Pro, plus</p>
               {[
-                'Lifetime Pro access',
-                'All future features included',
-                'Founder Discord community',
-                'Direct founder access (Slack/email)',
-                'Input on roadmap priorities',
-                'Listed as a founding member',
+                'Lifetime Pro access — pay once, use forever',
+                'All future modules included',
+                'Vendor intelligence module (Q3 2026)',
+                'Founding member badge',
+                'Direct founder access',
+                'Input on product roadmap',
               ].map(f => (
                 <div key={f} className="flex items-center gap-3 text-sm text-gray-700">
                   <span
@@ -200,21 +198,6 @@ export default async function PricingPage() {
           </div>
         </div>
 
-        {/* CRM compatibility */}
-        <div className="mt-12 text-center">
-          <p className="text-sm text-gray-400 mb-4 font-medium uppercase tracking-wide">Works with your CRM</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {['Salesforce', 'HubSpot', 'Pipedrive', 'Zoho CRM', 'Close', 'Any CRM'].map(crm => (
-              <span
-                key={crm}
-                className="px-4 py-2 rounded-full text-sm font-semibold border border-gray-200 text-gray-600 bg-gray-50"
-              >
-                {crm}
-              </span>
-            ))}
-          </div>
-        </div>
-
         {/* Feature comparison */}
         <div className="mt-16 bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-200">
@@ -231,16 +214,15 @@ export default async function PricingPage() {
             </thead>
             <tbody>
               {[
-                { feature: 'Monthly extractions', starter: '5', pro: 'Unlimited', founder: 'Unlimited' },
-                { feature: 'CRM fields extracted', starter: '13', pro: '13', founder: '13' },
-                { feature: 'Copy & download results', starter: '✓', pro: '✓', founder: '✓' },
-                { feature: 'Extraction history', starter: '—', pro: 'Last 50', founder: 'Last 50' },
-                { feature: 'AI confidence score', starter: '✓', pro: '✓', founder: '✓' },
-                { feature: 'Risk & buying signals', starter: '—', pro: '✓', founder: '✓' },
-                { feature: 'HubSpot CRM sync', starter: '—', pro: '✓', founder: '✓' },
-                { feature: 'Data quality scoring', starter: '—', pro: '✓', founder: '✓' },
+                { feature: 'Capacity audits per month', starter: '1', pro: 'Unlimited', founder: 'Unlimited' },
+                { feature: 'Administrative tax score', starter: '✓', pro: '✓', founder: '✓' },
+                { feature: 'Reallocation recommendations', starter: 'Basic', pro: 'Full', founder: 'Full' },
+                { feature: 'Weekly ops brief', starter: '—', pro: '✓', founder: '✓' },
+                { feature: 'Google Calendar integration', starter: '✓', pro: '✓', founder: '✓' },
+                { feature: 'Risk signals dashboard', starter: '—', pro: '✓', founder: '✓' },
+                { feature: 'Vendor intelligence module', starter: '—', pro: 'Q3 2026', founder: '✓' },
+                { feature: 'All future modules', starter: '—', pro: 'Early access', founder: '✓' },
                 { feature: 'Support', starter: 'Email', pro: 'Priority', founder: 'Founder channel' },
-                { feature: 'Future features', starter: '—', pro: 'Early access', founder: 'All, forever' },
               ].map(({ feature, starter, pro, founder }, i) => (
                 <tr key={feature} className={`border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
                   <td className="px-6 py-3.5 text-gray-700 font-medium">{feature}</td>
@@ -269,24 +251,28 @@ export default async function PricingPage() {
           <div className="space-y-4">
             {[
               {
-                q: 'What counts as one extraction?',
-                a: 'Each time you paste content and click "Extract Intelligence", that uses one extraction. All 13 fields are returned from one extraction.',
+                q: 'What is a capacity audit?',
+                a: 'A capacity audit analyzes your team\'s current workload and time allocation. RECLAIM maps where time is actually going vs where it should go, identifies your administrative tax percentage, and surfaces specific recommendations for redirecting bandwidth to higher-ROI work.',
+              },
+              {
+                q: 'How does the Google Calendar integration work?',
+                a: 'Connect your Google Calendar with one click. RECLAIM pulls the last 4 weeks of meeting data, categorizes your time automatically, and uses this real data to power your capacity audit — no self-reporting required.',
               },
               {
                 q: 'Can I cancel at any time?',
-                a: 'Yes. Cancel from the Billing page in your dashboard. You keep Pro access until the end of your billing period.',
+                a: 'Yes. Cancel from the Billing page in your dashboard. You keep Pro access until the end of your billing period. No questions asked.',
               },
               {
                 q: 'What is the Founder plan?',
-                a: 'Founder is a limited lifetime deal — pay once and get Pro features forever. We offer this to early believers who want to lock in access before pricing increases.',
+                a: 'The Founder plan is a lifetime deal — pay $349 once and get Pro features forever, including all future modules. Limited to 50 founding members.',
               },
               {
-                q: 'Do free extractions reset each month?',
-                a: 'Yes. Your 5 Starter extractions reset automatically on the 1st of each calendar month.',
+                q: 'Is there a team plan?',
+                a: 'Team plans are on the roadmap for Q3 2026. Email initiaops@gmail.com to get on the early list for team pricing.',
               },
               {
-                q: 'Is there a team or annual plan?',
-                a: "Team plans are on the roadmap. Email us at hello@getreclaimapp.com and we'll work something out.",
+                q: 'What happens to my data?',
+                a: 'All data is encrypted at rest and in transit. We use Supabase (SOC 2 compliant) for storage. We never sell your data. Calendar data is only used to power your audits.',
               },
             ].map(({ q, a }) => (
               <details key={q} className="group bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
