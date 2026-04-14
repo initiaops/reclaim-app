@@ -5,7 +5,7 @@ import WaitlistForm from '../WaitlistForm'
 export const metadata: Metadata = {
   title: 'About — RECLAIM 2.0 | Built by an Ops Leader',
   description:
-    'RECLAIM was built by a 7-year aerospace ops veteran who couldn\'t find a tool that quantified where his team\'s time actually went. So he built it.',
+    'RECLAIM was built by an operator who couldn\'t find a tool that quantified where their team\'s time actually went. So they built it.',
   alternates: { canonical: '/about' },
 }
 
@@ -97,60 +97,28 @@ export default function AboutPage() {
       {/* ── FOUNDER ───────────────────────────────────────────────────────── */}
       <section className="py-20 px-4 bg-white">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-black text-gray-900 mb-10 text-center">The team</h2>
-          <div className="rounded-2xl border border-gray-100 p-8 md:p-10 flex flex-col sm:flex-row gap-8 items-start shadow-sm">
-            <img
-              src="/kunal.jpg"
-              alt="Kunal Kothari"
-              style={{
-                width: 96,
-                height: 96,
-                borderRadius: '50%',
-                objectFit: 'cover',
-                flexShrink: 0,
-                border: '3px solid #EEEDFE',
-              }}
-            />
-            <div>
-              <p className="font-black text-gray-900 text-xl">Kunal Kothari</p>
-              <p className="text-sm mb-4" style={{ color: '#534AB7' }}>
-                Founder · Strategy & Operations · Initia Ops LLC
-              </p>
-              <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                Before building RECLAIM, Kunal spent 7 years at Pratt &amp; Whitney / RTX in
-                aerospace operations — owning program management and governance for a $5M+
-                outsourced supplier portfolio across 20+ global vendors, designing capacity
-                models and executive dashboards, and leading cross-functional process improvement
-                initiatives that standardized workflows and reduced overhead across global teams.
-              </p>
-              <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                Armed with an MBA from the University of Connecticut and dual degrees in
-                engineering and business, he brings operational rigor to every product decision.
-              </p>
-              <p className="text-gray-600 text-sm leading-relaxed mb-5">
-                The problem he kept running into: leadership always wanted to know where the
-                team&apos;s time was going, and there was never a clean answer. Spreadsheets, gut
-                feel, anecdotal evidence — nothing quantified, nothing defensible, nothing that
-                could actually change a resourcing decision. RECLAIM is the answer to that problem.
-              </p>
-              <div className="flex gap-4">
-                <a
-                  href="https://www.linkedin.com/in/kkothari-1/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold hover:opacity-80 transition-opacity"
-                  style={{ color: '#534AB7' }}
-                >
-                  LinkedIn →
-                </a>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-500 hover:text-gray-800 transition-colors"
-                >
-                  Contact →
-                </Link>
-              </div>
-            </div>
+          <h2 className="text-3xl font-black text-gray-900 mb-10 text-center">Built by an operator, for operators</h2>
+          <div className="rounded-2xl border border-gray-100 p-8 md:p-10 shadow-sm">
+            <p className="text-gray-600 text-sm leading-relaxed mb-4">
+              The founder spent 7 years in aerospace operations managing multi-million dollar
+              supplier portfolios, building executive capacity models, and leading cross-functional
+              process improvement initiatives across global teams.
+            </p>
+            <p className="text-gray-600 text-sm leading-relaxed mb-4">
+              The problem that kept coming up: leadership always wanted to know where the team&apos;s
+              time was going, and there was never a clean answer. Spreadsheets, gut feel, anecdotal
+              evidence — nothing quantified, nothing defensible, nothing that could actually change
+              a resourcing decision.
+            </p>
+            <p className="text-gray-600 text-sm leading-relaxed mb-6">
+              RECLAIM is the answer to that problem.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-500 hover:text-gray-800 transition-colors"
+            >
+              Get in touch →
+            </Link>
           </div>
         </div>
       </section>

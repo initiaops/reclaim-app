@@ -280,50 +280,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FOUNDER CARD ──────────────────────────────────────────────────── */}
-      <section className="py-24 px-4 bg-white">
-        <div className="max-w-3xl mx-auto">
-          <div className="rounded-2xl border border-gray-100 p-8 md:p-10 flex flex-col sm:flex-row gap-8 items-start">
-            <img
-              src="/kunal.jpg"
-              alt="Kunal Kothari"
-              style={{
-                width: 80,
-                height: 80,
-                borderRadius: '50%',
-                objectFit: 'cover',
-                flexShrink: 0,
-                border: '3px solid #EEEDFE',
-              }}
-            />
-            <div>
-              <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#534AB7' }}>
-                From the founder
-              </p>
-              <p className="text-gray-700 text-base leading-relaxed mb-5">
-                &ldquo;I spent 7 years at Pratt &amp; Whitney managing $5M+ supplier portfolios and
-                building capacity models for leadership. The problem I kept running into: no one
-                could tell me where the team&apos;s time actually went vs where we thought it went.
-                RECLAIM is the answer to that question.&rdquo;
-              </p>
-              <div>
-                <p className="font-bold text-gray-900">Kunal Kothari</p>
-                <p className="text-gray-400 text-sm">Founder, RECLAIM · Strategy & Operations · Initia Ops LLC</p>
-                <a
-                  href="https://www.linkedin.com/in/kkothari-1/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold mt-2 hover:opacity-80 transition-opacity"
-                  style={{ color: '#534AB7' }}
-                >
-                  LinkedIn →
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── CONTACT ───────────────────────────────────────────────────────── */}
       <section className="py-20 px-4 bg-white">
         <div className="max-w-3xl mx-auto">
