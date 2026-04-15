@@ -3,7 +3,7 @@ import Link from 'next/link'
 import WaitlistForm from '../WaitlistForm'
 
 export const metadata: Metadata = {
-  title: 'About — RECLAIM 2.0 | Built by an Ops Leader',
+  title: 'About — RECLAIM | Built by an Ops Leader',
   description:
     'RECLAIM was built by an operator who couldn\'t find a tool that quantified where their team\'s time actually went. So they built it.',
   alternates: { canonical: '/about' },
@@ -61,22 +61,38 @@ export default function AboutPage() {
           <div className="grid sm:grid-cols-2 gap-5">
             {[
               {
-                icon: '📐',
+                icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
+                  </svg>
+                ),
                 title: 'Quantified over qualitative',
                 desc: 'Every insight comes with a number attached. Gut feel is the problem we\'re solving — not a feature we support.',
               },
               {
-                icon: '📅',
+                icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                ),
                 title: 'Real data over self-reporting',
                 desc: 'Connecting to your actual calendar and project data produces better intelligence than asking people to describe their own workload.',
               },
               {
-                icon: '🏗️',
+                icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                  </svg>
+                ),
                 title: 'Ops-first thinking',
                 desc: 'Built by someone who ran the systems, not just studied them. Every feature comes from a real problem faced in real operations work.',
               },
               {
-                icon: '🔩',
+                icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                  </svg>
+                ),
                 title: 'Boring is beautiful',
                 desc: 'We build sustainable, reliable tools ops leaders can depend on — not flashy features that don\'t survive contact with operational reality.',
               },
@@ -85,7 +101,9 @@ export default function AboutPage() {
                 key={title}
                 className="bg-white rounded-2xl p-7 border border-gray-100 shadow-sm"
               >
-                <div className="text-3xl mb-4">{icon}</div>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#EEEDFE' }}>
+                  {icon}
+                </div>
                 <h3 className="font-bold text-gray-900 mb-2">{title}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{desc}</p>
               </div>

@@ -3,19 +3,19 @@ import Link from 'next/link'
 import WaitlistForm from './WaitlistForm'
 
 export const metadata: Metadata = {
-  title: 'RECLAIM 2.0 — Operational Intelligence for BizOps & Ops Leaders',
+  title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
   description:
     'Stop guessing where your team\'s time goes. RECLAIM maps actual capacity, identifies administrative overhead, and tells you where to redirect bandwidth.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'RECLAIM 2.0 — Operational Intelligence for BizOps & Ops Leaders',
+    title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
     description:
       'Stop guessing where your team\'s time goes. RECLAIM maps actual capacity, identifies administrative overhead, and tells you where to redirect bandwidth.',
     url: 'https://www.getreclaimapp.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RECLAIM 2.0 — Operational Intelligence for BizOps & Ops Leaders',
+    title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
     description:
       'Stop guessing where your team\'s time goes. RECLAIM maps actual capacity, identifies administrative overhead, and tells you where to redirect bandwidth.',
   },
@@ -199,7 +199,13 @@ export default function Home() {
               className="rounded-2xl p-6 border-2 card-hover"
               style={{ borderColor: '#534AB7', backgroundColor: '#F8F7FF' }}
             >
-              <div className="text-3xl mb-4">🗺️</div>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#534AB7' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+                  <line x1="9" y1="3" x2="9" y2="18"/>
+                  <line x1="15" y1="6" x2="15" y2="21"/>
+                </svg>
+              </div>
               <h3 className="font-bold text-gray-900 mb-2">Capacity Intelligence Map</h3>
               <p className="text-gray-500 text-sm leading-relaxed">
                 Live view of actual vs intended bandwidth allocation across your team —
@@ -208,7 +214,14 @@ export default function Home() {
             </div>
 
             <div className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover">
-              <div className="text-3xl mb-4">📊</div>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#EEEDFE' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10"/>
+                  <line x1="12" y1="20" x2="12" y2="4"/>
+                  <line x1="6" y1="20" x2="6" y2="14"/>
+                  <line x1="2" y1="20" x2="22" y2="20"/>
+                </svg>
+              </div>
               <h3 className="font-bold text-gray-900 mb-2">Administrative Tax Score</h3>
               <p className="text-gray-500 text-sm leading-relaxed">
                 The exact percentage of your team&apos;s time going to work that shouldn&apos;t
@@ -217,7 +230,12 @@ export default function Home() {
             </div>
 
             <div className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover">
-              <div className="text-3xl mb-4">⚡</div>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#EEEDFE' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="13 17 18 12 13 7"/>
+                  <polyline points="6 17 11 12 6 7"/>
+                </svg>
+              </div>
               <h3 className="font-bold text-gray-900 mb-2">Reallocation Recommendations</h3>
               <p className="text-gray-500 text-sm leading-relaxed">
                 Specific actions with dollar value attached: eliminate this process,
@@ -226,7 +244,14 @@ export default function Home() {
             </div>
 
             <div className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover">
-              <div className="text-3xl mb-4">📋</div>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#EEEDFE' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                  <line x1="9" y1="12" x2="15" y2="12"/>
+                  <line x1="9" y1="16" x2="15" y2="16"/>
+                </svg>
+              </div>
               <h3 className="font-bold text-gray-900 mb-2">Weekly Ops Brief</h3>
               <p className="text-gray-500 text-sm leading-relaxed">
                 Monday morning leadership report — auto-generated, written in plain English,
@@ -235,7 +260,14 @@ export default function Home() {
             </div>
 
             <div className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover">
-              <div className="text-3xl mb-4">📅</div>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#EEEDFE' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </div>
               <div className="flex items-center gap-2 mb-2">
                 <h3 className="font-bold text-gray-900">Google Calendar Integration</h3>
                 <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700">Now available</span>
@@ -247,7 +279,13 @@ export default function Home() {
             </div>
 
             <div className="rounded-2xl p-6 border border-gray-100 bg-gray-50 card-hover">
-              <div className="text-3xl mb-4">🏭</div>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#EEEDFE' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/>
+                  <path d="M6 12H4a2 2 0 0 0-2 2v8h20v-8a2 2 0 0 0-2-2h-2"/>
+                  <rect x="10" y="6" width="4" height="4"/>
+                </svg>
+              </div>
               <div className="flex items-center gap-2 mb-2">
                 <h3 className="font-bold text-gray-900">Vendor Intelligence</h3>
                 <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700">Coming Q3 2026</span>
@@ -258,6 +296,80 @@ export default function Home() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── COMPETITIVE POSITIONING ───────────────────────────────────────── */}
+      <section className="py-24 px-4" style={{ backgroundColor: '#F8F7FF' }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-black text-gray-900 mb-4">
+              Why not just use a spreadsheet?
+            </h2>
+            <p className="text-lg text-gray-500">
+              The alternatives are either too manual or too heavy. RECLAIM is built for how ops teams actually work.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-5">
+            <div className="bg-white rounded-2xl p-7 border border-gray-200">
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-5">Spreadsheets &amp; Surveys</p>
+              <ul className="space-y-3">
+                {[
+                  'Manual data entry every cycle',
+                  'Stale by Monday morning',
+                  'No analysis, no recommendations',
+                  'Can\'t survive operational reality',
+                  'No calendar data',
+                ].map(item => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-gray-400">
+                    <span className="mt-0.5 shrink-0 text-gray-300">—</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-white rounded-2xl p-7 border border-gray-200">
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-5">Workday / Planview / ServiceNow</p>
+              <ul className="space-y-3">
+                {[
+                  '6–12 month implementation',
+                  '$100K+ contracts',
+                  'Requires a dedicated admin team',
+                  'Not built for BizOps insights',
+                  'Slow to adapt to team changes',
+                ].map(item => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-gray-400">
+                    <span className="mt-0.5 shrink-0 text-gray-300">—</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-2xl p-7 border-2" style={{ borderColor: '#534AB7', backgroundColor: '#EEEDFE' }}>
+              <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: '#534AB7' }}>RECLAIM</p>
+              <ul className="space-y-3">
+                {[
+                  'Live capacity intelligence in minutes',
+                  'Real calendar data, no self-reporting',
+                  'Specific recommendations with $ value',
+                  'Built for ops leaders, not IT departments',
+                  'Start free in under 60 seconds',
+                ].map(item => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-gray-900 font-medium">
+                    <span className="mt-0.5 shrink-0 font-black" style={{ color: '#534AB7' }}>✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <p className="text-center text-gray-500 mt-10 text-base max-w-2xl mx-auto">
+            No implementation team. No six-month rollout. No enterprise contract. Just answers.
+          </p>
         </div>
       </section>
 
@@ -286,16 +398,15 @@ export default function Home() {
           <div className="text-center mb-10">
             <h2 className="text-3xl font-black text-gray-900 mb-3">Get in touch</h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">
-              Questions about RECLAIM 2.0, early access, or partnership opportunities?
+              Questions about RECLAIM, early access, or partnership opportunities?
               Reach out directly.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-5 mb-8">
-            {/* Email */}
+          <div className="flex justify-center mb-8">
             <a
-              href="mailto:initiaops@gmail.com"
-              className="rounded-2xl border border-gray-100 bg-gray-50 p-6 flex items-start gap-4 hover:border-purple-200 hover:bg-purple-50 transition-all group"
+              href="mailto:hello@getreclaimapp.com"
+              className="rounded-2xl border border-gray-100 bg-gray-50 p-6 flex items-start gap-4 hover:border-purple-200 hover:bg-purple-50 transition-all group max-w-sm w-full"
             >
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
@@ -308,28 +419,8 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">Email</p>
-                <p className="font-semibold text-gray-900 group-hover:text-purple-700 transition-colors">initiaops@gmail.com</p>
+                <p className="font-semibold text-gray-900 group-hover:text-purple-700 transition-colors">hello@getreclaimapp.com</p>
                 <p className="text-xs text-gray-400 mt-1">Usually responds within 24 hours</p>
-              </div>
-            </a>
-
-            {/* LinkedIn */}
-            <a
-              href="https://www.linkedin.com/in/kkothari-1/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-2xl border border-gray-100 bg-gray-50 p-6 flex items-start gap-4 hover:border-purple-200 hover:bg-purple-50 transition-all group"
-            >
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5 font-black text-sm"
-                style={{ backgroundColor: '#EEEDFE', color: '#534AB7' }}
-              >
-                in
-              </div>
-              <div>
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">LinkedIn</p>
-                <p className="font-semibold text-gray-900 group-hover:text-purple-700 transition-colors">Kunal Kothari</p>
-                <p className="text-xs text-gray-400 mt-1">Connect for ops and BizOps discussions</p>
               </div>
             </a>
           </div>
@@ -346,7 +437,7 @@ export default function Home() {
       {/* ── FOOTER ────────────────────────────────────────────────────────── */}
       <footer className="border-t border-gray-100 py-10 px-4 bg-white">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-          <p className="font-semibold text-gray-700">RECLAIM 2.0 by Initia Ops LLC</p>
+          <p className="font-semibold text-gray-700">RECLAIM by Initia Ops LLC</p>
           <div className="flex flex-wrap justify-center gap-6">
             <Link href="/privacy" className="hover:text-gray-700 transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-gray-700 transition-colors">Terms</Link>
