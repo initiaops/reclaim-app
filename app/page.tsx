@@ -519,6 +519,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-400">
           <p className="font-semibold text-gray-700">RECLAIM by Initia Ops LLC</p>
           <div className="flex flex-wrap justify-center gap-6">
+            <Link href="/calculator" className="hover:text-gray-700 transition-colors">Calculator</Link>
             <Link href="/privacy" className="hover:text-gray-700 transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-gray-700 transition-colors">Terms</Link>
             <Link href="/blog" className="hover:text-gray-700 transition-colors">Blog</Link>

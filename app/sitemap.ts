@@ -11,6 +11,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: 'https://www.getreclaimapp.com/calculator',
+      lastModified: '2026-04-17',
+      changeFrequency: 'monthly',
+      priority: 0.95,
+    },
+    {
+      url: 'https://www.getreclaimapp.com/how-it-works',
+      lastModified: '2026-04-17',
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
       url: 'https://www.getreclaimapp.com/pricing',
       lastModified: '2025-03-01',
       changeFrequency: 'monthly',

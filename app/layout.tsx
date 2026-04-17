@@ -107,6 +107,9 @@ export default async function RootLayout({
                     <Link href="/how-it-works" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
                       How it works
                     </Link>
+                    <Link href="/calculator" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
+                      Calculator
+                    </Link>
                     <Link href="/pricing" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
                       Pricing
                     </Link>

@@ -130,6 +130,24 @@ export default async function AdminPage() {
   const monthExtCount = monthExtractions ?? 0
   const avgPerUser = totalUserCount > 0 ? (monthExtCount / totalUserCount).toFixed(1) : '0'
 
+  // ── Calculator analytics ───────────────────────────────────────
+  const { data: calcData } = await admin
+    .from('calculator_results')
+    .select('admin_tax_pct, monthly_cost, user_type')
+
+  const calcCount = calcData?.length ?? 0
+  const avgCalcTax = calcCount > 0
+    ? Math.round(calcData!.reduce((s, r) => s + (r.admin_tax_pct ?? 0), 0) / calcCount)
+    : 0
+  const avgCalcCost = calcCount > 0
+    ? Math.round(calcData!.reduce((s, r) => s + (r.monthly_cost ?? 0), 0) / calcCount)
+    : 0
+  const calcTypeCounts: Record<string, number> = {}
+  for (const r of calcData ?? []) {
+    if (r.user_type) calcTypeCounts[r.user_type] = (calcTypeCounts[r.user_type] ?? 0) + 1
+  }
+  const topCalcType = Object.entries(calcTypeCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? '—'
+
   // ── Render ────────────────────────────────────────────────────
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -367,6 +385,26 @@ export default async function AdminPage() {
                 ))}
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ── 6. CALCULATOR ANALYTICS ─────────────────────────── */}
+        <section>
+          <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">Calculator Analytics</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { label: 'Total Completions', value: String(calcCount), sub: 'all time', color: 'text-blue-700', bg: 'bg-blue-50' },
+              { label: 'Avg Tax Score', value: calcCount > 0 ? `${avgCalcTax}%` : '—', sub: 'across all results', color: 'text-purple-700', bg: 'bg-purple-50' },
+              { label: 'Top User Type', value: topCalcType, sub: 'most common segment', color: 'text-orange-700', bg: 'bg-orange-50' },
+              { label: 'Avg Monthly Cost', value: calcCount > 0 ? fmt$(avgCalcCost) : '—', sub: 'estimated overhead', color: 'text-green-700', bg: 'bg-green-50' },
+            ].map(({ label, value, sub, color, bg }) => (
+              <div key={label} className="bg-white rounded-2xl border border-gray-200 p-5">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{label}</p>
+                <p className={`text-3xl font-black ${color}`}>{value}</p>
+                <p className="text-xs text-gray-400 mt-1">{sub}</p>
+                <div className={`mt-3 h-1 rounded-full ${bg}`} />
+              </div>
+            ))}
           </div>
         </section>
 
