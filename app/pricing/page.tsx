@@ -4,14 +4,14 @@ import { createClient } from '@/lib/supabase/server'
 import WaitlistForm from '../WaitlistForm'
 
 export const metadata: Metadata = {
-  title: 'Pricing — RECLAIM 2.0 | Start Free',
+  title: 'Pricing — RECLAIM | Start Free',
   description:
-    'Free capacity audit included. Pro at $99/month or $349 lifetime. Built for BizOps and ops leaders.',
+    'Free capacity audit included. Pro at $29/month or $149 lifetime. Built for BizOps and ops leaders.',
   alternates: { canonical: '/pricing' },
   openGraph: {
-    title: 'Pricing — RECLAIM 2.0 | Start Free',
+    title: 'Pricing — RECLAIM | Start Free',
     description:
-      'Free capacity audit included. Pro at $99/month or $349 lifetime. Built for BizOps and ops leaders.',
+      'Free capacity audit included. Pro at $29/month or $149 lifetime. Built for BizOps and ops leaders.',
     url: 'https://www.getreclaimapp.com/pricing',
   },
 }
@@ -86,7 +86,7 @@ export default async function PricingPage() {
             </Link>
           </div>
 
-          {/* Pro — $99/mo */}
+          {/* Pro — $29/mo */}
           <div
             className="rounded-2xl p-8 flex flex-col relative overflow-hidden shadow-2xl"
             style={{ backgroundColor: '#534AB7' }}
@@ -97,9 +97,9 @@ export default async function PricingPage() {
 
             <div className="mb-8">
               <h2 className="text-2xl font-black text-white mb-1">Pro</h2>
-              <p className="text-purple-200 text-sm">For active ops teams</p>
+              <p className="text-purple-200 text-sm">For business owners and ops leaders who need weekly intelligence without the enterprise price tag.</p>
               <div className="mt-4">
-                <span className="text-5xl font-black text-white">$99</span>
+                <span className="text-5xl font-black text-white">$29</span>
                 <span className="text-purple-300 ml-2">/ month</span>
               </div>
             </div>
@@ -143,7 +143,7 @@ export default async function PricingPage() {
             <p className="text-center text-purple-300 text-xs mt-4">🛡️ 30-day money-back guarantee</p>
           </div>
 
-          {/* Founder LTD — $349 */}
+          {/* Founder LTD — $149 */}
           <div className="bg-white rounded-2xl border-2 p-8 flex flex-col shadow-sm" style={{ borderColor: '#534AB7' }}>
             <div className="mb-8">
               <div
@@ -155,11 +155,11 @@ export default async function PricingPage() {
               <h2 className="text-2xl font-black text-gray-900 mb-1">Founder</h2>
               <p className="text-gray-400 text-sm">One payment. Forever.</p>
               <div className="mt-4">
-                <span className="text-5xl font-black text-gray-900">$349</span>
+                <span className="text-5xl font-black text-gray-900">$149</span>
                 <span className="text-gray-400 ml-2">one-time</span>
               </div>
               <p className="text-xs text-gray-400 mt-2">
-                ≈ 3.5 months of Pro, paid once
+                ≈ 5 months of Pro, paid once
               </p>
             </div>
 
@@ -264,11 +264,11 @@ export default async function PricingPage() {
               },
               {
                 q: 'What is the Founder plan?',
-                a: 'The Founder plan is a lifetime deal — pay $349 once and get Pro features forever, including all future modules. Limited to 50 founding members.',
+                a: 'The Founder plan is a lifetime deal — pay $149 once and get Pro features forever, including all future modules. Limited to 50 founding members.',
               },
               {
                 q: 'Is there a team plan?',
-                a: 'Team plans are on the roadmap for Q3 2026. Email initiaops@gmail.com to get on the early list for team pricing.',
+                a: 'Team plans are on the roadmap for Q3 2026. Email hello@getreclaimapp.com to get on the early list for team pricing.',
               },
               {
                 q: 'What happens to my data?',

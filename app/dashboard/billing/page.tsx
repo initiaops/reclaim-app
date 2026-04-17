@@ -54,7 +54,7 @@ export default async function BillingPage() {
                 <p className="text-gray-500 text-sm mt-1">Paid once. Yours forever.</p>
               </div>
               <div className="text-right">
-                <p className="text-3xl font-black text-gray-900">$349</p>
+                <p className="text-3xl font-black text-gray-900">$149</p>
                 <p className="text-sm text-gray-400">one-time</p>
               </div>
             </div>
@@ -80,7 +80,7 @@ export default async function BillingPage() {
                 <p className="text-gray-500 text-sm mt-1">Unlimited capacity audits and all modules.</p>
               </div>
               <div className="text-right">
-                <p className="text-3xl font-black text-gray-900">$99</p>
+                <p className="text-3xl font-black text-gray-900">$29</p>
                 <p className="text-sm text-gray-400">per month</p>
               </div>
             </div>
@@ -122,7 +122,7 @@ export default async function BillingPage() {
                 className="block w-full text-center font-bold py-3 rounded-xl text-white transition-opacity hover:opacity-90 text-sm"
                 style={{ backgroundColor: '#534AB7' }}
               >
-                Upgrade to Pro — $99/month
+                Upgrade to Pro — $29/month
               </Link>
               <p className="text-xs text-center text-gray-400 mt-2">Unlimited audits. Cancel anytime.</p>
             </div>

@@ -680,8 +680,8 @@ export default function DashboardClient({
           <div className="rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-2 border-dashed border-purple-200"
             style={{ backgroundColor: '#F5F3FF' }}>
             <div>
-              <p className="font-black text-gray-900">Upgrade to Pro — $49/month</p>
-              <p className="text-sm text-gray-500 mt-1">Unlimited extractions + persistent history. Cancel anytime.</p>
+              <p className="font-black text-gray-900">Upgrade to Pro — $29/month</p>
+              <p className="text-sm text-gray-500 mt-1">Unlimited capacity audits + full intelligence suite. Cancel anytime.</p>
             </div>
             <Link href="/pricing"
               className="shrink-0 text-white font-bold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 text-sm"

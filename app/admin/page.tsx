@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 const ADMIN_EMAIL = 'initiaops@gmail.com'
-const PRO_PRICE = 49
+const PRO_PRICE = 29
 const COST_VERCEL = 20
 const COST_SUPABASE = 25
 const COST_NAMECHEAP = 1.25 // $15/yr amortized
@@ -207,7 +207,7 @@ export default async function AdminPage() {
             </div>
             <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
               <p className="text-xs text-gray-400">
-                Revenue = Pro subscribers × $49 · OpenAI = $0.05/extraction · Stripe = 2.9% + $0.30/sub · All figures auto-calculated
+                Revenue = Pro subscribers × $29 · OpenAI = $0.05/extraction · Stripe = 2.9% + $0.30/sub · All figures auto-calculated
               </p>
             </div>
           </div>

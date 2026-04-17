@@ -3,7 +3,7 @@
 import { useState } from 'react'
 
 const VALID_CODES: Record<string, { label: string; discountedPrice: string }> = {
-  PLAYBOOK: { label: '20% off your first month', discountedPrice: '$39.20' },
+  PLAYBOOK: { label: '20% off your first month', discountedPrice: '$23.20' },
 }
 
 export default function ProUpgradeSection() {
@@ -30,7 +30,7 @@ export default function ProUpgradeSection() {
         className="block text-center font-black py-4 rounded-xl bg-white hover:bg-gray-50 transition-all shadow-lg hover:shadow-xl text-lg"
         style={{ color: 'var(--brand)' }}
       >
-        Upgrade to Pro — {applied ? applied.discountedPrice : '$49'}/mo
+        Upgrade to Pro — {applied ? applied.discountedPrice : '$29'}/mo
       </a>
 
       {/* Promo code toggle */}

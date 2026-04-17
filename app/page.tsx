@@ -41,7 +41,7 @@ const jsonLd = {
   url: 'https://www.getreclaimapp.com',
   description:
     'Operational intelligence platform for BizOps and Ops leaders. Capacity audits, administrative tax scoring, and reallocation recommendations grounded in real calendar data.',
-  offers: { '@type': 'Offer', price: '99', priceCurrency: 'USD' },
+  offers: { '@type': 'Offer', price: '29', priceCurrency: 'USD' },
 }
 
 export default function Home() {

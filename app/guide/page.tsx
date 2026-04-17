@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'How to Use RECLAIM 2.0 — Ops Intelligence Guide',
-  description: 'Step-by-step guide to running capacity audits, connecting Google Calendar, and eliminating administrative tax with RECLAIM 2.0.',
+  title: 'How to Use RECLAIM — Ops Intelligence Guide',
+  description: 'Step-by-step guide to running capacity audits, connecting Google Calendar, and eliminating administrative tax with RECLAIM.',
   alternates: { canonical: '/guide' },
   openGraph: {
-    title: 'How to Use RECLAIM 2.0 — Ops Intelligence Guide',
-    description: 'Step-by-step guide to running capacity audits, connecting Google Calendar, and eliminating administrative tax with RECLAIM 2.0.',
+    title: 'How to Use RECLAIM — Ops Intelligence Guide',
+    description: 'Step-by-step guide to running capacity audits, connecting Google Calendar, and eliminating administrative tax with RECLAIM.',
     url: 'https://www.getreclaimapp.com/guide',
   },
 }
@@ -48,7 +48,7 @@ export default function GuidePage() {
             User Guide
           </span>
           <h1 className="text-4xl font-black text-gray-900 mb-4 leading-tight">
-            How to use RECLAIM 2.0
+            How to use RECLAIM
           </h1>
           <p className="text-xl text-gray-500 leading-relaxed max-w-2xl">
             RECLAIM is an operational intelligence tool that surfaces where your team&apos;s time actually goes,
@@ -274,11 +274,11 @@ export default function GuidePage() {
                   </th>
                   <th className="px-4 py-4 font-bold text-center" style={{ color: BRAND }}>
                     <div>Pro</div>
-                    <div className="text-xs font-normal mt-0.5" style={{ color: '#9CA3AF' }}>$99/mo</div>
+                    <div className="text-xs font-normal mt-0.5" style={{ color: '#9CA3AF' }}>$29/mo</div>
                   </th>
                   <th className="px-4 py-4 font-bold text-center text-amber-700">
                     <div>Founder</div>
-                    <div className="text-xs font-normal text-gray-400 mt-0.5">$349 lifetime</div>
+                    <div className="text-xs font-normal text-gray-400 mt-0.5">$149 lifetime</div>
                   </th>
                 </tr>
               </thead>
@@ -364,7 +364,7 @@ export default function GuidePage() {
               style={{ backgroundColor: BRAND }}
             >
               <p className="font-black text-white text-lg mb-0.5">Pro</p>
-              <p className="text-2xl font-black text-white mb-1">$99<span className="text-base font-normal text-purple-200">/mo</span></p>
+              <p className="text-2xl font-black text-white mb-1">$29<span className="text-base font-normal text-purple-200">/mo</span></p>
               <p className="text-xs text-purple-300 mb-4">Unlimited audits · all integrations</p>
               <Link href="/pricing" className="block text-center text-sm font-black py-2.5 rounded-xl bg-white transition-all hover:bg-gray-50" style={{ color: BRAND }}>
                 Upgrade to Pro
@@ -372,7 +372,7 @@ export default function GuidePage() {
             </div>
             <div className="rounded-xl border-2 border-amber-200 bg-amber-50 p-4 text-center">
               <p className="font-black text-amber-900 text-lg mb-0.5">Founder</p>
-              <p className="text-2xl font-black text-amber-900 mb-1">$349<span className="text-base font-normal text-amber-600"> once</span></p>
+              <p className="text-2xl font-black text-amber-900 mb-1">$149<span className="text-base font-normal text-amber-600"> once</span></p>
               <p className="text-xs text-amber-600 mb-4">All Pro features · no monthly bill</p>
               <Link href="/pricing" className="block text-center text-sm font-bold py-2.5 rounded-xl bg-amber-400 text-amber-900 hover:bg-amber-500 transition-all">
                 Lock in lifetime access
