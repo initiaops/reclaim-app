@@ -15,17 +15,17 @@ export const metadata: Metadata = {
     template: '%s',
   },
   description:
-    'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Operational intelligence for revenue teams.',
+    "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
   openGraph: {
     title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
     description:
-      'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Operational intelligence for revenue teams.',
+      "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
     url: 'https://www.getreclaimapp.com',
     siteName: 'RECLAIM',
     type: 'website',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://www.getreclaimapp.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'RECLAIM — Operational Intelligence',
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
     description:
-      'RECLAIM reads your sales calls and emails and automatically extracts every CRM field in seconds. Operational intelligence for revenue teams.',
-    images: ['/og-image.png'],
+      "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
+    images: ['https://www.getreclaimapp.com/og-image.png'],
   },
 }
 

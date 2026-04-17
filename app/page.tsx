@@ -5,19 +5,30 @@ import WaitlistForm from './WaitlistForm'
 export const metadata: Metadata = {
   title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
   description:
-    'Stop guessing where your team\'s time goes. RECLAIM maps actual capacity, identifies administrative overhead, and tells you where to redirect bandwidth.',
+    "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
   alternates: { canonical: '/' },
   openGraph: {
     title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
     description:
-      'Stop guessing where your team\'s time goes. RECLAIM maps actual capacity, identifies administrative overhead, and tells you where to redirect bandwidth.',
+      "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
     url: 'https://www.getreclaimapp.com',
+    siteName: 'RECLAIM',
+    type: 'website',
+    images: [
+      {
+        url: 'https://www.getreclaimapp.com/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
     description:
-      'Stop guessing where your team\'s time goes. RECLAIM maps actual capacity, identifies administrative overhead, and tells you where to redirect bandwidth.',
+      "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
+    images: ['https://www.getreclaimapp.com/og-image.png'],
   },
 }
 
