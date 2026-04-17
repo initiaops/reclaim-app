@@ -255,7 +255,7 @@ export default function AccountClient({ userEmail, joinedDate, profile }: Props)
 
           <div className="flex flex-col sm:flex-row gap-3">
             <a
-              href="mailto:hello@getreclaimapp.com?subject=Data export request"
+              href="mailto:initiaops@gmail.com?subject=Data export request"
               className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
             >
               Download my data
@@ -286,7 +286,7 @@ export default function AccountClient({ userEmail, joinedDate, profile }: Props)
                   Cancel
                 </button>
                 <a
-                  href="mailto:hello@getreclaimapp.com?subject=Delete my account&body=Please delete my account associated with this email."
+                  href="mailto:initiaops@gmail.com?subject=Delete my account&body=Please delete my account associated with this email."
                   className="flex-1 py-2.5 rounded-xl text-sm font-bold text-center bg-red-600 text-white hover:bg-red-700 transition-colors"
                 >
                   Request deletion

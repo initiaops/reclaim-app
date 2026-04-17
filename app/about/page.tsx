@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import WaitlistForm from '../WaitlistForm'
 
@@ -117,26 +118,65 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-black text-gray-900 mb-10 text-center">Built by an operator, for operators</h2>
           <div className="rounded-2xl border border-gray-100 p-8 md:p-10 shadow-sm">
+            {/* Photo + name */}
+            <div className="flex items-center gap-5 mb-8">
+              <div className="shrink-0">
+                <Image
+                  src="/kunal.jpg"
+                  alt="Kunal Kothari"
+                  width={80}
+                  height={80}
+                  className="rounded-full object-cover"
+                  style={{ border: '3px solid #534AB7' }}
+                />
+              </div>
+              <div>
+                <p className="font-black text-gray-900 text-xl leading-tight">Kunal Kothari</p>
+                <p className="text-sm text-gray-500 mt-1">Founder · Strategy &amp; Operations · Initia Ops LLC</p>
+              </div>
+            </div>
+
+            {/* Bio */}
             <p className="text-gray-600 text-sm leading-relaxed mb-4">
-              The founder spent 7 years in aerospace operations managing multi-million dollar
-              supplier portfolios, building executive capacity models, and leading cross-functional
-              process improvement initiatives across global teams.
+              Before building RECLAIM, I spent 7 years at Pratt &amp; Whitney / RTX in aerospace
+              operations — owning program management and governance for a $5M+ outsourced supplier
+              portfolio across 20+ global vendors, designing capacity models and executive
+              dashboards, and leading cross-functional process improvement initiatives across
+              global teams.
             </p>
             <p className="text-gray-600 text-sm leading-relaxed mb-4">
-              The problem that kept coming up: leadership always wanted to know where the team&apos;s
-              time was going, and there was never a clean answer. Spreadsheets, gut feel, anecdotal
+              The problem I kept running into: leadership always wanted to know where the team&apos;s
+              time was going, and I never had a clean answer. Spreadsheets, gut feel, anecdotal
               evidence — nothing quantified, nothing defensible, nothing that could actually change
               a resourcing decision.
             </p>
-            <p className="text-gray-600 text-sm leading-relaxed mb-6">
+            <p className="text-gray-600 text-sm leading-relaxed mb-8">
               RECLAIM is the answer to that problem.
             </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-500 hover:text-gray-800 transition-colors"
+
+            {/* Credential pills */}
+            <div className="flex flex-wrap gap-2 mb-8">
+              {['MBA — UConn', '7 yrs RTX / P&W', '$5M+ supplier portfolios', 'BizOps & Program Ops'].map(pill => (
+                <span
+                  key={pill}
+                  className="text-xs font-semibold px-3 py-1.5 rounded-full"
+                  style={{ backgroundColor: '#EEEDFE', color: '#534AB7' }}
+                >
+                  {pill}
+                </span>
+              ))}
+            </div>
+
+            {/* LinkedIn */}
+            <a
+              href="https://www.linkedin.com/in/kkothari-1/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold hover:opacity-80 transition-opacity"
+              style={{ color: 'var(--brand)' }}
             >
-              Get in touch →
-            </Link>
+              Connect on LinkedIn →
+            </a>
           </div>
         </div>
       </section>

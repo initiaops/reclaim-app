@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import WaitlistForm from './WaitlistForm'
 
@@ -476,6 +477,19 @@ export default function Home() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-10">
+            {/* Founder identity */}
+            <div className="flex flex-col items-center mb-6">
+              <Image
+                src="/kunal.jpg"
+                alt="Kunal Kothari"
+                width={80}
+                height={80}
+                className="rounded-full object-cover mb-4"
+                style={{ border: '3px solid #534AB7' }}
+              />
+              <p className="font-black text-gray-900 text-lg leading-tight">Kunal Kothari</p>
+              <p className="text-sm text-gray-500 mt-1">Founder, RECLAIM</p>
+            </div>
             <h2 className="text-3xl font-black text-gray-900 mb-3">Get in touch</h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">
               Questions about RECLAIM, early access, or partnership opportunities?
@@ -483,10 +497,10 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="flex justify-center mb-8">
+          <div className="grid sm:grid-cols-2 gap-5 max-w-xl mx-auto">
             <a
-              href="mailto:hello@getreclaimapp.com"
-              className="rounded-2xl border border-gray-100 bg-gray-50 p-6 flex items-start gap-4 hover:border-purple-200 hover:bg-purple-50 transition-all group max-w-sm w-full"
+              href="mailto:initiaops@gmail.com"
+              className="rounded-2xl border border-gray-100 bg-gray-50 p-6 flex items-start gap-4 hover:border-purple-200 hover:bg-purple-50 transition-all group"
             >
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
@@ -499,18 +513,33 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">Email</p>
-                <p className="font-semibold text-gray-900 group-hover:text-purple-700 transition-colors">hello@getreclaimapp.com</p>
+                <p className="font-semibold text-gray-900 group-hover:text-purple-700 transition-colors text-sm">initiaops@gmail.com</p>
                 <p className="text-xs text-gray-400 mt-1">Usually responds within 24 hours</p>
               </div>
             </a>
-          </div>
 
-          <p className="text-center text-sm text-gray-400">
-            Prefer a call?{' '}
-            <Link href="/contact" className="hover:text-purple-700 transition-colors underline underline-offset-2">
-              Book a 20-minute intro at getreclaimapp.com/contact
-            </Link>
-          </p>
+            <a
+              href="https://www.linkedin.com/in/kkothari-1/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-2xl border border-gray-100 bg-gray-50 p-6 flex items-start gap-4 hover:border-purple-200 hover:bg-purple-50 transition-all group"
+            >
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
+                style={{ backgroundColor: '#EEEDFE' }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                  <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+                </svg>
+              </div>
+              <div>
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">LinkedIn</p>
+                <p className="font-semibold text-gray-900 group-hover:text-purple-700 transition-colors text-sm">Kunal Kothari</p>
+                <p className="text-xs text-gray-400 mt-1">Connect for ops and BizOps discussions</p>
+              </div>
+            </a>
+          </div>
         </div>
       </section>
 

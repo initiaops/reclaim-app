@@ -71,7 +71,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-lg font-bold text-gray-900 mb-3">11. Contact</h2>
-            <p>Questions about these terms? Email us at <a href="mailto:hello@getreclaimapp.com" className="underline" style={{ color: 'var(--brand)' }}>hello@getreclaimapp.com</a>.</p>
+            <p>Questions about these terms? Email us at <a href="mailto:initiaops@gmail.com" className="underline" style={{ color: 'var(--brand)' }}>initiaops@gmail.com</a>.</p>
           </section>
         </div>
       </div>

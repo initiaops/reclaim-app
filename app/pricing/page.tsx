@@ -268,7 +268,7 @@ export default async function PricingPage() {
               },
               {
                 q: 'Is there a team plan?',
-                a: 'Team plans are on the roadmap for Q3 2026. Email hello@getreclaimapp.com to get on the early list for team pricing.',
+                a: 'Team plans are on the roadmap for Q3 2026. Email initiaops@gmail.com to get on the early list for team pricing.',
               },
               {
                 q: 'What happens to my data?',
