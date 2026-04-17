@@ -147,49 +147,118 @@ export default function Home() {
       {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
       <section id="how-it-works" className="py-24 px-4" style={{ backgroundColor: '#F8F7FF' }}>
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-gray-900 mb-4">How RECLAIM works</h2>
+          <div className="text-center mb-14">
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#534AB7' }}>How it works</span>
+            <h2 className="text-4xl font-black text-gray-900 mt-3 mb-4">
+              Two ways to understand your capacity.<br className="hidden sm:block" /> Both free to start.
+            </h2>
             <p className="text-lg text-gray-500">
-              From workload description to actionable intelligence in under 60 seconds.
+              No credit card. No sales call. No limit on the calculator — ever.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                step: '01',
-                title: 'Describe your team\'s workload',
-                description:
-                  'Share your team\'s current state — active projects, time allocation, and what\'s feeling stuck. Connect Google Calendar for automatic data instead of self-reporting.',
-              },
-              {
-                step: '02',
-                title: 'Get your Capacity Audit',
-                description:
-                  'RECLAIM maps where your team\'s time actually goes vs where it should — broken down by role, project type, and administrative overhead percentage.',
-              },
-              {
-                step: '03',
-                title: 'Act on the intelligence',
-                description:
-                  'Receive specific reallocation recommendations with dollar-value attached, risk signals ranked by severity, and a leadership-ready weekly ops brief.',
-              },
-            ].map((item) => (
-              <div
-                key={item.step}
-                className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm card-hover"
-              >
-                <div
-                  className="inline-block text-xs font-black px-3 py-1 rounded-full mb-5 tracking-widest"
-                  style={{ backgroundColor: '#EEEDFE', color: '#534AB7' }}
-                >
-                  STEP {item.step}
+          <div className="grid md:grid-cols-[1fr_auto_1fr] gap-4 items-start">
+
+            {/* LEFT — The Calculator */}
+            <div className="bg-white rounded-2xl border-2 border-green-200 p-8 flex flex-col h-full">
+              <div className="mb-6">
+                <span className="inline-block text-xs font-bold px-3 py-1.5 rounded-full bg-green-100 text-green-700 mb-5">
+                  Free forever. No limit.
+                </span>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 bg-green-100">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="9" y="2" width="6" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                    <path d="m9 12 2 2 4-4"/>
+                  </svg>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{item.description}</p>
+                <h3 className="text-xl font-black text-gray-900">Answer 10 questions</h3>
               </div>
-            ))}
+
+              <ol className="space-y-5 mb-8 flex-1">
+                {[
+                  "Answer 10 questions about your team's meeting load, manual processes, and how capacity is being used.",
+                  "Get your Administrative Tax Score — the percentage of your team's time going to low-ROI work.",
+                  "See the dollar cost of that overhead, your top risk signals, and 3 specific recommendations. Instantly.",
+                ].map((text, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-black shrink-0 mt-0.5">
+                      {i + 1}
+                    </span>
+                    <p className="text-sm text-gray-600 leading-relaxed">{text}</p>
+                  </li>
+                ))}
+              </ol>
+
+              <div>
+                <Link
+                  href="/calculator"
+                  className="block text-center font-bold py-3.5 rounded-xl border-2 border-green-500 text-green-700 hover:bg-green-50 transition-all"
+                >
+                  Try the calculator →
+                </Link>
+                <p className="text-center text-xs text-gray-400 mt-3">No signup. No limit. Takes 3 minutes.</p>
+              </div>
+            </div>
+
+            {/* OR divider */}
+            <div className="flex md:flex-col items-center justify-center gap-3 py-6 md:pt-24">
+              <div className="h-px flex-1 md:h-10 md:w-px md:flex-none bg-gray-200" />
+              <span className="text-xs font-bold text-gray-400 bg-white border border-gray-200 rounded-full px-3 py-1.5 shrink-0">or</span>
+              <div className="h-px flex-1 md:h-10 md:w-px md:flex-none bg-gray-200" />
+            </div>
+
+            {/* RIGHT — The AI Audit */}
+            <div className="bg-white rounded-2xl border-2 p-8 flex flex-col h-full" style={{ borderColor: '#534AB7' }}>
+              <div className="mb-6">
+                <span className="inline-block text-xs font-bold px-3 py-1.5 rounded-full mb-5" style={{ backgroundColor: '#EEEDFE', color: '#534AB7' }}>
+                  1 free audit/month. Unlimited on Pro.
+                </span>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#EEEDFE' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                    <circle cx="17" cy="17" r="3"/><path d="m19 19-1.5-1.5"/>
+                  </svg>
+                </div>
+                <h3 className="text-xl font-black text-gray-900">Connect your real data</h3>
+              </div>
+
+              <ol className="space-y-5 mb-8 flex-1">
+                {[
+                  "Connect your Google Calendar or describe your team's current workload. RECLAIM reads your real data.",
+                  "AI maps your actual capacity allocation — meeting load, focus time, administrative overhead — in 60 seconds.",
+                  "Get a full capacity audit with risk signals, reallocation recommendations with dollar value, and a leadership-ready ops brief.",
+                ].map((text, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span
+                      className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 mt-0.5 text-white"
+                      style={{ backgroundColor: '#534AB7' }}
+                    >
+                      {i + 1}
+                    </span>
+                    <p className="text-sm text-gray-600 leading-relaxed">{text}</p>
+                  </li>
+                ))}
+              </ol>
+
+              <div>
+                <Link
+                  href="/signup"
+                  className="block text-center font-bold py-3.5 rounded-xl text-white transition-all hover:opacity-90"
+                  style={{ backgroundColor: '#534AB7' }}
+                >
+                  Run an AI audit →
+                </Link>
+                <p className="text-center text-xs text-gray-400 mt-3">1 free audit/month. Unlimited on Pro ($29/mo).</p>
+              </div>
+            </div>
           </div>
+
+          <p className="text-center text-gray-500 mt-10 text-sm">
+            Not sure which to start with? The calculator takes 3 minutes and requires nothing. Start there.{' '}
+            <Link href="/calculator" className="font-semibold underline underline-offset-2 hover:text-purple-700 transition-colors" style={{ color: '#534AB7' }}>
+              Start the calculator →
+            </Link>
+          </p>
         </div>
       </section>
 
