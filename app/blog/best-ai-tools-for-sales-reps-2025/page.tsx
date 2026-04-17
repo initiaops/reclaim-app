@@ -2,265 +2,202 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Best AI Tools for Sales Reps in 2025 | RECLAIM',
-  description: 'A practical breakdown of the AI tools actually worth paying for — call intelligence, CRM automation, email AI, and forecasting — plus how to build your stack.',
+  title: 'Why Ops Teams Are Always Overwhelmed | RECLAIM',
+  description: "If your ops team is constantly overwhelmed, the problem probably isn't headcount. Here's what's actually causing it and how to fix it.",
   alternates: { canonical: '/blog/best-ai-tools-for-sales-reps-2025' },
   openGraph: {
-    title: 'Best AI Tools for Sales Reps in 2025',
-    description: 'A practical breakdown of the AI tools actually worth paying for in sales — call intelligence, CRM automation, email AI, and forecasting.',
+    title: 'Why Ops Teams Are Always Overwhelmed | RECLAIM',
+    description: "If your ops team is constantly overwhelmed, the problem probably isn't headcount. Here's what's actually causing it and how to fix it.",
     url: 'https://www.getreclaimapp.com/blog/best-ai-tools-for-sales-reps-2025',
+    type: 'article',
   },
 }
 
-export default function BestAIToolsPost() {
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: "Why ops teams are always overwhelmed (it's not headcount)",
+  description: "If your ops team is constantly overwhelmed, the problem probably isn't headcount. Here's what's actually causing it and how to fix it.",
+  author: { '@type': 'Organization', name: 'RECLAIM' },
+  publisher: { '@type': 'Organization', name: 'RECLAIM', url: 'https://www.getreclaimapp.com' },
+  datePublished: '2026-04-01',
+  dateModified: '2026-04-17',
+}
+
+export default function Post() {
   return (
     <div className="bg-white min-h-screen">
-      <div className="bg-amber-50 border-b border-amber-200 px-4 py-3"><div className="max-w-2xl mx-auto text-sm text-amber-800"><span className="font-bold">Note:</span> This post was written during RECLAIM's initial CRM extraction phase. Our current product focuses on operational capacity intelligence for BizOps and ops leaders. <a href="/" className="underline font-semibold hover:text-amber-900">Learn more at getreclaimapp.com</a></div></div>
-      <div className="max-w-2xl mx-auto px-4 py-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-        {/* Back link */}
-        <Link href="/blog" className="text-sm font-bold" style={{ color: 'var(--brand)' }}>
-          ← All articles
-        </Link>
+      {/* Header */}
+      <div className="max-w-3xl mx-auto px-4 pt-16 pb-8">
+        <div className="mb-6">
+          <span className="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-purple-100 text-purple-700">Operations</span>
+        </div>
+        <h1 className="text-4xl sm:text-5xl font-black text-gray-900 leading-tight mb-6">
+          Why ops teams are always overwhelmed (it&apos;s not headcount)
+        </h1>
+        <p className="text-xl text-gray-500 leading-relaxed mb-8">
+          Adding people to an overwhelmed ops team is the most common and most expensive mistake a growing company can make. The problem is almost never headcount. Here&apos;s what it actually is — and how to fix it.
+        </p>
+        <div className="flex items-center gap-4 text-sm text-gray-400 mb-8 border-b border-gray-100 pb-8">
+          <span>RECLAIM</span>
+          <span>·</span>
+          <span>8 min read</span>
+          <span>·</span>
+          <time>April 2026</time>
+        </div>
+      </div>
 
-        {/* Header */}
-        <div className="mt-8 mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold px-2.5 py-1 rounded-full"
-              style={{ backgroundColor: '#EDE9FE', color: 'var(--brand)' }}>
-              AI Tools
-            </span>
-            <span className="text-xs text-gray-400">March 15, 2025</span>
-            <span className="text-xs text-gray-400">·</span>
-            <span className="text-xs text-gray-400">9 min read</span>
-          </div>
-          <h1 className="text-4xl font-black text-gray-900 leading-tight mb-4">
-            Best AI Tools for Sales Reps in 2025
-          </h1>
-          <p className="text-xl text-gray-500 leading-relaxed">
-            A practical breakdown of the AI tools actually worth paying for — call intelligence, CRM automation, email AI, and forecasting — plus how to build your stack without blowing your budget.
+      {/* Content */}
+      <div className="max-w-3xl mx-auto px-4 pb-16">
+        <div className="prose prose-gray max-w-none">
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">The headcount trap</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            When an ops team is drowning, the instinctive response from leadership is to add a person. It feels like a reasonable solution: more work than people can handle, so add more people. Simple supply and demand.
           </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The problem is that most ops teams don't have a headcount problem. They have a capacity utilization problem. The work exists, the people exist, but the way time is being allocated means that the right work never gets the right amount of attention. Adding a person to this situation gives you a more expensive version of the same broken system — with one additional person experiencing the same overwhelm as everyone else.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            The tell is in what happens after the hire. If the new person gets absorbed into the existing chaos within 60 days — if they're immediately reactive, immediately pulled into the same meetings and firefights, with no more strategic work getting done than before — the hire didn't solve the problem. It just bought you six months before leadership starts asking about headcount again.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">The three real causes of ops overwhelm</h2>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3">a. Reactive mode dominance</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            When more than 60% of a team's week is spent responding to requests, firefighting problems, and executing unplanned work, there is effectively no protected time for the work that actually changes the trajectory of the business.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            This isn't a motivation problem or a skills problem. It's a structural problem. When every stakeholder with a request can land it directly in the ops team's queue — via Slack, via email, via a quick hallway conversation — with no filtering, no prioritization, and no cost, the queue never empties. Reactive work expands to fill all available time because reactive work is always urgent and strategic work rarely is.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            The result: an ops team that is constantly busy and constantly behind, where the most important long-term projects are perpetually in the "next sprint" column. A new hire enters the same environment and becomes reactive within weeks — not because they're the wrong person, but because the structure creates that outcome.
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3">b. Process debt accumulation</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Process debt is what accumulates when teams solve problems with workarounds instead of systems. Every manual spreadsheet that replaced a tool that was "too expensive." Every recurring email thread that exists because no one built an intake form. Every weekly meeting that handles a question that could have been answered by a documented FAQ.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Each individual piece of process debt looks small. But it compounds. An ops team carrying significant process debt spends a substantial portion of every week maintaining workarounds — workarounds that take more time than a real solution would, produce less consistent output, and require constant human intervention to function at all.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            Process debt also makes onboarding new hires expensive. Every new person needs to learn the workarounds, understand the exceptions, and be briefed on which documented processes are actually out of date. This is time the existing team doesn't have.
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3">c. Role creep and misalignment</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Role misalignment is the most expensive and least visible cause of ops overwhelm. It happens when senior people get pulled into junior work, when specialists spend half their day on generalist coordination, and when the gap between what a role is supposed to do and what it actually does widens to the point where the team's actual capacity is a fraction of its apparent capacity.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            A director who spends 35% of their week in status meetings and writing reports is not operating as a director. Their actual strategic contribution to the business is being crowded out by work that should either be delegated, automated, or eliminated. When you add up the cost of role misalignment across a team, the effective capacity loss is typically 20 to 40% — before you've even accounted for reactive mode or process debt.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">The visibility problem — why ops leaders can't prove it</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Even when an ops leader correctly identifies the real problem — capacity utilization, not headcount — they often struggle to make the case to leadership. The reason: no data.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            "We're busy" is not a defensible position when leadership is making headcount decisions. Leaders need to justify investment, and "the team feels overwhelmed" doesn't justify it — especially when the ops team just got a hire approved last cycle.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            What ops leaders need is a number. Specifically: what percentage of the team's capacity is going to administrative and reactive work, what is the dollar value of that misallocated time, and what specifically would change if the structural problem were addressed. Without that number, the conversation defaults to headcount — because headcount is a concrete request that leadership knows how to evaluate.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">How to diagnose your capacity problem in one week</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            You don't need a consultant or a time-tracking tool to do a useful capacity diagnosis. Here's a five-day framework:
+          </p>
+          <ul className="list-none pl-0 space-y-4 mb-6">
+            <li className="flex gap-4">
+              <span className="font-black text-purple-700 w-12 shrink-0">Mon</span>
+              <span className="text-gray-700">List every recurring meeting for every team member. For each one: who attends, how long it is, and what the clear output is. If you can't name the output in one sentence, flag it.</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="font-black text-purple-700 w-12 shrink-0">Tue</span>
+              <span className="text-gray-700">Map every process your team repeats more than once a week. Include informal processes — recurring email threads, manual reports, regular coordination loops. These are your process debt candidates.</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="font-black text-purple-700 w-12 shrink-0">Wed</span>
+              <span className="text-gray-700">For each team member, estimate the actual percentage split between strategic work, operational work, and administrative work. Ask them to do this independently, then compare. The gap between their estimate and yours is revealing.</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="font-black text-purple-700 w-12 shrink-0">Thu</span>
+              <span className="text-gray-700">Use the administrative hours from Wednesday to calculate your admin tax score. Divide total admin hours by total capacity hours. Convert to dollars using your team's average fully-loaded hourly rate.</span>
+            </li>
+            <li className="flex gap-4">
+              <span className="font-black text-purple-700 w-12 shrink-0">Fri</span>
+              <span className="text-gray-700">Identify the single biggest drain — the one source of administrative overhead that, if fixed, would have the largest capacity impact. This is where you focus first.</span>
+            </li>
+          </ul>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">The administrative tax score</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The administrative tax score is the number that makes the invisible visible. It's the percentage of your team's total available capacity that goes to low-ROI administrative work — and when multiplied by your team's fully-loaded cost, it produces a dollar figure that leadership can evaluate.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            The RECLAIM calculator produces this score in under three minutes, with no signup required. It gives you the number you need to have a data-grounded conversation about capacity — one that moves beyond "we're overwhelmed" to "here's specifically what it's costing and here's what fixing it would unlock." See also: <Link href="/blog/automate-crm-data-entry" className="font-bold" style={{ color: '#534AB7' }}>how to calculate your administrative tax</Link> manually using the 4-step formula.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">Three fixes that actually work</h2>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3">a. Meeting audit and elimination</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The simplest and fastest capacity intervention available is meeting elimination. Here's the test: cancel one recurring meeting this week without explanation. If someone follows up and says "what happened to our sync?" — you've learned the meeting has value to someone. If no one mentions it, the meeting was not adding value.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            Apply this to your three most questionable recurring meetings over the next three weeks. You'll identify at least one that nobody misses. A one-hour weekly meeting with five people costs 260 person-hours per year. Eliminating two such meetings recaptures 520 person-hours — roughly 13 weeks of one person's time.
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3">b. Process elimination before automation</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The instinct when facing a painful manual process is to automate it. This is often wrong. Automating a broken process gives you a faster broken process. The right sequence is: eliminate what isn't needed, simplify what remains, then automate what's left.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            For every process in your team's recurring workload, ask: what would happen if we stopped doing this? If the answer is "nothing bad," eliminate it. If something bad would happen, ask: does the output actually need to be created manually, or is it already somewhere that could be accessed directly? Automation comes after these questions are answered.
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3">c. Protected strategic time blocks</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Strategic work doesn't get done because reactive work is always more urgent. The only structural fix is to protect strategic time before reactive work has a chance to claim it. This means putting 20% of each person's week — 8 hours — on the calendar at the start of every week as blocked focus time.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            The blocks need to be treated as unmoveable. Not "I'll do strategic work if there's time after my other commitments," but "these 8 hours are booked and other requests schedule around them." This is the difference between organizations that continuously improve and organizations that continuously firefight.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">When you actually do need more headcount</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            None of this means headcount is never the answer. There are situations where adding a person is the right move. The test is whether all three of these conditions are true:
+          </p>
+          <ul className="list-disc pl-6 space-y-3 text-gray-700 mb-4">
+            <li><strong>Demand has genuinely increased and you can quantify it.</strong> Not "we feel busier," but "the volume of X work has increased by Y% and we can show the numbers."</li>
+            <li><strong>Your administrative tax is already below 30%.</strong> If your team is highly efficient and genuinely running at capacity on valuable work, more people is the right answer. But if your admin tax is above 40%, the correct sequence is reduce overhead first.</li>
+            <li><strong>Strategic work is being completed but the volume is too high for the team.</strong> If strategic initiatives are getting done but there are simply more of them than the team can execute in parallel, that's a real capacity gap that headcount addresses.</li>
+          </ul>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            If you can say yes to all three, make the hire. If you can't — start with capacity optimization and see how much you can reclaim before adding cost. You may find the problem is smaller than it appeared.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            For a deeper framework on how to measure and present capacity data, see our guide on <Link href="/blog/capacity-planning-bizops" className="font-bold" style={{ color: '#534AB7' }}>capacity planning for BizOps leaders</Link> and <Link href="/how-it-works" className="font-bold" style={{ color: '#534AB7' }}>how RECLAIM generates real-time operational intelligence</Link>.
+          </p>
+
         </div>
 
-        {/* Body */}
-        <div className="prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed">
-
-          <p>
-            The AI tools market for sales reps has exploded. Every category — prospecting, call recording, email writing, CRM data entry, forecasting — now has a dozen AI-powered options, each promising to "10x your pipeline."
-          </p>
-
-          <p>
-            Most of it is noise. But a handful of tools have genuinely changed how good sales reps work in 2025. This guide breaks down which categories deliver real ROI, which specific tools stand out in each, and how to build a stack that doesn't drain your budget on tools you won't actually use.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">How to Think About AI Tools for Sales</h2>
-
-          <p>
-            Before evaluating specific tools, it helps to ask: <strong>which part of my job am I trying to fix?</strong>
-          </p>
-
-          <p>
-            AI tools for sales fall into four categories, each solving a different problem:
-          </p>
-
-          <ol className="list-decimal pl-6 space-y-2">
-            <li><strong>More pipeline:</strong> Prospecting, personalization, outreach automation</li>
-            <li><strong>Better calls:</strong> Call intelligence, real-time guidance, conversation analysis</li>
-            <li><strong>Less admin:</strong> CRM automation, note-taking, deal data extraction</li>
-            <li><strong>Better forecasting:</strong> Deal health scoring, pipeline risk analysis</li>
-          </ol>
-
-          <p>
-            The biggest ROI usually comes from fixing the biggest time drain first. For most reps, that's admin (#3). For SDRs, it's prospecting (#1). Pick your category before picking your tools.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Category 1: AI Prospecting and Outreach</h2>
-
-          <p>
-            This is the most crowded category. AI prospecting tools help you find leads, personalize outreach at scale, and manage sequences — all things that used to require significant manual effort.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Apollo.io</h3>
-          <p>
-            Apollo has become the go-to prospecting tool for teams that can't afford ZoomInfo. It combines a contact database (250M+ contacts) with email sequencing and basic AI personalization. The free tier is usable; paid tiers start around $49/month per user.
-          </p>
-          <p>
-            <strong>Best for:</strong> Outbound-heavy teams who need prospecting + sequencing in one place. Not as strong as dedicated intent data tools for enterprise prospecting.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Clay</h3>
-          <p>
-            Clay is more of a data enrichment platform than a traditional prospecting tool. It pulls data from 50+ sources (LinkedIn, Clearbit, Apollo, Crunchbase) and uses AI to write personalized outreach based on the enriched profile. It's genuinely powerful but has a learning curve.
-          </p>
-          <p>
-            <strong>Best for:</strong> Teams with a dedicated growth/ops person who wants highly personalized outreach at volume. Overkill if you're running simple sequences.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Lavender</h3>
-          <p>
-            Lavender is an email AI that scores your emails in real time and suggests improvements. It integrates with Gmail, Outlook, and most sequencing tools. Particularly useful for SDRs learning to write better cold emails.
-          </p>
-          <p>
-            <strong>Best for:</strong> Reps who send a lot of cold email and want AI feedback on messaging. Less useful once you've developed strong email instincts.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Category 2: AI Call Intelligence</h2>
-
-          <p>
-            Call intelligence tools record, transcribe, and analyze your sales calls. They've matured significantly — the best ones now provide deal risk analysis, coaching feedback, and CRM sync.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Gong</h3>
-          <p>
-            Gong is the market leader and arguably the most sophisticated call intelligence platform available. It analyzes conversation patterns, competitor mentions, deal risk, and rep behavior across your entire team. It's expensive (typically $1,200–$1,600+/year per user) and built for mid-market and enterprise.
-          </p>
-          <p>
-            <strong>Best for:</strong> Sales orgs with 15+ reps where deal coaching and forecasting intelligence justify the cost. Not the right tool for a 3-person team.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Fireflies.ai</h3>
-          <p>
-            Fireflies is a more accessible alternative — it records, transcribes, and summarizes calls, and pushes summaries to your CRM. At $10–$19/month per user, it's one of the better value call intelligence tools for smaller teams.
-          </p>
-          <p>
-            <strong>Best for:</strong> Teams that want automatic call recording and basic CRM sync without the enterprise price tag. Less analytical depth than Gong, but solid for most workflows.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Otter.ai</h3>
-          <p>
-            Otter is primarily a meeting transcription tool that has added some sales-specific features. It's best known for being accurate and easy to use, though its CRM integration is limited compared to dedicated sales tools.
-          </p>
-          <p>
-            <strong>Best for:</strong> Reps who need clean transcripts for manual review. Pair it with an extraction tool if you want structured CRM data from those transcripts.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Category 3: AI CRM Automation</h2>
-
-          <p>
-            This is the category with the most recent innovation. The core problem is getting deal information — budget, decision maker, pain points, next steps — out of conversations and into your CRM without manual data entry.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">RECLAIM</h3>
-          <p>
-            RECLAIM is built specifically for this problem. You paste a transcript from any source — Zoom, Google Meet, Teams, or even rough call notes — and it extracts structured CRM fields using GPT-4o. It identifies the decision maker, budget figures, deal stage, pain points, competitors, and next steps, then lets you edit before pushing directly to HubSpot.
-          </p>
-          <p>
-            It also includes AI insight fields that most tools don't: buying signals, risk signals, relationship dynamics, and recommended actions. These go beyond simple data entry and help reps understand the quality of the conversation, not just the facts.
-          </p>
-          <p>
-            <strong>Best for:</strong> Individual reps and small teams who want fast, accurate CRM updates after every call without an enterprise contract. Starts free.
-          </p>
-          <p>
-            <strong>Try it:</strong> <Link href="/signup" className="font-bold" style={{ color: 'var(--brand)' }}>Free at getreclaimapp.com</Link>
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">HubSpot Breeze AI</h3>
-          <p>
-            HubSpot launched "Breeze AI" in 2024 as an integrated AI layer across their platform. It can summarize contacts, help write emails, and analyze deals. The capabilities are growing, but most power features require Sales Hub Professional ($90+/user/month).
-          </p>
-          <p>
-            <strong>Best for:</strong> Teams already paying for HubSpot Professional who want to consolidate tooling. Not worth upgrading to Professional just for Breeze if you're currently on a lower tier.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Salesforce Einstein</h3>
-          <p>
-            Einstein is Salesforce's AI suite — deal scoring, activity capture, lead scoring, and generative AI for summaries. Like Breeze, it's most useful if you're already deep in the Salesforce ecosystem at Enterprise tier or above.
-          </p>
-          <p>
-            <strong>Best for:</strong> Enterprise Salesforce teams. Not an entry point for smaller orgs.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Category 4: AI Forecasting and Deal Intelligence</h2>
-
-          <p>
-            Deal forecasting tools analyze your pipeline and flag at-risk deals before they slip. This category is still early — most tools are enterprise-only and expensive — but the core concept is valuable.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Clari</h3>
-          <p>
-            Clari is the most established AI forecasting platform. It uses call data, CRM activity, and engagement signals to score deal health and predict close likelihood. It's built for VP of Sales and RevOps — not individual reps.
-          </p>
-          <p>
-            <strong>Best for:</strong> Sales leaders at companies with 20+ reps who need board-level pipeline visibility.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">People.ai</h3>
-          <p>
-            People.ai captures activity data from email, calendar, and calls, then analyzes it to find correlations between rep behaviors and win rates. More analytics-focused than Clari.
-          </p>
-          <p>
-            <strong>Best for:</strong> Operations teams who want to understand what "good" looks like across the sales org and replicate it.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Building Your Stack: A Practical Framework</h2>
-
-          <p>
-            The biggest mistake reps and managers make is signing up for six tools and using none of them consistently. Start with the one category that has the highest cost in your current workflow.
-          </p>
-
-          <p>
-            <strong>If admin is your biggest time drain (most reps):</strong>
-          </p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>Turn on HubSpot/Salesforce email sync (free baseline)</li>
-            <li>Add an AI extraction tool like RECLAIM for post-call CRM updates</li>
-            <li>Use Zapier for any high-volume intake automation</li>
-          </ul>
-
-          <p>
-            <strong>If prospecting is your bottleneck (SDR/BDR teams):</strong>
-          </p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>Apollo for list building + sequencing</li>
-            <li>Lavender for email quality coaching</li>
-            <li>Add Clay if you have ops support and want deeper personalization</li>
-          </ul>
-
-          <p>
-            <strong>If you're an AE with 20+ active deals:</strong>
-          </p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>Fireflies for call recording and transcription</li>
-            <li>RECLAIM for structured extraction and CRM push after key calls</li>
-            <li>HubSpot Breeze (if on Pro tier) for deal health signals</li>
-          </ul>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">What to Avoid in 2025</h2>
-
-          <p>
-            <strong>Tools you won't use after the first week.</strong> AI writing assistants, browser extensions, and "smart" email drafters often get abandoned once the novelty wears off. Evaluate tools based on how they fit your actual workflow, not their demos.
-          </p>
-
-          <p>
-            <strong>Enterprise tools for non-enterprise teams.</strong> Gong and Clari are genuinely excellent. They're also genuinely built for large orgs. Forcing them into a 5-person team creates more overhead than value.
-          </p>
-
-          <p>
-            <strong>Stacking tools that overlap.</strong> If you're using Fireflies for call summaries and RECLAIM for extraction, those complement each other. If you're using Apollo, ZoomInfo, and Lusha for prospecting, you're paying for the same data three times.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">The Bottom Line</h2>
-
-          <p>
-            AI is genuinely transforming what's possible in sales — but the tools that create real leverage are the ones that address your specific bottleneck and fit your workflow without requiring a behavior change you're not prepared to make.
-          </p>
-
-          <p>
-            For most reps in 2025, the highest-ROI AI investment is still in admin reduction. Cutting an hour of CRM work per day adds 22 selling days per year. That math is hard to beat.
-          </p>
-
-          <div className="mt-12 p-6 rounded-2xl border border-purple-200 bg-purple-50">
-            <p className="font-black text-gray-900 mb-2">Cut your CRM admin with RECLAIM</p>
-            <p className="text-sm text-gray-600 mb-4">
-              Paste any sales call transcript and get structured CRM fields in seconds — buying signals, deal stage, decision maker, and more — then push to HubSpot in one click.
-            </p>
-            <Link href="/signup"
-              className="inline-block text-sm font-bold text-white px-5 py-2.5 rounded-full"
-              style={{ backgroundColor: 'var(--brand)' }}>
-              Start free →
+        {/* CTA */}
+        <div className="mt-16 rounded-2xl p-8 text-center" style={{ backgroundColor: '#F8F7FF' }}>
+          <h3 className="text-2xl font-black text-gray-900 mb-3">Find out where your team&apos;s capacity is actually going</h3>
+          <p className="text-gray-500 mb-6">The admin tax calculator gives you a number in 3 minutes. No signup required.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/calculator" className="inline-flex items-center justify-center font-bold px-8 py-4 rounded-xl text-white hover:opacity-90 transition-all" style={{ backgroundColor: '#534AB7' }}>
+              Try the free calculator →
+            </Link>
+            <Link href="/how-it-works" className="inline-flex items-center justify-center font-bold px-8 py-4 rounded-xl border-2 text-gray-900 hover:bg-gray-50 transition-all" style={{ borderColor: '#534AB7' }}>
+              See how it works
             </Link>
           </div>
-
         </div>
       </div>
     </div>

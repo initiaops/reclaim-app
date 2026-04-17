@@ -2,101 +2,145 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Blog — Sales Intelligence & CRM Automation | RECLAIM',
-  description: 'Practical guides for sales teams on CRM automation, AI tools, and sales methodologies like MEDDIC.',
+  title: 'Blog — RECLAIM | Ops Intelligence Guides',
+  description: 'Practical guides on capacity planning, operational intelligence, and building ops teams that run on real data.',
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Blog — RECLAIM Sales Intelligence',
-    description: 'Practical guides for sales teams on CRM automation, AI tools, and sales methodologies.',
+    title: 'Blog — RECLAIM | Ops Intelligence Guides',
+    description: 'Practical guides on capacity planning, operational intelligence, and building ops teams that run on real data.',
     url: 'https://www.getreclaimapp.com/blog',
   },
 }
 
+const categoryColors: Record<string, { bg: string; text: string }> = {
+  'Capacity Planning': { bg: 'bg-violet-100', text: 'text-violet-700' },
+  'Operations': { bg: 'bg-blue-100', text: 'text-blue-700' },
+  'BizOps': { bg: 'bg-indigo-100', text: 'text-indigo-700' },
+  'Small Business': { bg: 'bg-emerald-100', text: 'text-emerald-700' },
+}
+
 const posts = [
   {
-    slug: 'automate-crm-data-entry',
-    title: 'How to Automate CRM Data Entry: A Complete Guide for Sales Teams',
-    description: 'Sales reps lose 40–80 minutes a day to manual CRM entry. Here are five methods to automate it completely — from email sync to AI extraction.',
-    readTime: '8 min read',
-    date: 'March 10, 2025',
-    tag: 'CRM Automation',
+    slug: 'small-business-operations-efficiency',
+    title: 'Operations efficiency for small businesses: where to start',
+    description: 'A practical framework for improving ops efficiency and reducing administrative overhead — without hiring more people.',
+    category: 'Small Business',
+    readTime: '8 min',
   },
   {
-    slug: 'best-ai-tools-for-sales-reps-2025',
-    title: 'Best AI Tools for Sales Reps in 2025',
-    description: "A practical breakdown of the AI tools actually worth paying for — call intelligence, CRM automation, email AI, and forecasting — plus how to build your stack.",
-    readTime: '9 min read',
-    date: 'March 15, 2025',
-    tag: 'AI Tools',
+    slug: 'team-capacity-misallocation',
+    title: '5 signs your team is misallocating capacity (and how to fix it)',
+    description: 'Capacity misallocation is the hidden reason most ops teams are overwhelmed. Five clear signals — and what to do about each.',
+    category: 'Capacity Planning',
+    readTime: '7 min',
+  },
+  {
+    slug: 'operational-intelligence-software',
+    title: 'What is operational intelligence? (And why ops teams need it now)',
+    description: 'A clear definition of operational intelligence, how it differs from BI, and why ops leaders need it to make data-driven resourcing decisions.',
+    category: 'Operations',
+    readTime: '8 min',
+  },
+  {
+    slug: 'capacity-planning-bizops',
+    title: 'Capacity planning for BizOps leaders: a practical guide',
+    description: 'A practical framework for BizOps leaders to map team capacity, identify gaps, and make resourcing decisions with real data.',
+    category: 'BizOps',
+    readTime: '9 min',
   },
   {
     slug: 'how-to-extract-meddic-from-sales-calls',
-    title: 'How to Extract MEDDIC from Sales Calls (Manually and with AI)',
-    description: 'MEDDIC only works if you capture it accurately after every call. Learn what to listen for and how to extract each element automatically from transcripts.',
-    readTime: '7 min read',
-    date: 'March 20, 2025',
-    tag: 'Sales Methodology',
+    title: 'How to write a weekly ops brief your CEO will actually read',
+    description: 'Most ops updates are too long, too vague, and get ignored. A simple weekly brief framework that leadership actually acts on.',
+    category: 'BizOps',
+    readTime: '6 min',
   },
   {
-    slug: 'hubspot-crm-tips-small-business',
-    title: 'HubSpot CRM Tips for Small Sales Teams',
-    description: 'Most small teams set up HubSpot wrong and wonder why no one uses it. Here are the tips that actually move the needle — pipeline setup, automation, and adoption.',
-    readTime: '7 min read',
-    date: 'April 1, 2025',
-    tag: 'CRM Automation',
+    slug: 'best-ai-tools-for-sales-reps-2025',
+    title: "Why ops teams are always overwhelmed (it's not headcount)",
+    description: 'The real causes of ops overwhelm — and the three fixes that actually work without adding headcount.',
+    category: 'Operations',
+    readTime: '8 min',
   },
   {
-    slug: 'what-is-meddic-sales-framework',
-    title: 'What Is MEDDIC? The Sales Framework Explained',
-    description: 'MEDDIC is the qualification framework used by the world\'s top B2B sales teams. Here\'s what each element means, how to use it in discovery, and why it works.',
-    readTime: '9 min read',
-    date: 'April 5, 2025',
-    tag: 'Sales Methodology',
-  },
-  {
-    slug: 'sales-call-transcript-software',
-    title: 'Sales Call Transcript Software — Top Options Compared',
-    description: 'A practical comparison of Gong, Fireflies, Otter, RECLAIM, and more — what each tool actually does, what it costs, and which type of team it fits.',
-    readTime: '8 min read',
-    date: 'April 10, 2025',
-    tag: 'AI Tools',
+    slug: 'automate-crm-data-entry',
+    title: 'How to calculate your administrative tax (and what it costs)',
+    description: 'The formula for calculating your admin tax score, what your percentage means, and the dollar cost of overhead for your specific team.',
+    category: 'Capacity Planning',
+    readTime: '7 min',
   },
 ]
 
 export default function BlogIndexPage() {
   return (
-    <div className="bg-white min-h-screen">
-      <div className="bg-gray-50 border-b border-gray-200 py-16 px-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="inline-block text-xs font-bold uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full"
-            style={{ backgroundColor: '#EDE9FE', color: 'var(--brand)' }}>
+    <div className="bg-gray-50 min-h-screen">
+      {/* Header */}
+      <div className="bg-white border-b border-gray-100 py-16 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="inline-block text-xs font-bold uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full bg-purple-100 text-purple-700">
             Blog
           </div>
-          <h1 className="text-4xl font-black text-gray-900 mb-4">Sales Intelligence Insights</h1>
-          <p className="text-xl text-gray-500">Practical guides on CRM automation, AI sales tools, and closing more deals.</p>
+          <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4 leading-tight">The RECLAIM Blog</h1>
+          <p className="text-xl text-gray-500 max-w-2xl leading-relaxed">
+            Practical guides on capacity planning, operational intelligence, and building ops teams that run on real data — not gut feel.
+          </p>
+
+          {/* Category filter pills — visual only */}
+          <div className="flex flex-wrap gap-2 mt-8">
+            {['All', 'Capacity Planning', 'Operations', 'BizOps', 'Small Business'].map((cat, i) => (
+              <span
+                key={cat}
+                className={`text-xs font-bold px-4 py-2 rounded-full cursor-default transition-colors ${
+                  i === 0
+                    ? 'text-white'
+                    : 'bg-white border border-gray-200 text-gray-600 hover:border-purple-200'
+                }`}
+                style={i === 0 ? { backgroundColor: '#534AB7' } : {}}
+              >
+                {cat}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-16 space-y-6">
-        {posts.map((post) => (
-          <Link key={post.slug} href={`/blog/${post.slug}`}
-            className="block bg-white rounded-2xl border border-gray-200 p-7 hover:border-purple-200 hover:shadow-md transition-all group">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-xs font-bold px-2.5 py-1 rounded-full"
-                style={{ backgroundColor: '#EDE9FE', color: 'var(--brand)' }}>
-                {post.tag}
-              </span>
-              <span className="text-xs text-gray-400">{post.date}</span>
-              <span className="text-xs text-gray-400">·</span>
-              <span className="text-xs text-gray-400">{post.readTime}</span>
-            </div>
-            <h2 className="text-xl font-black text-gray-900 mb-2 group-hover:text-purple-800 transition-colors leading-tight">
-              {post.title}
-            </h2>
-            <p className="text-gray-500 text-sm leading-relaxed">{post.description}</p>
-            <p className="mt-4 text-xs font-bold" style={{ color: 'var(--brand)' }}>Read article →</p>
-          </Link>
-        ))}
+      {/* Posts grid */}
+      <div className="max-w-5xl mx-auto px-4 py-12">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => {
+            const colors = categoryColors[post.category] ?? { bg: 'bg-purple-100', text: 'text-purple-700' }
+            return (
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="group flex flex-col bg-white rounded-2xl border border-gray-200 p-6 hover:border-purple-200 hover:shadow-md transition-all"
+              >
+                {/* Category badge */}
+                <div className="mb-4">
+                  <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${colors.bg} ${colors.text}`}>
+                    {post.category}
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h2 className="text-lg font-black text-gray-900 leading-snug mb-3 group-hover:text-purple-800 transition-colors flex-1">
+                  {post.title}
+                </h2>
+
+                {/* Description */}
+                <p className="text-gray-500 text-sm leading-relaxed mb-4">
+                  {post.description}
+                </p>
+
+                {/* Footer */}
+                <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                  <span className="text-xs text-gray-400">{post.readTime} read</span>
+                  <span className="text-xs font-bold" style={{ color: '#534AB7' }}>Read more →</span>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
       </div>
     </div>
   )

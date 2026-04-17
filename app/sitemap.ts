@@ -48,45 +48,71 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: 'https://www.getreclaimapp.com/blog',
-      lastModified: '2025-03-20',
+      lastModified: '2026-04-17',
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    // Active ops/BizOps blog posts
     {
       url: 'https://www.getreclaimapp.com/blog/automate-crm-data-entry',
-      lastModified: '2025-03-10',
+      lastModified: '2026-04-17',
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: 'https://www.getreclaimapp.com/blog/best-ai-tools-for-sales-reps-2025',
-      lastModified: '2025-03-15',
+      lastModified: '2026-04-17',
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: 'https://www.getreclaimapp.com/blog/how-to-extract-meddic-from-sales-calls',
-      lastModified: '2025-03-20',
+      lastModified: '2026-04-17',
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
+      url: 'https://www.getreclaimapp.com/blog/capacity-planning-bizops',
+      lastModified: '2026-04-17',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: 'https://www.getreclaimapp.com/blog/operational-intelligence-software',
+      lastModified: '2026-04-17',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: 'https://www.getreclaimapp.com/blog/team-capacity-misallocation',
+      lastModified: '2026-04-17',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: 'https://www.getreclaimapp.com/blog/small-business-operations-efficiency',
+      lastModified: '2026-04-17',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    // Legacy CRM-era posts (kept, not in main index)
+    {
       url: 'https://www.getreclaimapp.com/blog/hubspot-crm-tips-small-business',
       lastModified: '2025-04-01',
       changeFrequency: 'monthly',
-      priority: 0.7,
+      priority: 0.4,
     },
     {
       url: 'https://www.getreclaimapp.com/blog/what-is-meddic-sales-framework',
       lastModified: '2025-04-05',
       changeFrequency: 'monthly',
-      priority: 0.7,
+      priority: 0.4,
     },
     {
       url: 'https://www.getreclaimapp.com/blog/sales-call-transcript-software',
       lastModified: '2025-04-10',
       changeFrequency: 'monthly',
-      priority: 0.7,
+      priority: 0.4,
     },
     {
       url: 'https://www.getreclaimapp.com/privacy',

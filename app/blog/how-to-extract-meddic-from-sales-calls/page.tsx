@@ -2,282 +2,200 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'How to Extract MEDDIC from Sales Calls (Manually and with AI) | RECLAIM',
-  description: 'MEDDIC only works if you capture it accurately after every call. Learn what to listen for and how to extract each element automatically from transcripts.',
+  title: 'Weekly Ops Brief Template Your CEO Will Read | RECLAIM',
+  description: 'Most ops updates are too long, too vague, and ignored. Here\'s a simple weekly ops brief framework that leadership actually acts on.',
   alternates: { canonical: '/blog/how-to-extract-meddic-from-sales-calls' },
   openGraph: {
-    title: 'How to Extract MEDDIC from Sales Calls (Manually and with AI)',
-    description: 'MEDDIC only works if you capture it accurately. Learn what to listen for and how to extract each element automatically from sales call transcripts.',
+    title: 'Weekly Ops Brief Template Your CEO Will Read | RECLAIM',
+    description: 'Most ops updates are too long, too vague, and ignored. Here\'s a simple weekly ops brief framework that leadership actually acts on.',
     url: 'https://www.getreclaimapp.com/blog/how-to-extract-meddic-from-sales-calls',
+    type: 'article',
   },
 }
 
-export default function MEDDICPost() {
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How to write a weekly ops brief your CEO will actually read',
+  description: 'Most ops updates are too long, too vague, and ignored. Here\'s a simple weekly ops brief framework that leadership actually acts on.',
+  author: { '@type': 'Organization', name: 'RECLAIM' },
+  publisher: { '@type': 'Organization', name: 'RECLAIM', url: 'https://www.getreclaimapp.com' },
+  datePublished: '2026-04-01',
+  dateModified: '2026-04-17',
+}
+
+export default function Post() {
   return (
     <div className="bg-white min-h-screen">
-      <div className="bg-amber-50 border-b border-amber-200 px-4 py-3"><div className="max-w-2xl mx-auto text-sm text-amber-800"><span className="font-bold">Note:</span> This post was written during RECLAIM's initial CRM extraction phase. Our current product focuses on operational capacity intelligence for BizOps and ops leaders. <a href="/" className="underline font-semibold hover:text-amber-900">Learn more at getreclaimapp.com</a></div></div>
-      <div className="max-w-2xl mx-auto px-4 py-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-        {/* Back link */}
-        <Link href="/blog" className="text-sm font-bold" style={{ color: 'var(--brand)' }}>
-          ← All articles
-        </Link>
+      {/* Header */}
+      <div className="max-w-3xl mx-auto px-4 pt-16 pb-8">
+        <div className="mb-6">
+          <span className="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-purple-100 text-purple-700">BizOps</span>
+        </div>
+        <h1 className="text-4xl sm:text-5xl font-black text-gray-900 leading-tight mb-6">
+          How to write a weekly ops brief your CEO will actually read
+        </h1>
+        <p className="text-xl text-gray-500 leading-relaxed mb-8">
+          Most ops updates are too long, arrive at the wrong time, and focus on the wrong things. Here&apos;s a framework that produces a brief leadership reads, acts on, and asks for more of.
+        </p>
+        <div className="flex items-center gap-4 text-sm text-gray-400 mb-8 border-b border-gray-100 pb-8">
+          <span>RECLAIM</span>
+          <span>·</span>
+          <span>6 min read</span>
+          <span>·</span>
+          <time>April 2026</time>
+        </div>
+      </div>
 
-        {/* Header */}
-        <div className="mt-8 mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold px-2.5 py-1 rounded-full"
-              style={{ backgroundColor: '#EDE9FE', color: 'var(--brand)' }}>
-              Sales Methodology
-            </span>
-            <span className="text-xs text-gray-400">March 20, 2025</span>
-            <span className="text-xs text-gray-400">·</span>
-            <span className="text-xs text-gray-400">7 min read</span>
-          </div>
-          <h1 className="text-4xl font-black text-gray-900 leading-tight mb-4">
-            How to Extract MEDDIC from Sales Calls (Manually and with AI)
-          </h1>
-          <p className="text-xl text-gray-500 leading-relaxed">
-            MEDDIC only works if you capture it accurately after every call. Learn what to listen for in each element — and how to extract it automatically from transcripts.
+      {/* Content */}
+      <div className="max-w-3xl mx-auto px-4 pb-16">
+        <div className="prose prose-gray max-w-none">
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">Why most ops briefs don&apos;t get read</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The weekly ops update is one of the most consistently mishandled communication types in business. It gets written, it gets sent, and it mostly gets ignored — or skimmed for thirty seconds before being filed away. The ops leader who writes it spends two hours compiling information. The CEO who receives it spends ninety seconds reading it. Neither person is satisfied with the arrangement, but neither knows how to change it.
           </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The problems are predictable: the update is too long — three pages of context when leadership needs three sentences. It arrives at the wrong time — Friday afternoon, when leadership is winding down and won&apos;t look at it until Monday anyway. And it focuses on the wrong things — activity completed rather than risk present.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            "We completed 47 tasks this week" tells leadership nothing they can act on. What they need to know is: what is at risk right now, what decisions are being waited on, and what one action should they take to unblock something important. Everything else is noise.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">What a good ops brief needs to do</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            A good ops brief does exactly four things — nothing more:
+          </p>
+          <ol className="list-decimal pl-6 space-y-3 text-gray-700 mb-6">
+            <li><strong>Tell leadership what&apos;s at risk right now.</strong> Not what might become a risk in the future, and not a historical summary of past risks. The one or two things that, if not addressed this week, will cause a problem.</li>
+            <li><strong>Show what the team actually accomplished.</strong> Not the full task list — three to four bullets of the highest-signal work completed or advanced. The things that represent real progress against meaningful goals.</li>
+            <li><strong>Surface what&apos;s stuck and why.</strong> A clear statement of what is blocked, who needs to make a decision, and by what date the decision needs to happen to avoid a downstream problem.</li>
+            <li><strong>Recommend one clear action.</strong> Not a list of suggestions. One specific action, with an owner and a deadline. This is how ops leaders build credibility — by making decisions easy for leadership, not harder.</li>
+          </ol>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            If your current ops update doesn&apos;t do these four things, it isn&apos;t serving its purpose — regardless of how comprehensive it is.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">The one-page framework</h2>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            Here is the exact structure. Four sections. One page. Each section has a defined constraint that forces clarity.
+          </p>
+
+          <div className="bg-gray-50 rounded-2xl border border-gray-200 p-6 mb-8">
+            <p className="font-black text-gray-900 mb-4 text-lg">The four sections:</p>
+            <div className="space-y-5">
+              <div>
+                <p className="font-bold text-gray-900 mb-1">SECTION 1: Top Risk</p>
+                <p className="text-gray-600 text-sm">1–2 sentences. What is most likely to cause a problem this week and why. Specific, not general. If the risk is that a vendor contract renewal isn&apos;t signed and the deadline is Thursday, say that.</p>
+              </div>
+              <div>
+                <p className="font-bold text-gray-900 mb-1">SECTION 2: Status</p>
+                <p className="text-gray-600 text-sm">3–4 bullets. What actually happened — completed versus planned. Include one indicator of whether each major initiative is on track or at risk. "Product launch prep — on track" or "Q2 capacity review — at risk, blocked on data."</p>
+              </div>
+              <div>
+                <p className="font-bold text-gray-900 mb-1">SECTION 3: Blockers</p>
+                <p className="text-gray-600 text-sm">What is stuck. Who needs to make a decision. By when. Be specific about what happens if the decision doesn&apos;t get made: "If the vendor contract isn&apos;t signed by Thursday, we lose the Q2 rate and pay 15% more starting May 1."</p>
+              </div>
+              <div>
+                <p className="font-bold text-gray-900 mb-1">SECTION 4: Recommended Action</p>
+                <p className="text-gray-600 text-sm">One thing. Who does it. By what date. "Decision needed from CFO on vendor contract by Wednesday EOD." That&apos;s it. No optionality, no hedging, no "we could consider" language.</p>
+              </div>
+            </div>
+          </div>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">Rule 1: One page maximum</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            If your ops brief doesn&apos;t fit on one page, you haven&apos;t edited it enough. This is not a document for comprehensive reporting — that&apos;s what your dashboards and project management tools are for. The ops brief is a forcing function for identifying what matters most.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            When you can&apos;t cut it to one page, the problem is usually one of two things: you&apos;re including context that leadership already has, or you&apos;re including information that you think leadership should have but that doesn&apos;t require any action from them. Cut both ruthlessly. If it doesn&apos;t require a decision or communicate a risk, it belongs in the appendix — which leadership won&apos;t read, and that&apos;s fine.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">Rule 2: Send Monday morning, not Friday</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The traditional "Friday update" is one of the least effective communication patterns in business. Leadership reads Friday updates on Monday. By the time they get to it, the context has shifted, some of the blockers have either resolved themselves or gotten worse, and the recommended action is now either stale or late.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            Send your ops brief Monday morning — ideally before 9am. It sets the week&apos;s agenda while there&apos;s still time to act on it. Blockers flagged Monday morning can be unblocked Monday afternoon. Blockers flagged Friday afternoon get addressed the following week at best. The timing change alone can double the operational value of the same information.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">Rule 3: Lead with risk, not activity</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The most common structural mistake in ops briefs is starting with accomplishments. "This week we completed onboarding for three new clients, advanced the Q2 planning process, and finalized the vendor comparison." Leadership reads this and feels good. But if there&apos;s a serious risk buried in section four, they&apos;re already in a positive frame of mind and the risk doesn&apos;t land with appropriate urgency.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            Lead with the risk. Every time. The first sentence of your ops brief should tell leadership what they need to worry about, not what you accomplished last week. Accomplishments go in the status section — they&apos;re important context, but they&apos;re not the point. The point is: what needs their attention right now?
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">How to write one in 15 minutes</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Once you&apos;re comfortable with the format, writing your weekly ops brief should take 15 minutes or less. Here&apos;s the process:
+          </p>
+          <ol className="list-decimal pl-6 space-y-3 text-gray-700 mb-6">
+            <li>Open a blank document. Not last week&apos;s update — a blank document. Starting from last week&apos;s version creates cognitive debt and makes editing harder than writing fresh.</li>
+            <li>Write the top risk in one sentence. If you have to think hard about what the top risk is, that&apos;s a signal that you don&apos;t have clear enough visibility into your operations. The RECLAIM calculator and ops audit can help surface this.</li>
+            <li>List three things completed and three things in progress. Be specific. "Completed onboarding checklist for client X" beats "advanced client onboarding." Include one on-track/at-risk indicator for each in-progress item.</li>
+            <li>Write one blocker with the specific decision needed. Name the person who needs to decide. Name the deadline. Quantify the consequence if the deadline is missed.</li>
+            <li>Write one recommended action. One. If you have more than one, pick the most important. The others can wait for next week or be handled outside the brief.</li>
+          </ol>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Review it once. Cut anything that doesn&apos;t fit on the page. Send it.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">The free template — copy and use this</h2>
+
+          <div className="bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300 p-6 mb-8 font-mono text-sm text-gray-700">
+            <p className="font-black text-gray-900 mb-4 not-italic" style={{ fontFamily: 'inherit' }}>WEEKLY OPS BRIEF — [DATE]</p>
+            <div className="space-y-4">
+              <div>
+                <p className="font-bold text-gray-900 not-italic" style={{ fontFamily: 'inherit' }}>TOP RISK</p>
+                <p>[1–2 sentences describing the highest-priority risk this week. Be specific: name the issue, the consequence, and the timeline.]</p>
+              </div>
+              <div>
+                <p className="font-bold text-gray-900 not-italic" style={{ fontFamily: 'inherit' }}>STATUS</p>
+                <p>• Completed: [specific item]</p>
+                <p>• Completed: [specific item]</p>
+                <p>• In progress: [item] — on track</p>
+                <p>• In progress: [item] — at risk ([reason])</p>
+              </div>
+              <div>
+                <p className="font-bold text-gray-900 not-italic" style={{ fontFamily: 'inherit' }}>BLOCKERS</p>
+                <p>• [Issue] — needs decision from [person/role] by [date]. If not resolved: [consequence].</p>
+              </div>
+              <div>
+                <p className="font-bold text-gray-900 not-italic" style={{ fontFamily: 'inherit' }}>RECOMMENDED ACTION</p>
+                <p>[One specific action. Owner. Deadline.]</p>
+              </div>
+            </div>
+          </div>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">How to automate it entirely</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Writing the brief manually is valuable because it forces you to think through the week&apos;s priorities. But the data-gathering step — compiling what was completed, identifying what&apos;s blocked, pulling current status from multiple tools — is pure administrative overhead.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            RECLAIM&apos;s operational intelligence layer connects to your real data sources — calendar, project management tools, capacity metrics — and surfaces the inputs you need to write your weekly brief in seconds rather than an hour. The risk signals, the status, the blockers — drawn from actual data rather than self-reported estimates.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            The goal is a brief that takes five minutes to review and finalize rather than an hour to compile. You still make the editorial judgment calls — you decide what&apos;s the top risk, you write the recommended action — but the data-gathering is automated. See <Link href="/how-it-works" className="font-bold" style={{ color: '#534AB7' }}>how RECLAIM works</Link> or explore the <Link href="/blog/operational-intelligence-software" className="font-bold" style={{ color: '#534AB7' }}>operational intelligence guide</Link> for more context.
+          </p>
+
         </div>
 
-        {/* Body */}
-        <div className="prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed">
-
-          <p>
-            MEDDIC is one of the most widely used sales qualification frameworks in B2B software. Originally developed at PTC in the 1990s, it's become the default qualification methodology at many high-growth SaaS companies.
-          </p>
-
-          <p>
-            But here's the problem: most sales reps know what MEDDIC stands for. Far fewer actually capture it consistently. After a 45-minute discovery call, the details that matter — the economic buyer's exact objection, the quantified impact of the pain, the specific metrics the prospect mentioned — fade fast.
-          </p>
-
-          <p>
-            This guide covers what each MEDDIC element actually looks like in a real sales conversation, what to listen for, and how to extract it accurately — both manually and using AI.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">A Quick Refresher: What MEDDIC Stands For</h2>
-
-          <p>
-            MEDDIC is an acronym for the six qualifying criteria that, when known, indicate a deal is real and winnable:
-          </p>
-
-          <ul className="list-none pl-0 space-y-2">
-            <li><strong>M — Metrics:</strong> The quantifiable business impact of solving the problem</li>
-            <li><strong>E — Economic Buyer:</strong> The person with budget authority who will sign</li>
-            <li><strong>D — Decision Criteria:</strong> The factors the prospect will use to evaluate and choose a solution</li>
-            <li><strong>D — Decision Process:</strong> The steps the prospect will take to make a decision</li>
-            <li><strong>I — Identify Pain:</strong> The specific business problem driving urgency</li>
-            <li><strong>C — Champion:</strong> The internal advocate who wants you to win and has influence</li>
-          </ul>
-
-          <p>
-            Some orgs use MEDDICC (adding Competitors) or MEDDPICC (adding Paper Process). The core logic is the same: if you don't know these six things, the deal isn't qualified — it's a hope.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">How MEDDIC Elements Show Up in Real Calls</h2>
-
-          <p>
-            The challenge with MEDDIC isn't the framework — it's that prospects don't volunteer this information in a structured way. You have to listen for it, ask the right follow-up questions, and recognize the signals when they appear.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Metrics — Listen for numbers and impact language</h3>
-
-          <p>
-            Metrics rarely appear unprompted. You'll hear them when you ask questions like "What does this cost you today?" or "What would fixing this mean for the business?" Prospect phrases that signal metrics:
-          </p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>"We're losing about 3 hours per rep per week on this"</li>
-            <li>"Our close rate dropped from 28% to 19% since we changed the process"</li>
-            <li>"If we can reduce churn by 5%, that's roughly $2M ARR retained"</li>
-          </ul>
-          <p>
-            If the prospect hasn't given you numbers, you don't have Metrics. Estimates and rough ballparks count — "we think it's in the range of $500K in lost productivity" is enough to work with.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Economic Buyer — Listen for titles, signature authority, and budget language</h3>
-
-          <p>
-            The Economic Buyer is the person who can say yes when everyone else says no — and no when everyone else says yes. They often don't show up in early discovery calls. What to listen for:
-          </p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>"I'd need to run this by [name/title] before we move forward"</li>
-            <li>"The VP of Sales would need to be involved in any contract decision"</li>
-            <li>"We have a $50K approval threshold — anything above that goes to the CFO"</li>
-            <li>Any mention of a budget owner or fiscal year budget cycle</li>
-          </ul>
-          <p>
-            If your current contact says "I can make this decision," probe further — is that actually true, or are they the champion who needs to get someone else to sign?
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Decision Criteria — Listen for evaluation language</h3>
-
-          <p>
-            Decision criteria are the requirements a solution must meet to be chosen. They often come out when you ask "What does the ideal solution look like?" or "What would make you choose one vendor over another?"
-          </p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>"It needs to integrate with Salesforce — that's non-negotiable"</li>
-            <li>"Security is a top concern. We'll need to involve IT in any evaluation"</li>
-            <li>"We've had bad experiences with implementation, so ease of setup matters a lot"</li>
-            <li>"Price isn't the primary factor for us — reliability and support quality are"</li>
-          </ul>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Decision Process — Listen for timeline and steps language</h3>
-
-          <p>
-            The Decision Process tells you how many steps are between today and a signed contract. It's one of the most commonly missing elements in CRM records.
-          </p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>"We typically do a proof of concept before committing"</li>
-            <li>"Legal reviews all contracts, which can take 2–3 weeks"</li>
-            <li>"We're on a fiscal year that ends in September — any purchase needs to happen before then"</li>
-            <li>"We'd want to run a pilot with one team first and then expand"</li>
-          </ul>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Identify Pain — Listen for frustration and urgency</h3>
-
-          <p>
-            Pain is the felt problem — the thing that's actually hurting today, not a theoretical concern. Look for:
-          </p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>Emotional language: "it's been a nightmare," "I'm losing sleep over this," "our team is exhausted"</li>
-            <li>Timeline urgency: "we need to fix this before Q3," "our board asked about this last week"</li>
-            <li>Impact statements: "this is blocking us from scaling the team," "we can't launch until this is solved"</li>
-          </ul>
-          <p>
-            Generic pain ("we want to improve efficiency") is weak. Specific, urgent pain with a named consequence is strong.
-          </p>
-
-          <h3 className="text-lg font-bold text-gray-900 mt-6 mb-2">Champion — Listen for enthusiasm and insider knowledge</h3>
-
-          <p>
-            Your champion is someone inside the prospect company who wants you to win. Signs of a strong champion:
-          </p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>They share internal information you wouldn't have otherwise ("between us, the CFO is really focused on this")</li>
-            <li>They proactively offer to connect you with other stakeholders</li>
-            <li>They ask questions that suggest they're already selling internally ("how would I explain the ROI to my CFO?")
-            </li>
-            <li>They push back on your pricing, not to kill the deal, but because they want you to win</li>
-          </ul>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Extracting MEDDIC Manually: A Post-Call Checklist</h2>
-
-          <p>
-            Within 15 minutes of ending a call, do this:
-          </p>
-
-          <ol className="list-decimal pl-6 space-y-3">
-            <li>
-              <strong>Write down what you heard for each element</strong> — even if it's partial. "CFO approves, don't have their name yet" is more useful than a blank field.
-            </li>
-            <li>
-              <strong>Note what's missing</strong> — a blank MEDDIC field is a question you haven't asked yet. Mark it as "unknown" with a note to get it on the next call.
-            </li>
-            <li>
-              <strong>Capture exact quotes where possible</strong> — "their exact words were 'we need this done before September'" is more persuasive in a deal review than "they mentioned a September deadline."
-            </li>
-            <li>
-              <strong>Update deal stage based on completeness</strong> — a deal with no Economic Buyer identified shouldn't be in "Proposal." MEDDIC completeness should gate stage advancement.
-            </li>
-          </ol>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Extracting MEDDIC with AI: How It Works</h2>
-
-          <p>
-            Manual MEDDIC capture is consistent when you have 5 active deals. At 20, it slips. The calls where you're most rushed — the ones after back-to-back demos — are exactly the ones where CRM data goes stale.
-          </p>
-
-          <p>
-            AI extraction tools solve this by reading call transcripts and pulling structured data automatically. Here's what a good AI extraction workflow looks like:
-          </p>
-
-          <ol className="list-decimal pl-6 space-y-3">
-            <li>
-              <strong>Get your transcript</strong> — Zoom auto-generates transcripts. Google Meet has transcript download. Fireflies and Otter will also produce them. Even rough notes work.
-            </li>
-            <li>
-              <strong>Paste into an extraction tool</strong> — Tools like <Link href="/" className="font-bold" style={{ color: 'var(--brand)' }}>RECLAIM</Link> accept raw transcripts and return structured fields: decision maker, budget, pain points, deal stage, next steps, and competitors.
-            </li>
-            <li>
-              <strong>Review and edit</strong> — AI isn't perfect. If it pulled the wrong person as the decision maker or misread a budget figure, correct it. Good tools make editing easy.
-            </li>
-            <li>
-              <strong>Push to CRM</strong> — Once you've reviewed, push directly to your CRM with one click. No copy-pasting.
-            </li>
-          </ol>
-
-          <p>
-            For MEDDIC specifically, the AI fields map like this:
-          </p>
-
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm border border-gray-200 rounded-xl overflow-hidden">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className="text-left p-3 font-bold text-gray-900 border-b border-gray-200">MEDDIC Element</th>
-                  <th className="text-left p-3 font-bold text-gray-900 border-b border-gray-200">AI Extraction Field</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  ['Metrics', 'Budget + Pain Points (quantified)'],
-                  ['Economic Buyer', 'Decision Maker (name + title)'],
-                  ['Decision Criteria', 'Extracted from pain points + next steps context'],
-                  ['Decision Process', 'Next Steps (timeline and process language)'],
-                  ['Identify Pain', 'Pain Points'],
-                  ['Champion', 'Relationship Dynamics + Buying Signals'],
-                ].map(([meddic, field], i) => (
-                  <tr key={i} className="border-b border-gray-100 last:border-0">
-                    <td className="p-3 text-gray-700 font-medium">{meddic}</td>
-                    <td className="p-3 text-gray-500">{field}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Common MEDDIC Capture Mistakes</h2>
-
-          <p>
-            <strong>Conflating Champion and Economic Buyer.</strong> The champion wants you to win. The economic buyer can make you win. They're often different people. Your champion is who you talk to; your economic buyer is who your champion needs to sell to internally.
-          </p>
-
-          <p>
-            <strong>Treating "I'll send you our procurement process" as sufficient for Decision Process.</strong> That's a promise, not data. Document what you know now and follow up for specifics.
-          </p>
-
-          <p>
-            <strong>Capturing pain without quantifying it.</strong> "They have a CRM problem" is not Metrics. "They estimate 2 hours per rep per day is lost to manual CRM entry, across a 12-person team" is Metrics. Always push for the number.
-          </p>
-
-          <p>
-            <strong>Updating MEDDIC only at the start of a deal.</strong> MEDDIC should be updated after every substantive conversation. The Economic Buyer you identified in discovery might change. Pain might evolve. Process might compress if there's urgency.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">The Bottom Line</h2>
-
-          <p>
-            MEDDIC is a tool for separating qualified deals from false positives. But it only works if you capture it — accurately, after every call, while the details are still fresh.
-          </p>
-
-          <p>
-            Manual MEDDIC capture works if you're disciplined. AI extraction makes it faster, more consistent, and less dependent on memory. The best reps in 2025 use both: they know what to listen for, and they use AI to make sure nothing falls through the cracks.
-          </p>
-
-          <div className="mt-12 p-6 rounded-2xl border border-purple-200 bg-purple-50">
-            <p className="font-black text-gray-900 mb-2">Extract MEDDIC automatically with RECLAIM</p>
-            <p className="text-sm text-gray-600 mb-4">
-              Paste any sales call transcript and get structured CRM fields in seconds — decision maker, budget, pain points, deal stage, and more. Free to start.
-            </p>
-            <Link href="/signup"
-              className="inline-block text-sm font-bold text-white px-5 py-2.5 rounded-full"
-              style={{ backgroundColor: 'var(--brand)' }}>
-              Start free →
+        {/* CTA */}
+        <div className="mt-16 rounded-2xl p-8 text-center" style={{ backgroundColor: '#F8F7FF' }}>
+          <h3 className="text-2xl font-black text-gray-900 mb-3">Start with your admin tax score</h3>
+          <p className="text-gray-500 mb-6">Before you can write a great ops brief, you need visibility into where your capacity actually goes. The calculator takes 3 minutes.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/calculator" className="inline-flex items-center justify-center font-bold px-8 py-4 rounded-xl text-white hover:opacity-90 transition-all" style={{ backgroundColor: '#534AB7' }}>
+              Try the free calculator →
+            </Link>
+            <Link href="/signup" className="inline-flex items-center justify-center font-bold px-8 py-4 rounded-xl border-2 text-gray-900 hover:bg-gray-50 transition-all" style={{ borderColor: '#534AB7' }}>
+              Sign up free
             </Link>
           </div>
-
         </div>
       </div>
     </div>

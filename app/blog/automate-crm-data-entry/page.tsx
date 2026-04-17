@@ -2,259 +2,228 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'How to Automate CRM Data Entry: A Complete Guide for Sales Teams',
-  description: 'Sales reps lose 40–80 minutes a day to manual CRM entry. Here are five methods to automate it completely — from email sync to AI extraction.',
+  title: 'How to Calculate Your Administrative Tax | RECLAIM',
+  description: "Find out what percentage of your team's time goes to low-ROI admin work — and what it's costing you. Free calculator included.",
   alternates: { canonical: '/blog/automate-crm-data-entry' },
   openGraph: {
-    title: 'How to Automate CRM Data Entry: A Complete Guide for Sales Teams',
-    description: 'Sales reps lose 40–80 minutes a day to manual CRM entry. Here are five methods to automate it completely.',
+    title: 'How to Calculate Your Administrative Tax | RECLAIM',
+    description: "Find out what percentage of your team's time goes to low-ROI admin work — and what it's costing you. Free calculator included.",
     url: 'https://www.getreclaimapp.com/blog/automate-crm-data-entry',
+    type: 'article',
   },
 }
 
-export default function AutomateCRMDataEntryPost() {
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How to calculate your administrative tax (and what it costs)',
+  description: "Find out what percentage of your team's time goes to low-ROI admin work — and what it's costing you. Free calculator included.",
+  author: { '@type': 'Organization', name: 'RECLAIM' },
+  publisher: { '@type': 'Organization', name: 'RECLAIM', url: 'https://www.getreclaimapp.com' },
+  datePublished: '2026-04-01',
+  dateModified: '2026-04-17',
+}
+
+export default function Post() {
   return (
     <div className="bg-white min-h-screen">
-      <div className="bg-amber-50 border-b border-amber-200 px-4 py-3"><div className="max-w-2xl mx-auto text-sm text-amber-800"><span className="font-bold">Note:</span> This post was written during RECLAIM's initial CRM extraction phase. Our current product focuses on operational capacity intelligence for BizOps and ops leaders. <a href="/" className="underline font-semibold hover:text-amber-900">Learn more at getreclaimapp.com</a></div></div>
-      <div className="max-w-2xl mx-auto px-4 py-16">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-        {/* Back link */}
-        <Link href="/blog" className="text-sm font-bold" style={{ color: 'var(--brand)' }}>
-          ← All articles
-        </Link>
-
-        {/* Header */}
-        <div className="mt-8 mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-xs font-bold px-2.5 py-1 rounded-full"
-              style={{ backgroundColor: '#EDE9FE', color: 'var(--brand)' }}>
-              CRM Automation
-            </span>
-            <span className="text-xs text-gray-400">March 10, 2025</span>
-            <span className="text-xs text-gray-400">·</span>
-            <span className="text-xs text-gray-400">8 min read</span>
-          </div>
-          <h1 className="text-4xl font-black text-gray-900 leading-tight mb-4">
-            How to Automate CRM Data Entry: A Complete Guide for Sales Teams
-          </h1>
-          <p className="text-xl text-gray-500 leading-relaxed">
-            Sales reps lose 40–80 minutes every day to manual CRM entry. Here are five methods to automate it completely — and what to expect from each.
-          </p>
+      {/* Header */}
+      <div className="max-w-3xl mx-auto px-4 pt-16 pb-8">
+        <div className="mb-6">
+          <span className="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-purple-100 text-purple-700">Capacity Planning</span>
         </div>
+        <h1 className="text-4xl sm:text-5xl font-black text-gray-900 leading-tight mb-6">
+          How to calculate your administrative tax (and what it costs)
+        </h1>
+        <p className="text-xl text-gray-500 leading-relaxed mb-8">
+          Most businesses have no idea what percentage of their team's time is going to low-ROI administrative work. If you don't measure your administrative tax, you're flying blind on one of the biggest drains on your capacity budget.
+        </p>
+        <div className="flex items-center gap-4 text-sm text-gray-400 mb-8 border-b border-gray-100 pb-8">
+          <span>RECLAIM</span>
+          <span>·</span>
+          <span>7 min read</span>
+          <span>·</span>
+          <time>April 2026</time>
+        </div>
+      </div>
 
-        {/* Body */}
-        <div className="prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed">
+      {/* Content */}
+      <div className="max-w-3xl mx-auto px-4 pb-16">
+        <div className="prose prose-gray max-w-none">
 
-          <p>
-            Ask any sales rep what the most frustrating part of their job is, and "CRM updates" will be near the top of the list. Between logging call notes, updating deal stages, entering contact details, and writing follow-up summaries, it can eat an hour of every selling day.
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">What is the administrative tax?</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The administrative tax is the percentage of your team's total available work time that goes to low-ROI administrative work — status updates, data entry, coordination overhead, internal reporting, unnecessary meetings, and other tasks that consume hours without directly generating value for the business.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            It's called a "tax" because it's unavoidable overhead — some administrative work will always exist — but like any tax, the rate matters enormously. A 15% administrative tax is manageable. A 50% administrative tax means half your team's capacity is consumed before anyone does a single thing that actually moves the business forward.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            The administrative tax is distinct from operational work (running the business efficiently) and strategic work (improving and growing the business). It sits below both: it's the friction layer that exists because processes were never designed, meetings were never audited, and low-value work was never delegated or eliminated.
           </p>
 
-          <p>
-            That's not a small problem. For a rep working 220 days a year, losing 60 minutes daily to admin means losing over <strong>22 full selling days</strong> per year — before they've even sent a single cold email.
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">Why most businesses don't know theirs</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Ask most leaders what percentage of their team's time goes to administrative work and you'll get one of three answers: a shrug, a guess, or an optimistic estimate that's almost certainly too low.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The reason is straightforward: most organizations have never measured it. There's no line item in the budget for "administrative overhead." Time tracking is either absent or too coarse to capture the distinction between a productive operational process and a redundant status meeting. And the people doing the work often don't flag it — either because it feels normal, or because they don't want to seem like they're complaining.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            The result is that administrative work accumulates invisibly. A meeting that could have been an email. A report that nobody reads. A coordination loop that exists because no one built a documented process to replace it. Each one is small in isolation. Together, they represent a significant and entirely unmeasured drain on capacity.
           </p>
 
-          <p>
-            The good news: CRM data entry is one of the most automatable parts of sales. Here's a practical breakdown of the five main methods, what they actually do, and which one fits your workflow.
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">The 4-step formula to calculate your administrative tax</h2>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3">Step 1: Calculate total team capacity</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Start with the theoretical maximum: how many person-hours is your team capable of working in a month?
+          </p>
+          <div className="bg-gray-50 rounded-xl p-5 mb-6 font-mono text-sm text-gray-800">
+            Total capacity = Team size × 40 hours × 4 weeks
+          </div>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            For an 8-person team: 8 × 40 × 4 = <strong>1,280 hours per month</strong>. This is your denominator — the total capacity budget you're working with before any allocation decisions are made.
           </p>
 
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Why CRM Data Entry Is So Hard to Fix</h2>
-
-          <p>
-            Before diving into solutions, it helps to understand why this problem persists. CRM automation isn't new — HubSpot, Salesforce, and Pipedrive have had "email sync" features for years. So why are reps still spending an hour a day on updates?
+          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3">Step 2: Categorize your work types</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Divide all work your team does into three buckets. Be honest — if you're not sure where something belongs, default to administrative:
           </p>
-
-          <p>
-            The core issue is that the most valuable CRM data comes from <em>conversations</em> — calls, video meetings, and email threads — and conversations don't automatically translate into structured deal data. A rep knows what the prospect's budget is, who the decision maker is, what objections came up, and what the next steps are. But getting that out of their head (or a meeting transcript) and into the right CRM fields requires judgment that traditional automation can't supply.
-          </p>
-
-          <p>
-            Until recently. AI has changed what's possible here, and the best solutions now combine multiple automation methods to cover the full data entry workflow.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Method 1: Email and Calendar Sync</h2>
-
-          <p>
-            The simplest form of CRM automation is connecting your email and calendar so that interactions log automatically. Most modern CRMs support this natively.
-          </p>
-
-          <p>
-            <strong>What it does:</strong> Creates contact records when you email a new person. Logs sent and received emails against the deal. Records meeting events with participants and timestamps.
-          </p>
-
-          <p>
-            <strong>What it doesn't do:</strong> Email sync captures that a conversation happened — not what was said. It won't extract budget figures, note objections, update deal stage, or generate follow-up action items.
-          </p>
-
-          <p>
-            <strong>Best for:</strong> Keeping contact activity up to date. Essential baseline — if you're not using email sync, turn it on today.
-          </p>
-
-          <p>
-            <strong>Tools:</strong> HubSpot Sales Hub, Salesforce Inbox, Pipedrive, Copper CRM (built for G Suite).
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Method 2: Call Intelligence Platforms</h2>
-
-          <p>
-            Call intelligence tools record, transcribe, and analyze your sales calls. They've become standard in high-volume sales orgs over the last five years.
-          </p>
-
-          <p>
-            <strong>What they do:</strong> Record and transcribe calls in real time. Flag competitor mentions, pricing discussions, and key moments. Some push summaries back to your CRM automatically.
-          </p>
-
-          <p>
-            <strong>What they don't do:</strong> Most call recorders summarize broadly ("discussed pricing, competitor Acme mentioned") without populating structured CRM fields like deal stage, budget amount, or decision-maker name. The data usually lands in a notes field rather than as structured properties.
-          </p>
-
-          <p>
-            <strong>Cost reality:</strong> Gong starts around $1,200+/year per user. Chorus (now ZoomInfo) is similarly priced. These tools are built for large teams — for a 5-person team, the budget is often hard to justify.
-          </p>
-
-          <p>
-            <strong>Best for:</strong> Teams that need coaching and deal review at scale, and have the budget for enterprise tooling.
-          </p>
-
-          <p>
-            <strong>Tools:</strong> Gong, Chorus (ZoomInfo), Fireflies.ai, Otter.ai.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Method 3: Workflow Automation (Zapier / Make)</h2>
-
-          <p>
-            Automation platforms like Zapier and Make let you build rules that move data between apps: "When a Calendly meeting is booked, create a contact in HubSpot." These are powerful for eliminating repetitive handoffs.
-          </p>
-
-          <p>
-            <strong>What they do:</strong> Automate predictable, structured triggers. If X happens in app A, do Y in app B. Great for intake forms, meeting bookings, deal creation from inbound leads.
-          </p>
-
-          <p>
-            <strong>What they don't do:</strong> Handle unstructured content. They can't read a call transcript and figure out what the budget is. They move existing data between fields — they don't create new insights from raw text.
-          </p>
-
-          <p>
-            <strong>Best for:</strong> Eliminating known, repetitive handoffs. If you always create a deal when a demo is booked, automate that. But don't expect it to replace the judgment involved in updating deal details post-call.
-          </p>
-
-          <p>
-            <strong>Tools:</strong> Zapier, Make (Integromat), n8n (open source).
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Method 4: Native CRM AI Features</h2>
-
-          <p>
-            HubSpot, Salesforce, and Pipedrive have all launched AI features in the last two years. HubSpot has "Breeze AI," Salesforce has "Einstein," and Pipedrive has "AI Sales Assistant."
-          </p>
-
-          <p>
-            <strong>What they do:</strong> These features vary widely. The best ones can summarize email threads, suggest next steps, or flag deals at risk. Some offer meeting transcription through integrations.
-          </p>
-
-          <p>
-            <strong>What they don't do:</strong> Most native AI features are still maturing. HubSpot's AI features require Sales Hub Professional ($90+/user/month). Einstein requires Salesforce Enterprise or higher. The capabilities vary significantly, and independent reviews consistently find that specialty AI tools outperform native CRM AI for extraction tasks.
-          </p>
-
-          <p>
-            <strong>Best for:</strong> Teams already paying for enterprise tiers who want to consolidate tools. Worth evaluating, but don't assume it replaces a dedicated extraction workflow.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Method 5: AI Extraction from Transcripts</h2>
-
-          <p>
-            The newest and most effective method is using AI to extract structured data from raw transcripts. This is different from call intelligence platforms — it's lighter, faster, and focused specifically on populating CRM fields.
-          </p>
-
-          <p>
-            <strong>How it works:</strong> After a call, you paste the transcript (from Zoom, Google Meet, Teams, or even rough notes) into an AI extraction tool. The AI reads it and pulls out structured fields: decision maker, budget, pain points, deal stage, next steps, competitors mentioned.
-          </p>
-
-          <p>
-            <strong>Why it's different:</strong> Unlike broad call summaries, AI extraction maps directly to CRM properties. You get discrete values — not a paragraph — that can be reviewed and pushed to your CRM in one click.
-          </p>
-
-          <p>
-            <strong>What to look for in an AI extraction tool:</strong>
-          </p>
-
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Structured field extraction (not just summaries)</li>
-            <li>Editable results before pushing to CRM — AI isn't perfect, and you should be able to correct it</li>
-            <li>Direct CRM integration, so you're not copy-pasting</li>
-            <li>Confidence score, so you know when to double-check the extraction</li>
-            <li>No call recording required — works from any transcript source</li>
+          <ul className="list-disc pl-6 space-y-3 text-gray-700 mb-6">
+            <li><strong>Strategic work:</strong> Decisions, planning, and initiatives that change the trajectory of the business. Building new processes, launching new products, entering new markets, developing people.</li>
+            <li><strong>Operational work:</strong> Running the business effectively. Delivering products and services, managing customer relationships, executing repeatable processes that generate revenue or maintain quality.</li>
+            <li><strong>Administrative work:</strong> Everything else. Status updates that no one acts on. Meetings that exist because no one cancelled them. Data entry, internal coordination, manual reporting, and any recurring task that a well-designed process would eliminate or automate.</li>
           </ul>
 
-          <p>
-            <strong>Best for:</strong> Individual reps and small teams who want call-to-CRM automation without the $1,000+/year enterprise tooling cost.
+          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3">Step 3: Estimate hours per category</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            For each team member, estimate how their weekly hours break down across the three categories. You can do this as a team exercise — ask each person to categorize their recurring meetings, their recurring tasks, and their ad-hoc work. Be specific:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-gray-700 mb-4">
+            <li>Weekly team sync (1 hour): Does it produce a decision or clear output? No? Administrative.</li>
+            <li>Manual weekly status report to leadership (2 hours): Could it be automated? Yes? Administrative.</li>
+            <li>Customer onboarding calls (4 hours): Direct operational value. Operational.</li>
+            <li>Q2 pricing strategy review (3 hours this week): Strategic.</li>
+            <li>Answering Slack messages about where to find things (45 minutes): Administrative — this is a documentation problem, not a communication requirement.</li>
+          </ul>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            Add up the hours across all team members in each category. The total administrative hours across your team is your numerator.
           </p>
 
-          <p>
-            <strong>Tools:</strong> <Link href="/" className="font-bold" style={{ color: 'var(--brand)' }}>RECLAIM</Link>, which extracts MEDDIC-aligned fields and pushes directly to HubSpot.
+          <h3 className="text-xl font-bold text-gray-900 mt-8 mb-3">Step 4: Calculate your administrative tax percentage</h3>
+          <div className="bg-gray-50 rounded-xl p-5 mb-6 font-mono text-sm text-gray-800">
+            Administrative tax % = Total admin hours ÷ Total capacity hours × 100
+          </div>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            If your 8-person team collectively spends 576 hours per month on administrative work out of 1,280 total capacity hours: 576 ÷ 1,280 = 45% administrative tax. Nearly half your capacity is consumed before anyone does anything strategic or operational.
           </p>
 
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Building Your CRM Automation Stack</h2>
-
-          <p>
-            The most effective approach combines methods rather than relying on one. Here's a practical stack for a sales rep who wants to cut CRM admin to under 5 minutes per deal:
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">What does your score mean?</h2>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            Once you have your number, here's how to interpret it:
           </p>
 
-          <ol className="list-decimal pl-6 space-y-3">
-            <li>
-              <strong>Email + calendar sync</strong> (baseline) — Turn this on in your CRM. Free on most platforms. Handles all the contact activity logging automatically.
-            </li>
-            <li>
-              <strong>AI extraction after key calls</strong> — After every discovery or demo call, paste the transcript into your extraction tool. Review the fields, correct anything off, push to CRM. Takes 2–3 minutes.
-            </li>
-            <li>
-              <strong>Workflow automation for intake</strong> — If you get inbound demo requests or form fills, use Zapier to auto-create the deal and contact. Don't do this manually.
-            </li>
-          </ol>
-
-          <p>
-            With this stack, you've covered: contact creation, email logging, deal properties (from extraction), and deal creation (from automation). The only thing left is updating stage as deals progress — and if your extraction tool catches deal stage from the call, that's covered too.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">Common Mistakes When Automating CRM Entry</h2>
-
-          <p>
-            <strong>Over-engineering before establishing a baseline.</strong> Don't build a complex Zapier workflow before you've confirmed your manual process is consistent. Automate repeatable behavior, not chaos.
-          </p>
-
-          <p>
-            <strong>Trusting automation without review.</strong> Any automation that writes to your CRM without a human review step will eventually create bad data. The best tools give you an editable preview before pushing.
-          </p>
-
-          <p>
-            <strong>Logging activity but not deal data.</strong> Email sync gives you activity history. It doesn't tell you where the deal stands. You still need a process for extracting deal-level information after substantive calls.
-          </p>
-
-          <p>
-            <strong>Assuming enterprise tools are worth the price for small teams.</strong> Gong and Chorus are built for 50+ rep orgs with coaching workflows and deal reviews at scale. For a 3-person team, the ROI math rarely works. Look for tools priced for your stage.
-          </p>
-
-          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-3">The Bottom Line</h2>
-
-          <p>
-            CRM automation in 2025 means combining email sync, workflow automation, and AI extraction to cover the full data entry workflow. The technology exists to cut manual CRM time to under 5 minutes per deal — but it requires choosing the right tools for each part of the problem.
-          </p>
-
-          <p>
-            Start simple: turn on email sync, set up one Zapier workflow for your highest-volume intake source, and try an AI extraction tool for your next 10 calls. You'll quickly see where the remaining friction is and can build from there.
-          </p>
-
-          <div className="mt-12 p-6 rounded-2xl border border-purple-200 bg-purple-50">
-            <p className="font-black text-gray-900 mb-2">Try AI extraction with RECLAIM</p>
-            <p className="text-sm text-gray-600 mb-4">
-              Paste any sales call transcript and get structured CRM fields in seconds — then push directly to HubSpot with one click.
-            </p>
-            <Link href="/signup"
-              className="inline-block text-sm font-bold text-white px-5 py-2.5 rounded-full"
-              style={{ backgroundColor: 'var(--brand)' }}>
-              Start free →
-            </Link>
+          <div className="space-y-4 mb-8">
+            <div className="rounded-xl border border-green-200 bg-green-50 p-5">
+              <div className="font-black text-green-800 mb-1">Under 25% — Healthy</div>
+              <p className="text-green-700 text-sm leading-relaxed">Administrative work is contained. Your team has meaningful protected time for strategic and operational priorities. Maintain this by auditing meetings quarterly and continuing to automate or eliminate low-value recurring tasks.</p>
+            </div>
+            <div className="rounded-xl border border-yellow-200 bg-yellow-50 p-5">
+              <div className="font-black text-yellow-800 mb-1">25–44% — Moderate overhead</div>
+              <p className="text-yellow-700 text-sm leading-relaxed">Administrative work is eating into productive capacity. Improvements here would unlock meaningful time without adding headcount. Identify the top two or three sources and target them specifically.</p>
+            </div>
+            <div className="rounded-xl border border-orange-200 bg-orange-50 p-5">
+              <div className="font-black text-orange-800 mb-1">45–64% — High overhead</div>
+              <p className="text-orange-700 text-sm leading-relaxed">This is costing real money every month. At this level, strategic work is being crowded out and your team is likely feeling chronically overwhelmed despite working full weeks. This requires active intervention, not gradual improvement.</p>
+            </div>
+            <div className="rounded-xl border border-red-200 bg-red-50 p-5">
+              <div className="font-black text-red-800 mb-1">65%+ — Critical</div>
+              <p className="text-red-700 text-sm leading-relaxed">Your team is majority-administrative. More than half their collective capacity is going to work that doesn't directly drive business outcomes. This is unsustainable and requires immediate structural attention — not productivity tips, but a fundamental review of processes, meeting culture, and role design.</p>
+            </div>
           </div>
 
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">The dollar cost formula</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Your administrative tax percentage becomes much more persuasive when converted to dollars. Here's how to do it:
+          </p>
+          <div className="bg-gray-50 rounded-xl p-5 mb-6 text-sm text-gray-700 space-y-2">
+            <p><strong>Example: 8-person team, $70,000 average salary</strong></p>
+            <p>Fully loaded hourly cost: ($70,000 × 1.3 benefits multiplier) ÷ 2,080 hours = <strong>$43.75/hr</strong></p>
+            <p>At 45% admin tax: 8 people × 40 hrs × 0.45 = <strong>144 admin hours per week</strong></p>
+            <p>Per month: 144 × 4 = <strong>576 admin hours/month</strong></p>
+            <p>Dollar cost: 576 × $43.75 = <strong>$25,200/month</strong> in misallocated capacity</p>
+            <p>Annualized: <strong>$302,400/year</strong> spent on work that shouldn't require a human</p>
+          </div>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            This is not a theoretical number. These are real salaries being paid to real people for work that, in many cases, could be eliminated, automated, or delegated to a lower-cost resource. Every point of administrative tax reduction translates directly to recaptured capacity that can be redirected toward work that actually drives business outcomes.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            For a team with 45% admin tax, getting to 30% — entirely achievable within 60 days with focused effort — would recapture roughly $101,000 per year in capacity. That's capacity that can be redirected to strategic work without adding a single hire.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">The 3 biggest sources of administrative tax</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            In most organizations, administrative tax is concentrated in three areas. If you're trying to identify where to focus first, start here:
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">1. Meetings with no clear output</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            A one-hour weekly meeting with six people costs 312 person-hours per year. If that meeting doesn't produce a clear decision, action item, or output that couldn't have been accomplished asynchronously, every one of those hours is administrative tax. Most organizations have between three and eight recurring meetings that fit this description — which means they're burning somewhere between 936 and 2,500 person-hours per year on meetings that add no value.
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">2. Manual status reporting</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Weekly status reports that are manually compiled, formatted, and written — then read by leadership for five minutes and filed away — are one of the most common and most fixable sources of administrative tax. In most cases, the underlying data already exists in project management tools, CRMs, or dashboards. The manual assembly step is pure overhead. Automating or replacing it with a live dashboard is often a one-time 4-hour investment that saves 2 hours per week indefinitely.
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">3. Senior people doing junior work</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Role misalignment is one of the most expensive and least visible sources of administrative tax. When a director-level employee is formatting spreadsheets, reviewing basic deliverables that should be delegated, or sitting in vendor meetings where their expertise isn't needed, you're paying a senior salary for junior work. This happens when delegation is unclear, processes aren't documented, or the "it's faster to do it myself" instinct has never been challenged. It's expensive and it's fixable — but it requires explicit attention.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">How to start reducing it this week</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            You don't need a transformation initiative to start reducing your administrative tax. Here are three concrete moves you can make before Friday:
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Meeting audit — cancel one recurring meeting</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Look at your team's recurring meetings. Pick the one that most struggles to justify its existence: the one where people regularly show up unprepared, where the agenda is vague, or where the output is hard to describe. Cancel it for two weeks. If no one complains and nothing breaks, it wasn't adding value. If people push back with specifics, you now have a more honest conversation about what the meeting actually needs to accomplish.
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Automate one manual report</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Identify the one recurring report that takes the most time to produce. Find out where the underlying data lives. Either connect a dashboard directly to that data source, or replace the manual report with a shared doc that the data owner updates in place — no more compilation, formatting, and delivery cycle. This single change often saves 2 to 4 hours per week for whoever currently owns the report.
+          </p>
+
+          <h3 className="text-xl font-bold text-gray-900 mt-6 mb-3">Block 20% of each person's week as strategic focus time</h3>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Strategic work gets crowded out by administrative and operational work not because people don't value it, but because it never gets protected time on the calendar. Schedule it first. For a 40-hour week, that's 8 hours — two full mornings — blocked as non-negotiable focus time before any meetings are accepted. Do this for every team member, and do it at the start of each week before anything else lands on the calendar.
+          </p>
+
+          <h2 className="text-2xl font-black text-gray-900 mt-10 mb-4">Get your exact score in 3 minutes</h2>
+          <p className="text-gray-700 leading-relaxed mb-4">
+            The manual calculation above will get you a directional answer. The RECLAIM calculator takes your team size, average salary, and time estimates and gives you a precise administrative tax score with a dollar figure attached — in under 3 minutes, with no signup required.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            Use it to establish your baseline today, then track it monthly. A 10-point reduction in administrative tax, for an 8-person team at $70K average salary, is worth approximately $67,000 per year in recaptured capacity. That's the goal. The calculator makes the case.
+          </p>
+          <p className="text-gray-700 leading-relaxed mb-6">
+            Want to go deeper on the ops side? See our guide on <Link href="/blog/capacity-planning-bizops" className="font-bold" style={{ color: '#534AB7' }}>capacity planning for BizOps leaders</Link> and <Link href="/how-it-works" className="font-bold" style={{ color: '#534AB7' }}>how RECLAIM generates operational intelligence</Link> from your calendar data.
+          </p>
+
+        </div>
+
+        {/* CTA */}
+        <div className="mt-16 rounded-2xl p-8 text-center" style={{ backgroundColor: '#F8F7FF' }}>
+          <h3 className="text-2xl font-black text-gray-900 mb-3">See your admin tax score in 3 minutes</h3>
+          <p className="text-gray-500 mb-6">No signup. No limit. Instant results.</p>
+          <Link href="/calculator" className="inline-flex items-center justify-center font-bold px-8 py-4 rounded-xl text-white hover:opacity-90 transition-all" style={{ backgroundColor: '#534AB7' }}>
+            Try the free calculator →
+          </Link>
         </div>
       </div>
     </div>
