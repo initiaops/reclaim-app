@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import WaitlistForm from '../WaitlistForm'
 
 export const metadata: Metadata = {
   title: 'About — RECLAIM | Built by an Ops Leader',
@@ -188,10 +187,23 @@ export default function AboutPage() {
             Ready to try it?
           </h2>
           <p className="mb-8 text-lg" style={{ color: '#A9A4E0' }}>
-            Join the waitlist and get early access when your cohort opens.
+            Start free — 1 audit/month, no card needed. Or grab Early Access ($19) while spots last.
           </p>
-          <div className="flex justify-center">
-            <WaitlistForm placeholder="Enter your work email" buttonText="Join the waitlist →" />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/signup"
+              className="inline-flex items-center justify-center font-bold px-8 py-4 rounded-xl text-lg transition-all hover:opacity-90 bg-white"
+              style={{ color: '#534AB7' }}
+            >
+              Try free — no card needed
+            </Link>
+            <Link
+              href="/pricing"
+              className="inline-flex items-center justify-center font-semibold px-8 py-4 rounded-xl text-lg border transition-all"
+              style={{ borderColor: '#7B72D6', color: '#A9A4E0' }}
+            >
+              See pricing →
+            </Link>
           </div>
         </div>
       </section>

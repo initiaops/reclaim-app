@@ -132,7 +132,7 @@ export default async function RootLayout({
                       className="text-sm font-semibold text-white px-4 py-2 rounded-lg transition-all hover:opacity-90 hover:shadow-md"
                       style={{ backgroundColor: 'var(--brand)' }}
                     >
-                      Join waitlist
+                      Get started free
                     </Link>
                   </>
                 )}

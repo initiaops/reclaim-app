@@ -117,7 +117,7 @@ export default function GuidePage() {
               {
                 n: '01',
                 title: 'Create your account',
-                body: 'Go to getreclaimapp.com and click "Join waitlist" or "Log in". Sign up with your email — no credit card required. You\'ll get a confirmation email; click the link to activate, then log in.',
+                body: 'Go to getreclaimapp.com and click "Get started free" or "Log in". Sign up with your email — no credit card required. You\'ll get a confirmation email; click the link to activate, then log in.',
                 tag: null,
               },
               {
