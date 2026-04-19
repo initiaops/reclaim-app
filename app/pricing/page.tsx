@@ -203,7 +203,7 @@ export default async function PricingPage() {
             </div>
 
             <a
-              href="https://calendly.com/initiaops"
+              href="https://calendly.com/initiaops/30min"
               target="_blank"
               rel="noopener noreferrer"
               className="block text-center font-bold py-3.5 rounded-xl text-white transition-all hover:opacity-90"
@@ -341,7 +341,7 @@ export default async function PricingPage() {
             Try free — no card needed
           </Link>
           <a
-            href="https://calendly.com/initiaops"
+            href="https://calendly.com/initiaops/30min"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 font-semibold px-8 py-4 rounded-xl text-lg border transition-all"

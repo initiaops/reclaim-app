@@ -493,7 +493,7 @@ export default function Home() {
               <span className="text-sm font-bold text-amber-700 group-hover:text-amber-900">Claim your spot →</span>
             </Link>
 
-            <a href="https://calendly.com/initiaops" target="_blank" rel="noopener noreferrer" className="block rounded-2xl border-2 p-7 hover:bg-purple-50 transition-all group" style={{ borderColor: '#534AB7' }}>
+            <a href="https://calendly.com/initiaops/30min" target="_blank" rel="noopener noreferrer" className="block rounded-2xl border-2 p-7 hover:bg-purple-50 transition-all group" style={{ borderColor: '#534AB7' }}>
               <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#534AB7' }}>Strategy Session</div>
               <div className="text-2xl font-black text-gray-900 mb-1">$299</div>
               <div className="text-sm font-semibold text-gray-600 mb-4">one-time</div>
