@@ -26,7 +26,7 @@ export default async function DashboardPage() {
   ] = await Promise.all([
     supabase
       .from('subscriptions')
-      .select('plan, status')
+      .select('plan, status, audit_limit, topup_audits')
       .eq('user_id', user.id)
       .single(),
     supabase
@@ -60,6 +60,10 @@ export default async function DashboardPage() {
   ])
 
   const isPro = sub?.plan === 'pro' && sub?.status === 'active'
+  const isFounder = sub?.plan === 'founder'
+  const auditLimit = sub?.audit_limit ?? (isFounder ? 10 : isPro ? 999 : 1)
+  const topupAudits = sub?.topup_audits ?? 0
+  const planName = isPro ? 'pro' : isFounder ? 'founder' : 'free'
 
   const recentAudits = (recentOpsRows ?? []).map(row => ({
     id: row.id as string,
@@ -83,6 +87,9 @@ export default async function DashboardPage() {
         defaultIndustry={profile?.default_industry ?? ''}
         calendarConnected={calendarConnected}
         calendarAnalytics={calendarAnalytics}
+        auditLimit={auditLimit}
+        topupAudits={topupAudits}
+        planName={planName}
       />
     </Suspense>
   )

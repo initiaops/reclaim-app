@@ -90,39 +90,49 @@ export async function POST(request: NextRequest) {
   // 3. Plan check
   const { data: sub } = await supabase
     .from('subscriptions')
-    .select('plan, status')
+    .select('plan, status, audit_limit, topup_audits')
     .eq('user_id', user.id)
     .single()
 
   const isPro = sub?.plan === 'pro' && sub?.status === 'active'
 
   // 4. Rate limit check (different per mode)
-  if (!isPro) {
-    if (mode === 'ops') {
-      // Ops mode: 1 audit/month free — count from extractions table
-      const { count: opsCount } = await supabase
-        .from('extractions')
-        .select('*', { count: 'exact', head: true })
-        .eq('user_id', user.id)
-        .eq('mode', 'ops')
-        .gte('created_at', startOfCurrentMonth())
+  if (mode === 'ops') {
+    // Fetch audit_limit and topup_audits from subscriptions
+    const baseLimit = sub?.audit_limit ?? 1
+    const topupAudits = (sub as Record<string, unknown>)?.topup_audits as number ?? 0
+    const totalLimit = baseLimit + topupAudits
 
-      if ((opsCount ?? 0) >= 1) {
-        return NextResponse.json({ error: 'Monthly audit limit reached' }, { status: 429 })
-      }
-    } else {
-      // CRM mode: 5/month free — use usage table
-      const month = getCurrentMonth()
-      const { data: usageRow } = await supabase
-        .from('usage')
-        .select('count')
-        .eq('user_id', user.id)
-        .eq('month', month)
-        .single()
+    const { count: opsCount } = await supabase
+      .from('extractions')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('mode', 'ops')
+      .gte('created_at', startOfCurrentMonth())
 
-      if ((usageRow?.count ?? 0) >= 5) {
-        return NextResponse.json({ error: 'Monthly limit reached' }, { status: 429 })
-      }
+    if ((opsCount ?? 0) >= totalLimit) {
+      return NextResponse.json({
+        error: 'monthly_limit_reached',
+        message: 'You have used all your audits for this month.',
+        auditsUsed: opsCount ?? 0,
+        auditsLimit: totalLimit,
+        canTopUp: true,
+      }, { status: 429 })
+    }
+  }
+
+  if (!isPro && mode === 'crm') {
+    // CRM mode: 5/month free — use usage table
+    const month = getCurrentMonth()
+    const { data: usageRow } = await supabase
+      .from('usage')
+      .select('count')
+      .eq('user_id', user.id)
+      .eq('month', month)
+      .single()
+
+    if ((usageRow?.count ?? 0) >= 5) {
+      return NextResponse.json({ error: 'Monthly limit reached' }, { status: 429 })
     }
   }
 

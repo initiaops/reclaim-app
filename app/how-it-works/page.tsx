@@ -147,7 +147,7 @@ export default function HowItWorksPage() {
               className="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
               style={{ backgroundColor: '#EEEDFE', color: BRAND }}
             >
-              1 free audit/month — unlimited on Pro
+              1 free audit/month — 10/month on Early Access ($19 one-time)
             </span>
             <h2 className="text-3xl font-black text-gray-900 mt-5 mb-3">The AI Capacity Audit</h2>
             <p className="text-lg text-gray-500 max-w-2xl">
@@ -210,7 +210,7 @@ export default function HowItWorksPage() {
                     [true, 'Google Calendar connection'],
                     [true, 'Reallocation recommendations'],
                     [false, 'Weekly automated email brief'],
-                    [false, 'Unlimited audits'],
+                    [false, 'More than 1 audit/month'],
                     [false, 'Audit history'],
                   ].map(([included, label], i) => (
                     <li key={i} className="flex items-center gap-2.5 text-sm">
@@ -223,14 +223,14 @@ export default function HowItWorksPage() {
                 </ul>
               </div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: BRAND }}>Pro — $29/month</p>
+                <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: BRAND }}>Early Access — $19 one-time</p>
                 <ul className="space-y-2.5">
                   {[
                     'Everything in free',
-                    'Unlimited capacity audits',
-                    'Weekly ops brief sent to your inbox',
-                    'Full audit history',
-                    'Priority support',
+                    '10 capacity audits per month',
+                    'Audit history — last 30 audits',
+                    'All future modules — no extra charge',
+                    'Founding member status',
                   ].map(label => (
                     <li key={label} className="flex items-center gap-2.5 text-sm">
                       <span className="font-bold shrink-0" style={{ color: BRAND }}>✓</span>
@@ -255,8 +255,8 @@ export default function HowItWorksPage() {
                 a: "Meeting titles, start/end times, attendee counts, and recurrence patterns from the last 28 days. We never read email content, meeting descriptions, or any personal data. You can disconnect at any time.",
               },
               {
-                q: 'Why upgrade to Pro?',
-                a: "The weekly email brief is the main reason. Instead of logging in to run an audit, RECLAIM sends your ops brief every Monday morning automatically. For $29/month it's the cost of one coffee per week.",
+                q: 'Why get Early Access?',
+                a: "Early Access gives you 10 audits per month instead of 1, plus audit history and all future modules. It\'s a one-time payment of $19 — no subscription, no renewal. Limited to 100 founding members.",
               },
             ].map(({ q, a }) => (
               <details key={q} className="group bg-gray-50 rounded-xl border border-gray-100 overflow-hidden">
@@ -277,7 +277,7 @@ export default function HowItWorksPage() {
             >
               Start free — no credit card
             </Link>
-            <p className="text-sm text-gray-400">1 free audit/month. Upgrade for unlimited.</p>
+            <p className="text-sm text-gray-400">1 free audit/month. 10/month on Early Access — $19 one-time.</p>
           </div>
         </div>
       </section>

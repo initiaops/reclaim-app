@@ -54,77 +54,43 @@ export default async function BillingPage() {
                 <p className="text-gray-500 text-sm mt-1">Paid once. Yours forever.</p>
               </div>
               <div className="text-right">
-                <p className="text-3xl font-black text-gray-900">$149</p>
+                <p className="text-3xl font-black text-gray-900">$19</p>
                 <p className="text-sm text-gray-400">one-time</p>
               </div>
             </div>
+            <p className="text-sm text-gray-500 mb-2">One-time. Yours forever.</p>
             <div className="border-t border-gray-100 pt-5 space-y-2">
-              {['Unlimited capacity audits', 'All future modules included', 'Founder community access', 'No billing date — ever'].map(f => (
+              {['10 AI audits per month', 'Audit history — last 30 audits', 'All future modules — no extra charge', 'Founding member status', 'No billing date — ever'].map(f => (
                 <div key={f} className="flex items-center gap-3 text-sm text-gray-700">
                   <span className="font-bold" style={{ color: '#534AB7' }}>✓</span> {f}
                 </div>
               ))}
             </div>
-          </div>
-        ) : isPro ? (
-          <div className="bg-white rounded-2xl border border-gray-200 p-8">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <span
-                  className="text-xs font-black px-3 py-1 rounded-full text-white uppercase tracking-wide"
-                  style={{ backgroundColor: '#534AB7' }}
-                >
-                  Active
-                </span>
-                <h2 className="text-2xl font-black text-gray-900 mt-3">Pro Plan</h2>
-                <p className="text-gray-500 text-sm mt-1">Unlimited capacity audits and all modules.</p>
-              </div>
-              <div className="text-right">
-                <p className="text-3xl font-black text-gray-900">$29</p>
-                <p className="text-sm text-gray-400">per month</p>
-              </div>
-            </div>
-            <div className="border-t border-gray-100 pt-5 space-y-2 mb-6">
-              {['Unlimited capacity audits', 'Weekly ops brief', 'HubSpot CRM sync (legacy)', 'All future modules', 'Priority support'].map(f => (
-                <div key={f} className="flex items-center gap-3 text-sm text-gray-700">
-                  <span className="font-bold" style={{ color: '#534AB7' }}>✓</span> {f}
-                </div>
-              ))}
-            </div>
-            <a
-              href="/api/stripe/portal"
-              className="block w-full text-center font-semibold py-3 rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors text-sm"
-            >
-              Manage subscription
-            </a>
-            <p className="text-xs text-center text-gray-400 mt-2">
-              Update payment, view invoices, or cancel via Stripe&apos;s secure portal.
-            </p>
           </div>
         ) : (
           <div className="bg-white rounded-2xl border border-gray-200 p-8">
             <div className="flex items-start justify-between mb-4">
               <div>
                 <span className="text-xs font-semibold px-3 py-1 rounded-full bg-gray-100 text-gray-500 uppercase tracking-wide">
-                  Free — Early Access
+                  Free
                 </span>
                 <h2 className="text-2xl font-black text-gray-900 mt-3">Free Plan</h2>
-                <p className="text-gray-500 text-sm mt-1">1 capacity audit per month. 5 CRM extractions (legacy).</p>
+                <p className="text-gray-500 text-sm mt-1">1 capacity audit per month. Calculator unlimited.</p>
               </div>
               <div className="text-right">
                 <p className="text-3xl font-black text-gray-900">$0</p>
-                <p className="text-sm text-gray-400">per month</p>
+                <p className="text-sm text-gray-400">forever</p>
               </div>
             </div>
             <div className="border-t border-gray-100 pt-5 mb-6">
-              <Link
-                href="/pricing"
-                className="block w-full text-center font-bold py-3 rounded-xl text-white transition-opacity hover:opacity-90 text-sm"
-                style={{ backgroundColor: '#534AB7' }}
+              <a
+                href="/api/stripe/checkout-ltd"
+                className="block w-full text-center font-black py-3 rounded-xl text-yellow-900 transition-opacity hover:opacity-90 text-sm"
+                style={{ backgroundColor: '#F59E0B' }}
               >
-                Upgrade to Pro — $29/month
-              </Link>
-              <p className="text-xs text-center text-gray-400 mt-2">Unlimited audits. Cancel anytime.</p>
+                Get Early Access — $19 one-time
+              </a>
+              <p className="text-xs text-center text-gray-400 mt-2">10 audits/month. All future modules. No subscription.</p>
             </div>
           </div>
         )}

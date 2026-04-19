@@ -4,6 +4,9 @@ import { createAdminClient } from '@/lib/supabase/admin'
 
 const ADMIN_EMAIL = 'initiaops@gmail.com'
 const PRO_PRICE = 29
+const LTD_PRICE = 19
+const SESSION_PRICE = 299
+const TOPUP_PRICE = 15
 const COST_VERCEL = 20
 const COST_SUPABASE = 25
 const COST_NAMECHEAP = 1.25 // $15/yr amortized
@@ -59,6 +62,8 @@ export default async function AdminPage() {
     { count: monthExtractions },
     { data: usageAll },
     { data: topUsersThisMonth },
+    { count: ltdCount },
+    { count: sessionCount },
   ] = await Promise.all([
     admin.auth.admin.listUsers({ perPage: 1000 }),
     admin.from('subscriptions').select('user_id, plan, status, role, created_at'),
@@ -72,6 +77,8 @@ export default async function AdminPage() {
       .eq('month', currentMonth)
       .order('count', { ascending: false })
       .limit(5),
+    admin.from('subscriptions').select('*', { count: 'exact', head: true }).eq('plan', 'founder'),
+    admin.from('sessions_booked').select('*', { count: 'exact', head: true }),
   ])
 
   // ── Revenue metrics ───────────────────────────────────────────
@@ -184,6 +191,29 @@ export default async function AdminPage() {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* ── 1b. ONE-TIME REVENUE ────────────────────────────── */}
+        <section>
+          <h2 className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">One-Time Revenue</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { label: 'LTD Sales', value: String(ltdCount ?? 0), sub: `× $${LTD_PRICE} = ${fmt$((ltdCount ?? 0) * LTD_PRICE)}`, color: 'text-amber-700', bg: 'bg-amber-50' },
+              { label: 'Sessions Booked', value: String(sessionCount ?? 0), sub: `× $${SESSION_PRICE} = ${fmt$((sessionCount ?? 0) * SESSION_PRICE)}`, color: 'text-purple-700', bg: 'bg-purple-50' },
+              { label: 'Total One-Time', value: fmt$((ltdCount ?? 0) * LTD_PRICE + (sessionCount ?? 0) * SESSION_PRICE), sub: 'all time', color: 'text-green-700', bg: 'bg-green-50' },
+              { label: 'LTD Spots Left', value: String(Math.max(0, 100 - (ltdCount ?? 0))), sub: 'of 100 remaining', color: 'text-blue-700', bg: 'bg-blue-50' },
+            ].map(({ label, value, sub, color, bg }) => (
+              <div key={label} className="bg-white rounded-2xl border border-gray-200 p-5">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{label}</p>
+                <p className={`text-3xl font-black ${color}`}>{value}</p>
+                <p className="text-xs text-gray-400 mt-1">{sub}</p>
+                <div className={`mt-3 h-1 rounded-full ${bg}`} />
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-gray-400 mt-2">
+            Topup price reference: ${TOPUP_PRICE}/pack · LTD: ${LTD_PRICE} · Strategy Session: ${SESSION_PRICE}
+          </p>
         </section>
 
         {/* ── 2. MONTHLY P&L ──────────────────────────────────── */}

@@ -1,24 +1,50 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
-import WaitlistForm from '../WaitlistForm'
 
 export const metadata: Metadata = {
-  title: 'Pricing — RECLAIM | Start Free',
-  description:
-    'Free capacity audit included. Pro at $29/month or $149 lifetime. Built for BizOps and ops leaders.',
+  title: 'Pricing — RECLAIM | Simple pricing',
+  description: 'Start free. Grab lifetime access while spots last. Or book a session when you\'re ready for hands-on help.',
   alternates: { canonical: '/pricing' },
   openGraph: {
-    title: 'Pricing — RECLAIM | Start Free',
-    description:
-      'Free capacity audit included. Pro at $29/month or $149 lifetime. Built for BizOps and ops leaders.',
+    title: 'Pricing — RECLAIM | Simple pricing',
+    description: 'Start free. Grab lifetime access while spots last. Or book a session when you\'re ready for hands-on help.',
     url: 'https://www.getreclaimapp.com/pricing',
   },
 }
 
+const CHECK = (
+  <span className="w-5 h-5 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold shrink-0">✓</span>
+)
+const CROSS = (
+  <span className="w-5 h-5 rounded-full bg-gray-100 text-gray-300 flex items-center justify-center text-xs font-bold shrink-0">✗</span>
+)
+
 export default async function PricingPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+
+  let ltdRemaining = 100
+  try {
+    const admin = createAdminClient()
+    const { count } = await admin
+      .from('subscriptions')
+      .select('*', { count: 'exact', head: true })
+      .eq('plan', 'founder')
+    ltdRemaining = Math.max(0, 100 - (count ?? 0))
+  } catch {}
+
+  const spotsFilled = 100 - ltdRemaining
+  const pctFilled = Math.round((spotsFilled / 100) * 100)
+
+  const badgeBg = ltdRemaining < 20 ? '#FEE2E2' : ltdRemaining < 50 ? '#FEF3C7' : '#D1FAE5'
+  const badgeText = ltdRemaining < 20 ? '#991B1B' : ltdRemaining < 50 ? '#92400E' : '#065F46'
+  const badgeMsg = ltdRemaining < 20
+    ? `Only ${ltdRemaining} left!`
+    : ltdRemaining < 50
+    ? `${ltdRemaining} of 100 spots remaining`
+    : `Still available — ${ltdRemaining} of 100 spots`
 
   return (
     <div className="bg-white min-h-screen">
@@ -32,243 +58,258 @@ export default async function PricingPage() {
           Pricing
         </span>
         <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4 tracking-tight">
-          Simple, transparent pricing
+          Simple pricing
         </h1>
         <p className="text-xl text-gray-500 max-w-xl mx-auto">
-          Start free while we&apos;re in early access. Lock in founder pricing before public launch.
+          Start free. Grab lifetime access while spots last. Or book a session
+          when you&apos;re ready for hands-on help.
         </p>
       </div>
 
-      {/* ── PLANS ───────────────────────────────────────────────────────── */}
-      <div className="max-w-5xl mx-auto px-4 pb-8 -mt-4">
-        <div className="grid md:grid-cols-3 gap-6 items-start">
+      {/* ── THREE CARDS ─────────────────────────────────────────────────── */}
+      <div className="max-w-5xl mx-auto px-4 pt-12 pb-8">
 
-          {/* Starter — Free */}
-          <div className="bg-white rounded-2xl border border-gray-200 p-8 flex flex-col shadow-sm">
-            <div className="mb-8">
-              <h2 className="text-2xl font-black text-gray-900 mb-1">Starter</h2>
-              <p className="text-gray-400 text-sm">Try it out, no card needed</p>
+        {/* LTD badge above cards */}
+        <div className="flex justify-center mb-3">
+          <span
+            className="text-sm font-bold px-5 py-2 rounded-full"
+            style={{ backgroundColor: badgeBg, color: badgeText }}
+          >
+            Limited — {badgeMsg}
+          </span>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 items-stretch">
+
+          {/* CARD 1 — Free */}
+          <div className="bg-white rounded-2xl border-l-4 border-gray-300 border border-gray-200 p-8 flex flex-col shadow-sm">
+            <div className="mb-6">
+              <h2 className="text-2xl font-black text-gray-900 mb-1">Free</h2>
+              <p className="text-gray-400 text-sm">Try RECLAIM with no commitment.</p>
               <div className="mt-4">
                 <span className="text-5xl font-black text-gray-900">$0</span>
-                <span className="text-gray-400 ml-2">/ month</span>
+                <span className="text-gray-400 ml-2">forever</span>
               </div>
             </div>
 
             <div className="space-y-3 mb-8 flex-1">
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">What&apos;s included</p>
               {[
-                '1 capacity audit per month',
-                'Administrative tax score',
-                'Basic reallocation report',
-                'Calendar insights (connect Google Calendar)',
-                'Email support',
-              ].map(f => (
-                <div key={f} className="flex items-center gap-3 text-sm text-gray-700">
-                  <span className="w-5 h-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs font-bold shrink-0">✓</span>
-                  {f}
+                { check: true, text: 'Capacity calculator — unlimited, always free' },
+                { check: true, text: '1 AI capacity audit per month' },
+                { check: true, text: 'Administrative tax score' },
+                { check: true, text: 'Risk signals and recommendations' },
+                { check: true, text: 'Google Calendar connection' },
+                { check: false, text: 'More than 1 audit/month' },
+                { check: false, text: 'Audit history' },
+                { check: false, text: 'Future modules' },
+              ].map(({ check, text }) => (
+                <div key={text} className={`flex items-start gap-3 text-sm ${check ? 'text-gray-700' : 'text-gray-300'}`}>
+                  {check ? CHECK : CROSS}
+                  {text}
                 </div>
               ))}
-              <div className="pt-2 border-t border-gray-100 mt-4 space-y-3">
-                {['Unlimited audits', 'Weekly ops brief', 'Risk signals dashboard', 'Vendor intelligence module'].map(f => (
-                  <div key={f} className="flex items-center gap-3 text-sm text-gray-300">
-                    <span className="w-5 h-5 rounded-full bg-gray-100 text-gray-300 flex items-center justify-center text-xs font-bold shrink-0">—</span>
-                    {f}
-                  </div>
-                ))}
-              </div>
             </div>
 
             <Link
               href={user ? '/dashboard' : '/signup'}
-              className="block text-center font-bold py-3.5 rounded-xl border-2 border-gray-200 text-gray-700 hover:border-purple-200 hover:bg-purple-50 transition-all"
+              className="block text-center font-bold py-3.5 rounded-xl border-2 border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50 transition-all"
             >
-              {user ? 'Go to Dashboard' : 'Get started free'}
+              {user ? 'Go to dashboard' : 'Start free — no card needed'}
             </Link>
+            <p className="text-center text-xs text-gray-400 mt-3">No credit card. No time limit.</p>
           </div>
 
-          {/* Pro — $29/mo */}
-          <div
-            className="rounded-2xl p-8 flex flex-col relative overflow-hidden shadow-2xl"
-            style={{ backgroundColor: '#534AB7' }}
-          >
-            <div className="absolute top-5 right-5 bg-yellow-400 text-yellow-900 text-xs font-black px-3 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
-              Most Popular
-            </div>
-
-            <div className="mb-8">
-              <h2 className="text-2xl font-black text-white mb-1">Pro</h2>
-              <p className="text-purple-200 text-sm">For business owners and ops leaders who need weekly intelligence without the enterprise price tag.</p>
+          {/* CARD 2 — Early Access LTD */}
+          <div className="bg-white rounded-2xl border-2 border-amber-400 p-8 flex flex-col shadow-lg relative">
+            <div className="mb-6">
+              <h2 className="text-2xl font-black text-gray-900 mb-1">Early Access</h2>
+              <p className="text-gray-500 text-sm">Lock in access before we close this offer.</p>
               <div className="mt-4">
-                <span className="text-5xl font-black text-white">$29</span>
-                <span className="text-purple-300 ml-2">/ month</span>
+                <span className="text-5xl font-black text-gray-900">$19</span>
+                <span className="text-gray-400 ml-2">one-time payment</span>
+              </div>
+
+              {/* Progress bar */}
+              <div className="mt-4">
+                <div className="flex justify-between text-xs text-gray-400 mb-1">
+                  <span>{spotsFilled} spots sold</span>
+                  <span>{ltdRemaining} remaining</span>
+                </div>
+                <div className="w-full bg-gray-100 rounded-full h-2">
+                  <div
+                    className="h-2 rounded-full transition-all"
+                    style={{ width: `${pctFilled}%`, backgroundColor: '#F59E0B' }}
+                  />
+                </div>
               </div>
             </div>
 
             <div className="space-y-3 mb-8 flex-1">
-              <p className="text-xs font-bold text-purple-300 uppercase tracking-wide">Everything in Starter, plus</p>
               {[
-                'Unlimited capacity audits',
-                'Weekly ops brief (auto-generated)',
-                'Google Calendar integration',
-                'Reallocation recommendations with $ value',
-                'Risk signals dashboard',
-                'Vendor intelligence module (Q3 2026)',
-                'Priority support',
-              ].map(f => (
-                <div key={f} className="flex items-center gap-3 text-sm text-white">
-                  <span className="w-5 h-5 rounded-full bg-yellow-400 text-yellow-900 flex items-center justify-center text-xs font-bold shrink-0">✓</span>
-                  {f}
+                { check: true, text: 'Everything in Free' },
+                { check: true, text: '10 AI audits per month' },
+                { check: true, text: 'Audit history — last 30 audits' },
+                { check: true, text: 'All future modules — no extra charge' },
+                { check: true, text: 'Founding member status' },
+                { check: false, text: 'Weekly ops brief email' },
+                { check: false, text: 'Unlimited audits' },
+              ].map(({ check, text }) => (
+                <div key={text} className={`flex items-start gap-3 text-sm ${check ? 'text-gray-700' : 'text-gray-300'}`}>
+                  {check ? CHECK : CROSS}
+                  {text}
                 </div>
               ))}
             </div>
 
-            {user ? (
-              <Link
-                href="/api/stripe/checkout"
-                className="block text-center font-black py-4 rounded-xl bg-white hover:bg-gray-50 transition-all shadow-lg hover:shadow-xl text-lg"
-                style={{ color: '#534AB7' }}
-              >
-                Upgrade to Pro
-              </Link>
-            ) : (
-              <Link
-                href="/signup"
-                className="block text-center font-black py-4 rounded-xl bg-white hover:bg-gray-50 transition-all shadow-lg hover:shadow-xl text-lg"
-                style={{ color: '#534AB7' }}
-              >
-                Start free, upgrade later
-              </Link>
-            )}
-
-            <p className="text-center text-purple-300 text-xs mt-4">🛡️ 30-day money-back guarantee</p>
+            <a
+              href={user ? '/api/stripe/checkout-ltd' : '/signup?next=/api/stripe/checkout-ltd'}
+              className="block text-center font-black py-4 rounded-xl transition-all hover:opacity-90 text-gray-900 text-lg"
+              style={{ backgroundColor: '#F59E0B' }}
+            >
+              Get lifetime access — $19
+            </a>
+            <p className="text-center text-xs text-gray-500 mt-3">
+              One payment. 10 audits/month forever.<br />
+              Closes permanently at 100 spots.
+            </p>
           </div>
 
-          {/* Founder LTD — $149 */}
+          {/* CARD 3 — Strategy Session */}
           <div className="bg-white rounded-2xl border-2 p-8 flex flex-col shadow-sm" style={{ borderColor: '#534AB7' }}>
-            <div className="mb-8">
-              <div
-                className="inline-block text-xs font-black px-3 py-1 rounded-full mb-3 uppercase tracking-wide"
-                style={{ backgroundColor: '#EEEDFE', color: '#534AB7' }}
-              >
-                Limited — Lifetime
-              </div>
-              <h2 className="text-2xl font-black text-gray-900 mb-1">Founder</h2>
-              <p className="text-gray-400 text-sm">One payment. Forever.</p>
+            <div className="mb-6">
+              <h2 className="text-2xl font-black text-gray-900 mb-1">1:1 Strategy Session</h2>
+              <p className="text-gray-500 text-sm">Work directly with the founder to implement your capacity audit results.</p>
               <div className="mt-4">
-                <span className="text-5xl font-black text-gray-900">$149</span>
+                <span className="text-5xl font-black text-gray-900">$299</span>
                 <span className="text-gray-400 ml-2">one-time</span>
               </div>
-              <p className="text-xs text-gray-400 mt-2">
-                ≈ 5 months of Pro, paid once
-              </p>
             </div>
 
             <div className="space-y-3 mb-8 flex-1">
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Everything in Pro, plus</p>
               {[
-                'Lifetime Pro access — pay once, use forever',
-                'All future modules included',
-                'Vendor intelligence module (Q3 2026)',
-                'Founding member badge',
-                'Direct founder access',
-                'Input on product roadmap',
-              ].map(f => (
-                <div key={f} className="flex items-center gap-3 text-sm text-gray-700">
-                  <span
-                    className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold shrink-0 text-white"
-                    style={{ backgroundColor: '#534AB7' }}
-                  >✓</span>
-                  {f}
+                '90-minute video call',
+                'Review your audit results together',
+                'Identify your top 3 process changes',
+                '30-day implementation plan',
+                'Written action plan delivered after session',
+                'Available to anyone — any plan',
+                'Scheduling via Calendly',
+              ].map(text => (
+                <div key={text} className="flex items-start gap-3 text-sm text-gray-700">
+                  {CHECK}
+                  {text}
                 </div>
               ))}
             </div>
 
-            <Link
-              href={user ? '/api/stripe/checkout?plan=founder' : '/signup'}
+            <a
+              href="https://calendly.com/initiaops"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block text-center font-bold py-3.5 rounded-xl text-white transition-all hover:opacity-90"
               style={{ backgroundColor: '#534AB7' }}
             >
-              Get Founder access
-            </Link>
-
-            <p className="text-center text-gray-400 text-xs mt-3">
-              Limited to first 50 founders · {' '}
-              <span className="font-semibold" style={{ color: '#534AB7' }}>23 spots left</span>
+              Book a session
+            </a>
+            <p className="text-center text-xs text-gray-400 mt-3">
+              Limited availability.<br />Responds within 24 hours to confirm.
             </p>
           </div>
         </div>
 
-        {/* Feature comparison */}
-        <div className="mt-16 bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="font-black text-gray-900 text-lg">Full feature comparison</h3>
-          </div>
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left px-6 py-4 text-gray-500 font-semibold w-2/5">Feature</th>
-                <th className="px-4 py-4 text-gray-700 font-bold text-center">Starter</th>
-                <th className="px-4 py-4 font-bold text-center" style={{ color: '#534AB7' }}>Pro</th>
-                <th className="px-4 py-4 font-bold text-center text-gray-700">Founder</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { feature: 'Capacity audits per month', starter: '1', pro: 'Unlimited', founder: 'Unlimited' },
-                { feature: 'Administrative tax score', starter: '✓', pro: '✓', founder: '✓' },
-                { feature: 'Reallocation recommendations', starter: 'Basic', pro: 'Full', founder: 'Full' },
-                { feature: 'Weekly ops brief', starter: '—', pro: '✓', founder: '✓' },
-                { feature: 'Google Calendar integration', starter: '✓', pro: '✓', founder: '✓' },
-                { feature: 'Risk signals dashboard', starter: '—', pro: '✓', founder: '✓' },
-                { feature: 'Vendor intelligence module', starter: '—', pro: 'Q3 2026', founder: '✓' },
-                { feature: 'All future modules', starter: '—', pro: 'Early access', founder: '✓' },
-                { feature: 'Support', starter: 'Email', pro: 'Priority', founder: 'Founder channel' },
-              ].map(({ feature, starter, pro, founder }, i) => (
-                <tr key={feature} className={`border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                  <td className="px-6 py-3.5 text-gray-700 font-medium">{feature}</td>
-                  <td className="px-4 py-3.5 text-center text-gray-400">{starter}</td>
-                  <td className="px-4 py-3.5 text-center font-semibold" style={{ color: '#534AB7' }}>{pro}</td>
-                  <td className="px-4 py-3.5 text-center text-gray-700 font-medium">{founder}</td>
+        {/* ── COMPARISON TABLE ─────────────────────────────────────────── */}
+        <div className="mt-16">
+          <h2 className="text-2xl font-black text-gray-900 mb-8 text-center">Plan comparison</h2>
+          <div className="bg-gray-50 rounded-2xl border border-gray-200 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 bg-white">
+                  <th className="text-left px-6 py-4 text-gray-500 font-semibold w-2/5">Feature</th>
+                  <th className="px-4 py-4 text-gray-700 font-bold text-center">Free</th>
+                  <th className="px-4 py-4 font-bold text-center" style={{ color: '#B45309' }}>Early Access</th>
+                  <th className="px-4 py-4 font-bold text-center" style={{ color: '#534AB7' }}>Session</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {[
+                  { feature: 'Capacity calculator', free: 'Unlimited', ltd: 'Unlimited', session: 'Unlimited' },
+                  { feature: 'AI audits/month', free: '1', ltd: '10', session: '1 (Free plan)' },
+                  { feature: 'Admin tax score', free: '✓', ltd: '✓', session: '✓' },
+                  { feature: 'Risk signals', free: '✓', ltd: '✓', session: '✓' },
+                  { feature: 'Recommendations', free: '✓', ltd: '✓', session: '✓' },
+                  { feature: 'Google Calendar', free: '✓', ltd: '✓', session: '✓' },
+                  { feature: 'Audit history', free: '—', ltd: 'Last 30', session: '—' },
+                  { feature: 'Future modules', free: '—', ltd: 'All included', session: '—' },
+                  { feature: '1:1 founder session', free: '—', ltd: '—', session: '✓' },
+                  { feature: 'Written action plan', free: '—', ltd: '—', session: '✓' },
+                  { feature: 'Price', free: 'Free', ltd: '$19 once', session: '$299 once' },
+                ].map(({ feature, free, ltd, session }, i) => (
+                  <tr key={feature} className={`border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                    <td className="px-6 py-3.5 text-gray-700 font-medium">{feature}</td>
+                    <td className="px-4 py-3.5 text-center text-gray-500">{free}</td>
+                    <td className="px-4 py-3.5 text-center font-semibold" style={{ color: '#B45309' }}>{ltd}</td>
+                    <td className="px-4 py-3.5 text-center font-semibold" style={{ color: '#534AB7' }}>{session}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        {/* Guarantee */}
-        <div className="mt-12 rounded-2xl p-8 text-center border-2 border-dashed border-purple-200" style={{ backgroundColor: '#F8F7FF' }}>
-          <div className="text-4xl mb-3">🛡️</div>
-          <h3 className="text-xl font-black text-gray-900 mb-2">30-day money-back guarantee</h3>
-          <p className="text-gray-500 text-sm max-w-md mx-auto">
-            If RECLAIM doesn&apos;t deliver for your team in the first 30 days,
-            email us for a full refund. No questions asked.
+        {/* ── AUDIT TOP-UP ─────────────────────────────────────────────── */}
+        <div className="mt-16 bg-gray-50 rounded-2xl border border-gray-200 p-10">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-black text-gray-900 mb-2">Need more audits this month?</h2>
+            <p className="text-gray-500">No subscription needed. Just buy more when you need them.</p>
+          </div>
+          <div className="max-w-md mx-auto bg-white rounded-2xl border border-gray-200 p-8 text-center shadow-sm">
+            <p className="text-xl font-black text-gray-900 mb-1">Audit Top-Up Pack</p>
+            <p className="text-4xl font-black text-gray-900 my-4">$15 <span className="text-lg font-semibold text-gray-400">one-time</span></p>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+              Adds 10 audits to your account instantly. Works on any plan.
+              No subscription created. Expires at end of current month.
+            </p>
+            <a
+              href={user ? '/api/stripe/checkout-topup' : '/signup?next=/api/stripe/checkout-topup'}
+              className="block w-full text-center font-black py-3.5 rounded-xl text-white transition-all hover:opacity-90"
+              style={{ backgroundColor: '#F59E0B' }}
+            >
+              Buy 10 more audits — $15
+            </a>
+          </div>
+          <p className="text-center text-xs text-gray-400 mt-6">
+            Top-ups are available from your dashboard when you hit your limit. You can also buy them here anytime.
           </p>
         </div>
 
-        {/* FAQ */}
+        {/* ── FAQ ──────────────────────────────────────────────────────── */}
         <div className="mt-16 max-w-2xl mx-auto">
-          <h2 className="text-2xl font-black text-gray-900 mb-8 text-center">Pricing questions</h2>
+          <h2 className="text-2xl font-black text-gray-900 mb-8 text-center">Frequently asked questions</h2>
           <div className="space-y-4">
             {[
               {
-                q: 'What is a capacity audit?',
-                a: 'A capacity audit analyzes your team\'s current workload and time allocation. RECLAIM maps where time is actually going vs where it should go, identifies your administrative tax percentage, and surfaces specific recommendations for redirecting bandwidth to higher-ROI work.',
+                q: 'What happens when the 100 LTD spots are gone?',
+                a: 'The Early Access offer closes permanently. After that, the only options are the free plan or booking a strategy session.',
               },
               {
-                q: 'How does the Google Calendar integration work?',
-                a: 'Connect your Google Calendar with one click. RECLAIM pulls the last 4 weeks of meeting data, categorizes your time automatically, and uses this real data to power your capacity audit — no self-reporting required.',
+                q: 'What counts as one AI audit?',
+                a: 'Each time you click "Run Capacity Audit" in your dashboard uses one audit. The free calculator at /calculator never counts toward your limit — it\'s unlimited always.',
               },
               {
-                q: 'Can I cancel at any time?',
-                a: 'Yes. Cancel from the Billing page in your dashboard. You keep Pro access until the end of your billing period. No questions asked.',
+                q: 'Can I buy more audits if I hit my limit?',
+                a: 'Yes. You can buy a top-up pack of 10 audits for $15 anytime from your dashboard or from this page. Top-ups expire at the end of the month.',
               },
               {
-                q: 'What is the Founder plan?',
-                a: 'The Founder plan is a lifetime deal — pay $149 once and get Pro features forever, including all future modules. Limited to 50 founding members.',
+                q: 'What\'s included in the strategy session?',
+                a: 'A 90-minute video call with the founder, Kunal Kothari. You\'ll review your RECLAIM audit results together, identify your top 3 process changes, and leave with a written 30-day implementation plan delivered within 24 hours of the call.',
               },
               {
-                q: 'Is there a team plan?',
-                a: 'Team plans are on the roadmap for Q3 2026. Email initiaops@gmail.com to get on the early list for team pricing.',
+                q: 'Do I need RECLAIM to book a session?',
+                a: 'No. You can book a session whether you\'re on the free plan, the LTD, or haven\'t signed up at all. The session stands alone as a consulting service.',
+              },
+              {
+                q: 'Will there be a subscription plan later?',
+                a: 'Yes. Once we\'ve validated the product with our founding members we\'ll introduce a Pro subscription with unlimited audits and a weekly ops brief delivered every Monday morning. Early Access members will get priority access and a discount.',
               },
               {
                 q: 'What happens to my data?',
@@ -289,23 +330,25 @@ export default async function PricingPage() {
 
       {/* ── BOTTOM CTA ──────────────────────────────────────────────────── */}
       <div className="py-20 px-4 text-center mt-12" style={{ backgroundColor: '#26215C' }}>
-        <h2 className="text-3xl font-black text-white mb-4">Ready to get started?</h2>
-        <p className="mb-8" style={{ color: '#A9A4E0' }}>Join the waitlist or sign up and start free today.</p>
+        <h2 className="text-3xl font-black text-white mb-4">Start free today</h2>
+        <p className="mb-8 text-lg" style={{ color: '#A9A4E0' }}>No credit card. No time limit. Upgrade when you need more.</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/signup"
             className="inline-flex items-center justify-center gap-2 font-bold px-8 py-4 rounded-xl text-lg transition-all hover:opacity-90 bg-white"
             style={{ color: '#534AB7' }}
           >
-            Start free
+            Try free — no card needed
           </Link>
-          <Link
-            href="/contact"
+          <a
+            href="https://calendly.com/initiaops"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 font-semibold px-8 py-4 rounded-xl text-lg border transition-all"
             style={{ borderColor: '#7B72D6', color: '#A9A4E0' }}
           >
-            Talk to us
-          </Link>
+            Book a strategy session
+          </a>
         </div>
       </div>
     </div>

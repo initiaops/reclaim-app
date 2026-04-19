@@ -27,25 +27,70 @@ export async function POST(request: NextRequest) {
 
   const supabase = createAdminClient()
 
-  // Handle payment confirmed — upgrade user to Pro
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
     const userId = session.metadata?.user_id
+    const type = session.metadata?.type
 
-    if (!userId) {
-      return NextResponse.json({ error: 'No user_id in metadata' }, { status: 400 })
+    if (type === 'ltd' && userId) {
+      await supabase.from('subscriptions').upsert(
+        {
+          user_id: userId,
+          plan: 'founder',
+          audit_limit: 10,
+          stripe_customer_id: session.customer as string,
+          status: 'active',
+        },
+        { onConflict: 'user_id' }
+      )
     }
 
-    await supabase.from('subscriptions').upsert(
-      {
-        user_id: userId,
-        plan: 'pro',
-        stripe_customer_id: session.customer as string,
-        stripe_subscription_id: session.subscription as string,
-        status: 'active',
-      },
-      { onConflict: 'user_id' }
-    )
+    if (type === 'topup' && userId) {
+      // Get current topup_audits value
+      const { data: sub } = await supabase
+        .from('subscriptions')
+        .select('topup_audits')
+        .eq('user_id', userId)
+        .single()
+
+      const current = sub?.topup_audits ?? 0
+      const now = new Date()
+      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59)
+
+      await supabase.from('subscriptions').upsert(
+        {
+          user_id: userId,
+          topup_audits: current + 10,
+          topup_expires_at: endOfMonth.toISOString(),
+        },
+        { onConflict: 'user_id' }
+      )
+    }
+
+    if (type === 'session') {
+      const customerEmail = session.customer_details?.email ?? null
+      await supabase.from('sessions_booked').insert({
+        user_id: userId ?? null,
+        customer_email: customerEmail,
+        stripe_session_id: session.id,
+      })
+      // Note: email notification to founder happens via Stripe dashboard / email settings
+    }
+
+    // Legacy: handle old Pro subscription checkout (no type metadata)
+    if (!type && userId) {
+      await supabase.from('subscriptions').upsert(
+        {
+          user_id: userId,
+          plan: 'pro',
+          audit_limit: 999,
+          stripe_customer_id: session.customer as string,
+          stripe_subscription_id: session.subscription as string,
+          status: 'active',
+        },
+        { onConflict: 'user_id' }
+      )
+    }
   }
 
   // Handle subscription cancelled or expired — downgrade to Free

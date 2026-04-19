@@ -49,6 +49,9 @@ interface Props {
   defaultIndustry: string
   calendarConnected: boolean
   calendarAnalytics: CalendarAnalytics | null
+  auditLimit: number
+  topupAudits: number
+  planName: 'free' | 'founder' | 'pro'
 }
 
 const FREE_OPS_LIMIT = 1
@@ -81,7 +84,7 @@ function taxColor(pct: number) {
 
 export default function OpsDashboardClient({
   userEmail, isPro, opsUsageCount, recentAudits, defaultTeamSize, defaultIndustry,
-  calendarConnected, calendarAnalytics,
+  calendarConnected, calendarAnalytics, auditLimit, topupAudits, planName,
 }: Props) {
   const calendarPrefix = calendarAnalytics ? buildCalendarSummary(calendarAnalytics) : ''
   const [description, setDescription] = useState(calendarPrefix)
@@ -94,7 +97,10 @@ export default function OpsDashboardClient({
   const [sessionCount, setSessionCount] = useState(0)
 
   const totalOpsCount = opsUsageCount + sessionCount
-  const canRun = isPro || totalOpsCount < FREE_OPS_LIMIT
+  const totalLimit = auditLimit + topupAudits
+  const canRun = totalOpsCount < totalLimit
+  const limitReached = totalOpsCount >= totalLimit
+  const usagePercent = Math.min(Math.round((totalOpsCount / totalLimit) * 100), 100)
 
   const firstName = (() => {
     const raw = userEmail.split('@')[0].split('.')[0].split('+')[0]
@@ -154,7 +160,18 @@ export default function OpsDashboardClient({
         {/* ── Header ──────────────────────────────────────────────────── */}
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-black text-gray-900">Ops Intelligence Dashboard</h1>
+            <div className="flex items-center gap-2 mb-1">
+              <h1 className="text-2xl font-black text-gray-900">Ops Intelligence Dashboard</h1>
+              {planName === 'founder' && (
+                <span className="text-[10px] font-black px-2 py-0.5 rounded-full text-yellow-900 uppercase tracking-widest bg-amber-400">Early Access</span>
+              )}
+              {planName === 'pro' && (
+                <span className="text-[10px] font-black px-2 py-0.5 rounded-full text-white uppercase tracking-widest" style={{ backgroundColor: 'var(--brand)' }}>Pro</span>
+              )}
+              {planName === 'free' && (
+                <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 uppercase tracking-widest">Free · 1 audit/month</span>
+              )}
+            </div>
             <p className="text-gray-500 mt-1">
               Welcome back, {firstName}. Here&apos;s your operational snapshot.
             </p>
@@ -182,7 +199,7 @@ export default function OpsDashboardClient({
             <p className="text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">Audits This Month</p>
             <p className="text-3xl font-black text-gray-900 mb-1">{totalOpsCount}</p>
             <p className="text-xs text-gray-400">
-              {isPro ? 'Unlimited on Pro' : `of ${FREE_OPS_LIMIT} included in free plan`}
+              {`${totalLimit - totalOpsCount} remaining this month`}
             </p>
           </div>
 
@@ -199,6 +216,40 @@ export default function OpsDashboardClient({
             <p className="text-3xl font-black mb-1" style={{ color: '#534AB7' }}>{nextMonday}</p>
             <p className="text-xs text-gray-400">Auto-generated from your audit data</p>
           </div>
+        </div>
+
+        {/* ── Usage bar ─────────────────────────────────────────────────── */}
+        <div className="bg-white rounded-2xl border border-gray-200 p-5">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm font-semibold text-gray-700">Audits this month</span>
+            <span className="text-sm font-black text-gray-900">{totalOpsCount} of {totalLimit}</span>
+          </div>
+          <div className="w-full bg-gray-100 rounded-full h-2 mb-3">
+            <div
+              className={`h-2 rounded-full transition-all duration-700 ${limitReached ? 'bg-red-400' : 'bg-purple-500'}`}
+              style={{ width: `${usagePercent}%` }}
+            />
+          </div>
+          {limitReached ? (
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <p className="text-sm text-red-600 font-medium">You&apos;ve hit your monthly limit.</p>
+              <a
+                href="/api/stripe/checkout-topup"
+                className="inline-flex items-center gap-2 text-sm font-black px-4 py-2 rounded-xl text-yellow-900 transition-all hover:opacity-90"
+                style={{ backgroundColor: '#F59E0B' }}
+              >
+                Buy 10 more audits — $15
+              </a>
+            </div>
+          ) : (
+            <p className="text-xs text-gray-400">
+              {planName === 'free' ? (
+                <>Need more? <Link href="/pricing" className="font-bold underline underline-offset-2" style={{ color: '#534AB7' }}>Buy a top-up — $15 for 10 audits</Link></>
+              ) : (
+                <>Need more? <a href="/api/stripe/checkout-topup" className="font-bold underline underline-offset-2" style={{ color: '#534AB7' }}>Buy a top-up — $15 for 10 audits</a></>
+              )}
+            </p>
+          )}
         </div>
 
         {/* ── Calendar Insights ───────────────────────────────────────── */}
@@ -275,8 +326,8 @@ The more context you give, the more specific and actionable your audit results w
 
             {!canRun && (
               <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-800">
-                You&apos;ve used your 1 free audit this month.{' '}
-                <Link href="/pricing" className="font-bold underline">Upgrade to Pro</Link> for unlimited audits.
+                You&apos;ve used all {totalLimit} audit{totalLimit === 1 ? '' : 's'} for this month.{' '}
+                <a href="/api/stripe/checkout-topup" className="font-bold underline">Buy 10 more for $15 →</a>
               </div>
             )}
 
@@ -286,7 +337,7 @@ The more context you give, the more specific and actionable your audit results w
               className="w-full py-3.5 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ backgroundColor: '#534AB7' }}
             >
-              {loading ? 'Running audit…' : 'Run Capacity Audit →'}
+              {loading ? 'Running audit…' : !canRun ? 'Monthly limit reached' : 'Run Capacity Audit →'}
             </button>
             <p className="text-center text-xs text-gray-400">Estimated time: 30–60 seconds</p>
           </div>

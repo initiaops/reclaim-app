@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import WaitlistForm from './WaitlistForm'
 
 export const metadata: Metadata = {
   title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
@@ -42,7 +41,7 @@ const jsonLd = {
   url: 'https://www.getreclaimapp.com',
   description:
     'Operational intelligence platform for BizOps and Ops leaders. Capacity audits, administrative tax scoring, and reallocation recommendations grounded in real calendar data.',
-  offers: { '@type': 'Offer', price: '29', priceCurrency: 'USD' },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
 }
 
 export default function Home() {
@@ -58,13 +57,13 @@ export default function Home() {
         <div className="max-w-5xl mx-auto text-center">
           <span
             className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-6 px-4 py-2 rounded-full border"
-            style={{ borderColor: '#CECCF5', color: '#534AB7', backgroundColor: '#EEEDFE' }}
+            style={{ borderColor: '#F59E0B', color: '#B45309', backgroundColor: '#FEF3C7' }}
           >
             <span
               className="w-1.5 h-1.5 rounded-full animate-pulse inline-block"
-              style={{ backgroundColor: '#534AB7' }}
+              style={{ backgroundColor: '#B45309' }}
             />
-            Now in private beta — limited spots
+            Early Access — 100 spots, $19 lifetime
           </span>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 leading-[1.06] tracking-tight max-w-4xl mx-auto mb-6">
@@ -78,11 +77,22 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
-            <WaitlistForm placeholder="Enter your work email" buttonText="Join the waitlist →" />
+            <Link
+              href="/signup"
+              className="inline-flex items-center gap-2 font-black px-8 py-4 rounded-xl text-lg text-white transition-all hover:opacity-90 hover:shadow-md"
+              style={{ backgroundColor: '#534AB7' }}
+            >
+              Try free — no card needed
+            </Link>
+            <Link
+              href="/calculator"
+              className="inline-flex items-center gap-2 font-bold px-8 py-4 rounded-xl text-lg border-2 border-gray-200 text-gray-700 hover:border-purple-200 hover:bg-purple-50 transition-all"
+            >
+              See the calculator →
+            </Link>
           </div>
-
           <p className="text-sm text-gray-400">
-            No credit card required · Free early access · Built by an ops leader
+            No credit card · 1 free audit/month · Built by an ops leader
           </p>
         </div>
       </section>
@@ -212,7 +222,7 @@ export default function Home() {
             <div className="bg-white rounded-2xl border-2 p-8 flex flex-col h-full" style={{ borderColor: '#534AB7' }}>
               <div className="mb-6">
                 <span className="inline-block text-xs font-bold px-3 py-1.5 rounded-full mb-5" style={{ backgroundColor: '#EEEDFE', color: '#534AB7' }}>
-                  1 free audit/month. Unlimited on Pro.
+                  1 free audit/month. 10/month on Early Access.
                 </span>
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#EEEDFE' }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -249,7 +259,7 @@ export default function Home() {
                 >
                   Run an AI audit →
                 </Link>
-                <p className="text-center text-xs text-gray-400 mt-3">1 free audit/month. Unlimited on Pro ($29/mo).</p>
+                <p className="text-center text-xs text-gray-400 mt-3">1 free audit/month. 10/month on Early Access — $19 lifetime.</p>
               </div>
             </div>
           </div>
@@ -454,22 +464,47 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── WAITLIST CTA ──────────────────────────────────────────────────── */}
-      <section className="py-24 px-4" style={{ backgroundColor: '#26215C' }}>
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-black text-white mb-4">
-            Get early access
-          </h2>
-          <p className="text-lg mb-10" style={{ color: '#A9A4E0' }}>
-            RECLAIM is in private beta. We&apos;re onboarding ops teams in cohorts.
-            Join the waitlist and be first in line.
-          </p>
-          <div className="flex justify-center">
-            <WaitlistForm placeholder="Enter your work email" buttonText="Request access →" />
+      {/* ── PRICING STRIP ─────────────────────────────────────────────── */}
+      <section className="py-20 px-4 bg-white border-t border-gray-100">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-black text-gray-900 mb-10 text-center">How to get started</h2>
+          <div className="grid md:grid-cols-3 gap-5">
+            <Link href="/signup" className="block rounded-2xl border-2 border-gray-200 p-7 hover:border-gray-300 hover:bg-gray-50 transition-all group">
+              <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Free</div>
+              <div className="text-2xl font-black text-gray-900 mb-1">$0</div>
+              <div className="text-sm font-semibold text-gray-600 mb-4">1 audit/month</div>
+              <ul className="space-y-1.5 text-sm text-gray-500 mb-6">
+                <li>Calculator — unlimited</li>
+                <li>1 AI audit/month</li>
+                <li>No card needed</li>
+              </ul>
+              <span className="text-sm font-bold text-gray-700 group-hover:text-gray-900">Get started free →</span>
+            </Link>
+
+            <Link href="/pricing" className="block rounded-2xl border-2 border-amber-400 p-7 hover:bg-amber-50 transition-all group">
+              <div className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-3">Early Access — Limited</div>
+              <div className="text-2xl font-black text-gray-900 mb-1">$19</div>
+              <div className="text-sm font-semibold text-gray-600 mb-4">one-time payment</div>
+              <ul className="space-y-1.5 text-sm text-gray-500 mb-6">
+                <li>10 audits/month forever</li>
+                <li>Audit history</li>
+                <li>All future modules</li>
+              </ul>
+              <span className="text-sm font-bold text-amber-700 group-hover:text-amber-900">Claim your spot →</span>
+            </Link>
+
+            <a href="https://calendly.com/initiaops" target="_blank" rel="noopener noreferrer" className="block rounded-2xl border-2 p-7 hover:bg-purple-50 transition-all group" style={{ borderColor: '#534AB7' }}>
+              <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#534AB7' }}>Strategy Session</div>
+              <div className="text-2xl font-black text-gray-900 mb-1">$299</div>
+              <div className="text-sm font-semibold text-gray-600 mb-4">one-time</div>
+              <ul className="space-y-1.5 text-sm text-gray-500 mb-6">
+                <li>90 min with founder</li>
+                <li>Written action plan</li>
+                <li>Any plan, anytime</li>
+              </ul>
+              <span className="text-sm font-bold group-hover:opacity-80" style={{ color: '#534AB7' }}>Book a session →</span>
+            </a>
           </div>
-          <p className="text-sm mt-6" style={{ color: '#7B72D6' }}>
-            No spam. No pitch decks. Just an invite when your spot is ready.
-          </p>
         </div>
       </section>
 
