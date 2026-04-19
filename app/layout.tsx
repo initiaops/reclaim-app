@@ -95,6 +95,11 @@ export default async function RootLayout({
                     <Link href="/guide" className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-2.5 py-2 rounded-lg hover:bg-purple-50 hidden sm:block">
                       Guide
                     </Link>
+                    {user.email === 'initiaops@gmail.com' && (
+                      <Link href="/admin" className="text-sm font-medium text-gray-700 hover:text-purple-800 transition-colors px-2.5 py-2 rounded-lg hover:bg-purple-50 hidden sm:block">
+                        Admin
+                      </Link>
+                    )}
                     <form action={signOut} className="hidden sm:block">
                       <button
                         type="submit"
