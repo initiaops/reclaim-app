@@ -94,6 +94,25 @@ RECOMMENDATIONS must be:
 Example good recommendation: "Batch all distributor calls into Tuesday afternoon. Instead of 4-5 separate calls spread across the week, one 2-hour block handles everything. This reclaims 3-4 hours weekly — worth approximately $1,200/month — $14,400/year at your time value."
 Example bad recommendation: "Implement a scheduling system to optimize vendor communications"
 
+DO THIS NOW — LITERAL INSTRUCTION RULES:
+The how_to field must contain a literal, ready-to-execute instruction.
+
+- If the action involves contacting someone, provide the EXACT message to send
+- If the action involves a schedule change, name the SPECIFIC day and time
+- If the business is physical (retail, trades, F&B), never reference "calendar" — use physical cues instead:
+  - "Put a note on your register"
+  - "Set a phone alarm for Tuesday 9am"
+  - "Write this on the whiteboard in back"
+  - "Tell your staff at opening tomorrow"
+
+Example of GOOD how_to for retail:
+'Text each of your distributor reps today: "Hey [name], moving all our calls to Tuesdays between 10am-12pm going forward. Works better for the store schedule. Talk then." Takes 5 minutes to send, saves you 4 hours every single week.'
+
+Example of BAD how_to for retail:
+'Inform suppliers to call only during this time and block it on your calendar.'
+
+The test: could a busy store owner do this in the next 10 minutes without thinking about how to start? If yes — good instruction. If no — rewrite it.
+
 WEEKLY OPS BRIEF must be:
 - Written for the business owner themselves, not for a corporate leadership team
 - Start with the single most important thing they should know
