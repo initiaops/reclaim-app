@@ -11,8 +11,8 @@ export async function GET() {
       .select('*', { count: 'exact', head: true })
       .eq('plan', 'founder')
     const sold = count ?? 0
-    return NextResponse.json({ sold, remaining: Math.max(0, 100 - sold) })
+    return NextResponse.json({ sold, remaining: Math.max(0, 35 - sold), total: 35 })
   } catch {
-    return NextResponse.json({ sold: 0, remaining: 100 })
+    return NextResponse.json({ sold: 0, remaining: 35, total: 35 })
   }
 }

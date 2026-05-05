@@ -2,20 +2,20 @@ import Link from 'next/link'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export default async function LtdBanner() {
-  let remaining = 100
+  let remaining = 35
   try {
     const supabase = createAdminClient()
     const { count } = await supabase
       .from('subscriptions')
       .select('*', { count: 'exact', head: true })
       .eq('plan', 'founder')
-    remaining = Math.max(0, 100 - (count ?? 0))
+    remaining = Math.max(0, 35 - (count ?? 0))
   } catch {}
 
-  const bgColor = remaining < 20 ? '#DC2626' : '#D97706'
-  const label = remaining < 20
+  const bgColor = remaining < 10 ? '#DC2626' : '#D97706'
+  const label = remaining < 10
     ? `Only ${remaining} spots left`
-    : `${remaining} of 100 spots remaining`
+    : `${remaining} of 35 spots remaining`
 
   return (
     <div className="w-full text-center py-2.5 px-4 text-sm font-semibold text-white" style={{ backgroundColor: bgColor }}>

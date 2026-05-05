@@ -77,8 +77,8 @@ export async function POST(request: NextRequest) {
       // Note: email notification to founder happens via Stripe dashboard / email settings
     }
 
-    // Legacy: handle old Pro subscription checkout (no type metadata)
-    if (!type && userId) {
+    // Pro subscription checkout
+    if ((type === 'pro_subscription' || !type) && userId) {
       await supabase.from('subscriptions').upsert(
         {
           user_id: userId,
@@ -93,17 +93,36 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // Handle subscription cancelled or expired — downgrade to Free
-  if (
-    event.type === 'customer.subscription.deleted' ||
-    (event.type === 'customer.subscription.updated' &&
-      (event.data.object as Stripe.Subscription).status === 'canceled')
-  ) {
+  // Handle subscription cancelled — downgrade to Free
+  if (event.type === 'customer.subscription.deleted') {
     const subscription = event.data.object as Stripe.Subscription
+    const { data: sub } = await supabase
+      .from('subscriptions')
+      .select('user_id')
+      .eq('stripe_subscription_id', subscription.id)
+      .single()
+    if (sub) {
+      await supabase
+        .from('subscriptions')
+        .update({ plan: 'free', audit_limit: 1, status: 'canceled', stripe_subscription_id: null })
+        .eq('user_id', sub.user_id)
+    }
+  }
 
+  // Handle subscription updated — track renewal date and status changes
+  if (event.type === 'customer.subscription.updated') {
+    const subscription = event.data.object as Stripe.Subscription
+    const updates: Record<string, unknown> = {
+      status: subscription.status,
+      current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+    }
+    if (subscription.status === 'canceled') {
+      updates.plan = 'free'
+      updates.audit_limit = 1
+    }
     await supabase
       .from('subscriptions')
-      .update({ plan: 'free', status: 'canceled' })
+      .update(updates)
       .eq('stripe_subscription_id', subscription.id)
   }
 

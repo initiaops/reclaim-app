@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import CalendarInsightsPanel from './CalendarInsightsPanel'
 import AuditIntakeForm from './AuditIntakeForm'
 import type { CalendarAnalytics } from '@/lib/calendar-analytics'
@@ -101,6 +102,17 @@ export default function OpsDashboardClient({
   const [copied, setCopied]           = useState(false)
   const [sessionCount, setSessionCount] = useState(0)
   const [useManualInput, setUseManualInput] = useState(false)
+  const [bannerDismissed, setBannerDismissed] = useState(false)
+
+  const searchParams = useSearchParams()
+  const welcomeParam = searchParams.get('welcome')
+
+  useEffect(() => {
+    if (welcomeParam) {
+      const t = setTimeout(() => setBannerDismissed(true), 5000)
+      return () => clearTimeout(t)
+    }
+  }, [welcomeParam])
 
   const totalOpsCount = opsUsageCount + sessionCount
   const totalLimit = auditLimit + topupAudits
@@ -169,10 +181,10 @@ export default function OpsDashboardClient({
             <div className="flex items-center gap-2 mb-1">
               <h1 className="text-2xl font-black text-gray-900">Ops Intelligence Dashboard</h1>
               {planName === 'founder' && (
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-full text-yellow-900 uppercase tracking-widest bg-amber-400">Early Access</span>
+                <span className="text-[10px] font-black px-2 py-0.5 rounded-full text-yellow-900 uppercase tracking-widest bg-amber-400">Early Access · 10/month</span>
               )}
               {planName === 'pro' && (
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-full text-white uppercase tracking-widest" style={{ backgroundColor: 'var(--brand)' }}>Pro</span>
+                <span className="text-[10px] font-black px-2 py-0.5 rounded-full text-white uppercase tracking-widest" style={{ backgroundColor: '#534AB7' }}>Pro · Unlimited ✓</span>
               )}
               {planName === 'free' && (
                 <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 uppercase tracking-widest">Free · 1 audit/month</span>
@@ -224,39 +236,98 @@ export default function OpsDashboardClient({
           </div>
         </div>
 
+        {/* ── Welcome banners ─────────────────────────────────────────── */}
+        {!bannerDismissed && welcomeParam === 'pro' && (
+          <div className="rounded-2xl border border-green-200 bg-green-50 px-5 py-4 flex items-start justify-between gap-4">
+            <p className="text-sm font-semibold text-green-800">
+              Welcome to Pro! Your first weekly ops brief arrives this Monday morning.
+            </p>
+            <button onClick={() => setBannerDismissed(true)} className="text-green-500 hover:text-green-700 shrink-0 text-lg leading-none">×</button>
+          </div>
+        )}
+        {!bannerDismissed && welcomeParam === 'founder' && (
+          <div className="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 flex items-start justify-between gap-4">
+            <p className="text-sm font-semibold text-amber-800">
+              Welcome, founding member! You have 10 audits per month and lifetime access to all future modules.
+            </p>
+            <button onClick={() => setBannerDismissed(true)} className="text-amber-500 hover:text-amber-700 shrink-0 text-lg leading-none">×</button>
+          </div>
+        )}
+
         {/* ── Usage bar ─────────────────────────────────────────────────── */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-5">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-semibold text-gray-700">Audits this month</span>
-            <span className="text-sm font-black text-gray-900">{totalOpsCount} of {totalLimit}</span>
+        {planName === 'pro' ? (
+          <div className="bg-white rounded-2xl border border-gray-200 p-5 flex items-center justify-between">
+            <div>
+              <span className="text-sm font-semibold text-gray-700">Pro plan</span>
+              <p className="text-xs text-gray-400 mt-0.5">Unlimited audits — no limit to track</p>
+            </div>
+            <span className="text-xs font-black px-3 py-1 rounded-full text-white" style={{ backgroundColor: '#534AB7' }}>Unlimited ✓</span>
           </div>
-          <div className="w-full bg-gray-100 rounded-full h-2 mb-3">
-            <div
-              className={`h-2 rounded-full transition-all duration-700 ${limitReached ? 'bg-red-400' : 'bg-purple-500'}`}
-              style={{ width: `${usagePercent}%` }}
-            />
+        ) : (
+          <div className="bg-white rounded-2xl border border-gray-200 p-5">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-semibold text-gray-700">Audits this month</span>
+              <span className="text-sm font-black text-gray-900">{totalOpsCount} of {totalLimit}</span>
+            </div>
+            <div className="w-full bg-gray-100 rounded-full h-2 mb-3">
+              <div
+                className={`h-2 rounded-full transition-all duration-700 ${limitReached ? 'bg-red-400' : 'bg-purple-500'}`}
+                style={{ width: `${usagePercent}%` }}
+              />
+            </div>
+            {limitReached ? (
+              <div className="flex items-center flex-wrap gap-3 mt-2">
+                <p className="text-sm text-red-600 font-medium flex-1">You&apos;ve hit your monthly limit.</p>
+                <a
+                  href="/api/stripe/checkout-topup"
+                  className="text-xs font-black px-3 py-1.5 rounded-lg text-yellow-900 transition-all hover:opacity-90"
+                  style={{ backgroundColor: '#F59E0B' }}
+                >
+                  Buy top-up — $15 for 10
+                </a>
+                <a
+                  href="/api/stripe/checkout-pro"
+                  className="text-xs font-black px-3 py-1.5 rounded-lg text-white transition-all hover:opacity-90"
+                  style={{ backgroundColor: '#534AB7' }}
+                >
+                  Upgrade to Pro
+                </a>
+              </div>
+            ) : (
+              <p className="text-xs text-gray-400">
+                Need more?{' '}
+                <a href="/api/stripe/checkout-topup" className="font-bold underline underline-offset-2" style={{ color: '#534AB7' }}>Buy a top-up — $15 for 10 audits</a>
+              </p>
+            )}
           </div>
-          {limitReached ? (
-            <div className="flex items-center justify-between flex-wrap gap-3">
-              <p className="text-sm text-red-600 font-medium">You&apos;ve hit your monthly limit.</p>
+        )}
+
+        {/* ── Pro upsell card ──────────────────────────────────────────── */}
+        {planName !== 'pro' && (
+          <div className="rounded-2xl border border-purple-100 p-5" style={{ backgroundColor: '#F8F7FF' }}>
+            <div className="flex items-start justify-between gap-4 flex-wrap">
+              <div>
+                <p className="text-sm font-black text-gray-900 mb-1">
+                  {planName === 'founder'
+                    ? 'Want unlimited audits + the weekly brief?'
+                    : 'Upgrade to Pro — $29/month'}
+                </p>
+                <p className="text-xs text-gray-500 leading-relaxed max-w-sm">
+                  {planName === 'founder'
+                    ? 'Upgrade to Pro for $29/month. Your Early Access status is preserved — you keep your founding member badge.'
+                    : 'Get unlimited audits + your weekly ops brief delivered every Monday morning. Cancel anytime.'}
+                </p>
+              </div>
               <a
-                href="/api/stripe/checkout-topup"
-                className="inline-flex items-center gap-2 text-sm font-black px-4 py-2 rounded-xl text-yellow-900 transition-all hover:opacity-90"
-                style={{ backgroundColor: '#F59E0B' }}
+                href="/api/stripe/checkout-pro"
+                className="shrink-0 text-sm font-black px-5 py-2.5 rounded-xl text-white hover:opacity-90 transition-all"
+                style={{ backgroundColor: '#534AB7' }}
               >
-                Buy 10 more audits — $15
+                Upgrade to Pro →
               </a>
             </div>
-          ) : (
-            <p className="text-xs text-gray-400">
-              {planName === 'free' ? (
-                <>Need more? <Link href="/pricing" className="font-bold underline underline-offset-2" style={{ color: '#534AB7' }}>Buy a top-up — $15 for 10 audits</Link></>
-              ) : (
-                <>Need more? <a href="/api/stripe/checkout-topup" className="font-bold underline underline-offset-2" style={{ color: '#534AB7' }}>Buy a top-up — $15 for 10 audits</a></>
-              )}
-            </p>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* ── Calendar Insights ───────────────────────────────────────── */}
         {calendarConnected && calendarAnalytics && (
@@ -577,6 +648,34 @@ The more context you give, the more specific and actionable your audit results w
                 <span className="w-2 h-2 rounded-full inline-block shrink-0" style={{ backgroundColor: '#534AB7' }} />
                 Purple bars indicate activities that can be automated or eliminated
               </p>
+            </div>
+
+          </div>
+
+            {/* Session CTA */}
+            <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6">
+              <div className="flex items-start justify-between gap-6 flex-wrap">
+                <div>
+                  <p className="text-base font-black text-gray-900 mb-1">Want help turning this into a 30-day action plan?</p>
+                  <p className="text-sm text-gray-500 leading-relaxed max-w-lg">
+                    Book a 90-minute strategy session with the founder. We&apos;ll review these results together and build an exact plan for your situation — written and delivered within 24 hours.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-2 shrink-0">
+                  <a
+                    href="https://calendly.com/initiaops/30min"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-black px-5 py-2.5 rounded-xl border-2 transition-all hover:opacity-90"
+                    style={{ borderColor: '#534AB7', color: '#534AB7' }}
+                  >
+                    Book a session — $299
+                  </a>
+                  <Link href="/pricing" className="text-xs text-center text-gray-400 hover:text-gray-600 transition-colors">
+                    Learn more
+                  </Link>
+                </div>
+              </div>
             </div>
 
           </div>

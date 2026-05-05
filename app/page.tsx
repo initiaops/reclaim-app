@@ -63,7 +63,7 @@ export default function Home() {
               className="w-1.5 h-1.5 rounded-full animate-pulse inline-block"
               style={{ backgroundColor: '#B45309' }}
             />
-            Early Access — 100 spots, $19 lifetime
+            Early Access — 35 spots, $19 lifetime
           </span>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 leading-[1.06] tracking-tight max-w-4xl mx-auto mb-6">
@@ -468,11 +468,11 @@ export default function Home() {
       <section className="py-20 px-4 bg-white border-t border-gray-100">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-black text-gray-900 mb-10 text-center">How to get started</h2>
-          <div className="grid md:grid-cols-3 gap-5">
-            <Link href="/signup" className="block rounded-2xl border-2 border-gray-200 p-7 hover:border-gray-300 hover:bg-gray-50 transition-all group">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <Link href="/signup" className="block rounded-2xl border-2 border-gray-200 p-6 hover:border-gray-300 hover:bg-gray-50 transition-all group">
               <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Free</div>
               <div className="text-2xl font-black text-gray-900 mb-1">$0</div>
-              <div className="text-sm font-semibold text-gray-600 mb-4">1 audit/month</div>
+              <div className="text-sm font-semibold text-gray-500 mb-4">forever</div>
               <ul className="space-y-1.5 text-sm text-gray-500 mb-6">
                 <li>Calculator — unlimited</li>
                 <li>1 AI audit/month</li>
@@ -481,10 +481,10 @@ export default function Home() {
               <span className="text-sm font-bold text-gray-700 group-hover:text-gray-900">Get started free →</span>
             </Link>
 
-            <Link href="/pricing" className="block rounded-2xl border-2 border-amber-400 p-7 hover:bg-amber-50 transition-all group">
+            <Link href="/pricing" className="block rounded-2xl border-2 border-amber-400 p-6 hover:bg-amber-50 transition-all group">
               <div className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-3">Early Access — Limited</div>
               <div className="text-2xl font-black text-gray-900 mb-1">$19</div>
-              <div className="text-sm font-semibold text-gray-600 mb-4">one-time payment</div>
+              <div className="text-sm font-semibold text-gray-500 mb-4">one-time · 35 spots</div>
               <ul className="space-y-1.5 text-sm text-gray-500 mb-6">
                 <li>10 audits/month forever</li>
                 <li>Audit history</li>
@@ -493,16 +493,28 @@ export default function Home() {
               <span className="text-sm font-bold text-amber-700 group-hover:text-amber-900">Claim your spot →</span>
             </Link>
 
-            <a href="https://calendly.com/initiaops/30min" target="_blank" rel="noopener noreferrer" className="block rounded-2xl border-2 p-7 hover:bg-purple-50 transition-all group" style={{ borderColor: '#534AB7' }}>
-              <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#534AB7' }}>Strategy Session</div>
+            <Link href="/pricing" className="block rounded-2xl border-2 p-6 hover:bg-purple-50 transition-all group" style={{ borderColor: '#534AB7' }}>
+              <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: '#534AB7' }}>Pro</div>
+              <div className="text-2xl font-black text-gray-900 mb-1">$29</div>
+              <div className="text-sm font-semibold text-gray-500 mb-4">per month</div>
+              <ul className="space-y-1.5 text-sm text-gray-500 mb-6">
+                <li>Unlimited audits</li>
+                <li>Weekly ops brief</li>
+                <li>Cancel anytime</li>
+              </ul>
+              <span className="text-sm font-bold group-hover:opacity-80" style={{ color: '#534AB7' }}>Start Pro →</span>
+            </Link>
+
+            <a href="https://calendly.com/initiaops/30min" target="_blank" rel="noopener noreferrer" className="block rounded-2xl border-2 border-gray-200 p-6 hover:bg-gray-50 transition-all group">
+              <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Strategy Session</div>
               <div className="text-2xl font-black text-gray-900 mb-1">$299</div>
-              <div className="text-sm font-semibold text-gray-600 mb-4">one-time</div>
+              <div className="text-sm font-semibold text-gray-500 mb-4">one-time</div>
               <ul className="space-y-1.5 text-sm text-gray-500 mb-6">
                 <li>90 min with founder</li>
                 <li>Written action plan</li>
                 <li>Any plan, anytime</li>
               </ul>
-              <span className="text-sm font-bold group-hover:opacity-80" style={{ color: '#534AB7' }}>Book a session →</span>
+              <span className="text-sm font-bold text-gray-700 group-hover:text-gray-900">Book a session →</span>
             </a>
           </div>
         </div>
