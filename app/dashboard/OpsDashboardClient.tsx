@@ -17,6 +17,7 @@ interface Recommendation {
   action: string
   hours_reclaimed_weekly: number
   dollar_impact_monthly?: number
+  dollar_impact_annually?: number
   priority: 'immediate' | 'this_week' | 'this_month'
   how_to?: string
 }
@@ -500,10 +501,15 @@ The more context you give, the more specific and actionable your audit results w
                         </span>
                         {r.dollar_impact_monthly != null && r.dollar_impact_monthly > 0 && (
                           <span className="inline-flex items-center gap-1 text-xs font-bold text-green-700 bg-green-50 border border-green-200 px-2.5 py-1 rounded-full">
-                            ~${r.dollar_impact_monthly.toLocaleString()}/mo saved
+                            ~${r.dollar_impact_monthly.toLocaleString()}/mo
                           </span>
                         )}
                       </div>
+                      {r.dollar_impact_annually != null && r.dollar_impact_annually > 0 && (
+                        <p className="text-sm font-black text-green-700">
+                          ~${r.dollar_impact_annually.toLocaleString()}/year saved
+                        </p>
+                      )}
                       {r.how_to && (
                         <div
                           className="rounded-lg px-3 py-3 mt-1"
