@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import CalendarInsightsPanel from './CalendarInsightsPanel'
+import AuditIntakeForm from './AuditIntakeForm'
 import type { CalendarAnalytics } from '@/lib/calendar-analytics'
 import { buildCalendarSummary } from '@/lib/calendar-analytics'
 
@@ -99,6 +100,7 @@ export default function OpsDashboardClient({
   const [copied, setCopied]           = useState(false)
   const [sessionCount, setSessionCount] = useState(0)
   const [expandedRecs, setExpandedRecs] = useState<Set<number>>(new Set())
+  const [useManualInput, setUseManualInput] = useState(false)
 
   const totalOpsCount = opsUsageCount + sessionCount
   const totalLimit = auditLimit + topupAudits
@@ -117,17 +119,17 @@ export default function OpsDashboardClient({
     : null
   const colors = result ? taxColor(result.administrative_tax_pct) : null
 
-  async function handleRun() {
-    if (!canRun || loading || !description.trim()) return
-    setLoading(true)
-    setError('')
-    setResult(null)
-
-    const content = [
+  async function handleRun(promptOverride?: string) {
+    if (!canRun || loading) return
+    const content = promptOverride ?? [
       description,
       teamSize ? `Team size: ${teamSize}` : '',
       industry ? `Industry/Function: ${industry}` : '',
     ].filter(Boolean).join('\n')
+    if (!content.trim()) return
+    setLoading(true)
+    setError('')
+    setResult(null)
 
     try {
       const res  = await fetch('/api/extract', {
@@ -272,54 +274,8 @@ export default function OpsDashboardClient({
             <div>
               <h2 className="text-lg font-black text-gray-900 mb-1">Run a Capacity Audit</h2>
               <p className="text-sm text-gray-500 leading-relaxed">
-                Describe your team&apos;s current workload and time allocation. RECLAIM will identify
-                your administrative tax, surface operational risks, and recommend where to redirect capacity.
+                Answer a few quick questions. RECLAIM will calculate your administrative tax and tell you exactly where your time and money are going.
               </p>
-            </div>
-
-            <textarea
-              value={description}
-              onChange={e => setDescription(e.target.value)}
-              placeholder={`Describe your team's current state. For example:
-— Team size and roles (e.g. 8 people: 2 PMs, 3 analysts, 2 coordinators, 1 director)
-— What major projects or initiatives are active
-— Roughly how time is being spent this week
-— What's feeling slow, stuck, or overwhelming
-— Any upcoming deadlines or leadership pressure
-
-The more context you give, the more specific and actionable your audit results will be.`}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm resize-none text-gray-700 placeholder-gray-300 focus:outline-none focus:ring-2"
-              style={{ minHeight: 200, '--tw-ring-color': '#534AB7' } as React.CSSProperties}
-            />
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-                  Team size
-                </label>
-                <input
-                  type="number"
-                  min="1"
-                  value={teamSize}
-                  onChange={e => setTeamSize(e.target.value)}
-                  placeholder="e.g. 8"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
-                  style={{ '--tw-ring-color': '#534AB7' } as React.CSSProperties}
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
-                  Industry / Function
-                </label>
-                <input
-                  type="text"
-                  value={industry}
-                  onChange={e => setIndustry(e.target.value)}
-                  placeholder="e.g. BizOps, Aerospace, SaaS"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
-                  style={{ '--tw-ring-color': '#534AB7' } as React.CSSProperties}
-                />
-              </div>
             </div>
 
             {error && (
@@ -335,15 +291,76 @@ The more context you give, the more specific and actionable your audit results w
               </div>
             )}
 
-            <button
-              onClick={handleRun}
-              disabled={loading || !canRun || !description.trim()}
-              className="w-full py-3.5 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{ backgroundColor: '#534AB7' }}
-            >
-              {loading ? 'Running audit…' : !canRun ? 'Monthly limit reached' : 'Run Capacity Audit →'}
-            </button>
-            <p className="text-center text-xs text-gray-400">Estimated time: 30–60 seconds</p>
+            {canRun && !useManualInput && (
+              <AuditIntakeForm
+                calendarConnected={calendarConnected}
+                loading={loading}
+                onComplete={(prompt) => handleRun(prompt)}
+                onSwitchToManual={() => setUseManualInput(true)}
+              />
+            )}
+
+            {canRun && useManualInput && (
+              <div className="space-y-4">
+                <textarea
+                  value={description}
+                  onChange={e => setDescription(e.target.value)}
+                  placeholder={`Describe your team's current state. For example:
+— Team size and roles (e.g. 8 people: 2 PMs, 3 analysts, 2 coordinators, 1 director)
+— What major projects or initiatives are active
+— Roughly how time is being spent this week
+— What's feeling slow, stuck, or overwhelming
+— Any upcoming deadlines or leadership pressure
+
+The more context you give, the more specific and actionable your audit results will be.`}
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm resize-none text-gray-700 placeholder-gray-300 focus:outline-none focus:ring-2"
+                  style={{ minHeight: 200, '--tw-ring-color': '#534AB7' } as React.CSSProperties}
+                />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Team size</label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={teamSize}
+                      onChange={e => setTeamSize(e.target.value)}
+                      placeholder="e.g. 8"
+                      className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+                      style={{ '--tw-ring-color': '#534AB7' } as React.CSSProperties}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Industry / Function</label>
+                    <input
+                      type="text"
+                      value={industry}
+                      onChange={e => setIndustry(e.target.value)}
+                      placeholder="e.g. BizOps, Aerospace, SaaS"
+                      className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2"
+                      style={{ '--tw-ring-color': '#534AB7' } as React.CSSProperties}
+                    />
+                  </div>
+                </div>
+                <button
+                  onClick={() => handleRun()}
+                  disabled={loading || !description.trim()}
+                  className="w-full py-3.5 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{ backgroundColor: '#534AB7' }}
+                >
+                  {loading ? 'Running audit…' : 'Run Capacity Audit →'}
+                </button>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs text-gray-400">Estimated time: 30–60 seconds</p>
+                  <button
+                    type="button"
+                    onClick={() => setUseManualInput(false)}
+                    className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    ← Use guided form
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* RIGHT: Risks + recent */}
