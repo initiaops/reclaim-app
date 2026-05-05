@@ -114,7 +114,9 @@ export async function POST(request: NextRequest) {
     const subscription = event.data.object as Stripe.Subscription
     const updates: Record<string, unknown> = {
       status: subscription.status,
-      current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+      current_period_end: (subscription as any).current_period_end
+        ? new Date((subscription as any).current_period_end * 1000).toISOString()
+        : null,
     }
     if (subscription.status === 'canceled') {
       updates.plan = 'free'
