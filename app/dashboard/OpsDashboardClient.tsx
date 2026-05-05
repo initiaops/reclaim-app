@@ -652,7 +652,6 @@ The more context you give, the more specific and actionable your audit results w
 
           </div>
 
-            {/* Session CTA */}
             <div className="rounded-2xl border border-gray-200 bg-gray-50 p-6">
               <div className="flex items-start justify-between gap-6 flex-wrap">
                 <div>
