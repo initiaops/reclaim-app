@@ -1369,7 +1369,7 @@ export default function AuditIntakeForm({
           ) : (
             <div>
               <a
-                href="/api/calendar/connect"
+                href="/api/integrations/google/auth"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-90"
                 style={{ backgroundColor: '#534AB7' }}
               >
