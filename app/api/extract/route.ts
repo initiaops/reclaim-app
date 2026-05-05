@@ -289,8 +289,9 @@ export async function POST(request: NextRequest) {
   // 7. Save to extraction history
   const { error: insertError } = await supabase.from('extractions').insert({
     user_id: user.id,
-    transcript_excerpt: transcript.slice(0, 200),
+    transcript_snippet: transcript,
     result: parsed,
+    created_at: new Date().toISOString(),
     mode,
   })
   if (insertError) {
