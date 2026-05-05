@@ -146,6 +146,21 @@ const RETAIL_QUESTIONS: Question[] = [
     ],
   },
   {
+    id: 'growth_activities',
+    label: 'What growth activities do you wish you had more time for?',
+    type: 'multi',
+    options: [
+      'Running promotions, events, or tastings',
+      'Building relationships with key customers',
+      'Reaching out to local businesses (restaurants, caterers, offices)',
+      'Improving the in-store experience',
+      'Building a loyalty program',
+      'Growing social media presence properly',
+      'Exploring new product categories',
+      'Opening a second location someday',
+    ],
+  },
+  {
     id: 'work_on_business',
     label: 'When was the last time you worked ON your business instead of IN it?',
     type: 'single',
@@ -234,6 +249,20 @@ const FOOD_QUESTIONS: Question[] = [
       'Loyalty programs or events',
       'Reviewing supplier contracts and pricing',
       'Getting financial reporting organized',
+    ],
+  },
+  {
+    id: 'growth_activities',
+    label: 'What growth activities keep getting pushed back?',
+    type: 'multi',
+    options: [
+      'Private dining or events program',
+      'Catering expansion',
+      'Loyalty or rewards program',
+      'Growing delivery or takeout channel',
+      'Building corporate or office accounts',
+      'Menu innovation and seasonal specials',
+      'Second location planning',
     ],
   },
   {
@@ -337,6 +366,19 @@ const TRADES_QUESTIONS: Question[] = [
       'Building relationships with suppliers for better pricing',
       'Hiring or training better help',
       'Getting my finances properly organized',
+    ],
+  },
+  {
+    id: 'growth_activities',
+    label: 'What would you do with 5 extra hours per week?',
+    type: 'multi',
+    options: [
+      'Follow up with past customers for repeat work',
+      'Ask for referrals and reviews',
+      'Quote more jobs faster',
+      'Build relationships with complementary trades',
+      'Market to a new neighborhood or area',
+      'Develop a maintenance contract offering',
     ],
   },
   {
@@ -446,6 +488,19 @@ const CONSULTING_QUESTIONS: Question[] = [
     ],
   },
   {
+    id: 'growth_activities',
+    label: 'What growth activities keep getting pushed back?',
+    type: 'multi',
+    options: [
+      'Writing content or thought leadership',
+      'Speaking at events or on podcasts',
+      'Building a referral partner network',
+      'Developing a productized service offering',
+      'Raising rates with existing clients',
+      'Targeting a new industry vertical',
+    ],
+  },
+  {
     id: 'work_on_business',
     label: 'When was the last time you worked ON your business instead of IN it?',
     type: 'single',
@@ -549,6 +604,19 @@ const AGENCY_QUESTIONS: Question[] = [
     ],
   },
   {
+    id: 'growth_activities',
+    label: 'What growth activities keep getting pushed back?',
+    type: 'multi',
+    options: [
+      'Building a stronger new business pipeline',
+      'Developing case studies and social proof',
+      'Expanding into new service offerings',
+      'Targeting a new client segment',
+      'Building strategic partnerships',
+      'Improving our public profile and positioning',
+    ],
+  },
+  {
     id: 'work_on_business',
     label: 'When was the last time you worked ON your business instead of IN it?',
     type: 'single',
@@ -602,6 +670,7 @@ function assembleTemplateAnswers(
     fmt('stock_outs', 'Stock-out frequency')
     fmt('staff_scheduling', 'Staff scheduling method')
     fmt('growth_blockers', 'What keeps getting deferred')
+    fmt('growth_activities', 'Growth activities they want time for')
     fmt('work_on_business', 'Last time worked on (not in) business')
   } else if (businessType === 'Food & beverage') {
     fmt('operation_type', 'Operation type')
@@ -610,6 +679,7 @@ function assembleTemplateAnswers(
     fmt('supplier_orders', 'Supplier order management')
     fmt('biggest_headache', 'Biggest operational headache')
     fmt('growth_blockers', 'What keeps getting deferred')
+    fmt('growth_activities', 'Growth activities they want time for')
     fmt('work_on_business', 'Last time worked on (not in) business')
   } else if (businessType === 'Trades & home services') {
     fmt('trade_type', 'Type of trade work')
@@ -619,6 +689,7 @@ function assembleTemplateAnswers(
     fmt('lead_time', 'Inquiry to booked job time')
     fmt('invoicing', 'Invoicing and payment approach')
     fmt('growth_blockers', 'What keeps getting deferred')
+    fmt('growth_activities', 'Growth activities they want time for')
     fmt('work_on_business', 'Last time worked on (not in) business')
   } else if (businessType === 'Consulting') {
     fmt('consulting_type', 'Type of consulting')
@@ -629,6 +700,7 @@ function assembleTemplateAnswers(
     fmt('billable_pct', 'Billable vs non-billable split')
     fmt('new_business', 'How new business is won')
     fmt('growth_blockers', 'What keeps getting deferred')
+    fmt('growth_activities', 'Growth activities they want time for')
     fmt('work_on_business', 'Last time worked on (not in) business')
   } else if (businessType === 'Agency') {
     fmt('agency_type', 'Agency type')
@@ -639,6 +711,7 @@ function assembleTemplateAnswers(
     fmt('biggest_pain', 'Biggest operational pain')
     fmt('new_business', 'How new business is won')
     fmt('growth_blockers', 'What keeps getting deferred')
+    fmt('growth_activities', 'Growth activities they want time for')
     fmt('work_on_business', 'Last time worked on (not in) business')
   }
 
@@ -658,6 +731,10 @@ function assemblePrompt(answers: AuditAnswers, calendarConnected: boolean): stri
     ? assembleTemplateAnswers(answers.businessType, answers.templateAnswers)
     : `Business description: ${answers.otherText || 'Not provided'}`
 
+  const growthActivities = Array.isArray(answers.templateAnswers['growth_activities'])
+    ? (answers.templateAnswers['growth_activities'] as string[])
+    : []
+
   return `BUSINESS CONTEXT:
 Business model: ${answers.businessModel}
 Business type: ${answers.businessType}
@@ -666,6 +743,12 @@ Monthly revenue: ${answers.monthlyRevenue || 'Not specified'}
 Hours worked per week: ${answers.hoursPerWeek || 'Not specified'}
 Hourly value: ${answers.hourlyRate || 'Not specified'}
 
+CRITICAL INSTRUCTIONS FOR THIS AUDIT:
+- Use the exact business type and industry terminology throughout — do not use generic terms like 'supplier' when the business type suggests 'distributor rep' or 'vendor'
+- Reference the specific growth activities they selected — these are what they actually want time for
+- Every recommendation must connect to one of their selected growth activities — show them how reclaiming time leads directly to the growth they want
+- The weekly ops brief must mention at least one specific growth activity by name
+
 WEEK BREAKDOWN (self-reported hours):
 Meetings and calls: ${answers.meetingHours} hrs/week
 Admin work: ${answers.adminHours} hrs/week
@@ -673,6 +756,9 @@ Core billable/revenue work: ${answers.coreWorkHours} hrs/week
 Marketing and sales: ${answers.marketingHours} hrs/week
 Management and coordination: ${answers.managementHours} hrs/week
 Total: ${total} hrs/week
+
+GROWTH ACTIVITIES THEY WANT TIME FOR:
+${growthActivities.length > 0 ? growthActivities.join(', ') : 'Not specified'}
 
 INDUSTRY-SPECIFIC ANSWERS:
 ${templateSection}

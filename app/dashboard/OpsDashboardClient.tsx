@@ -99,7 +99,6 @@ export default function OpsDashboardClient({
   const [result, setResult]           = useState<OpsResult | null>(null)
   const [copied, setCopied]           = useState(false)
   const [sessionCount, setSessionCount] = useState(0)
-  const [expandedRecs, setExpandedRecs] = useState<Set<number>>(new Set())
   const [useManualInput, setUseManualInput] = useState(false)
 
   const totalOpsCount = opsUsageCount + sessionCount
@@ -489,14 +488,13 @@ The more context you give, the more specific and actionable your audit results w
               <div className="grid sm:grid-cols-3 gap-4">
                 {result.reallocation_recommendations.map((r, i) => {
                   const cfg = priorityConfig[r.priority] ?? priorityConfig.this_month
-                  const isExpanded = expandedRecs.has(i)
                   return (
-                    <div key={i} className="bg-white rounded-2xl border border-gray-200 p-5 flex flex-col">
-                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full mb-3 inline-block w-fit ${cfg.bg} ${cfg.text}`}>
+                    <div key={i} className="bg-white rounded-2xl border border-gray-200 p-5 flex flex-col gap-3">
+                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full inline-block w-fit ${cfg.bg} ${cfg.text}`}>
                         {cfg.label}
                       </span>
-                      <p className="font-bold text-gray-900 text-sm mb-3">{r.action}</p>
-                      <div className="flex flex-wrap gap-2 mb-3">
+                      <p className="font-bold text-gray-900 text-sm">{r.action}</p>
+                      <div className="flex flex-wrap gap-2">
                         <span className="inline-flex items-center gap-1 text-xs font-bold text-green-700 bg-green-100 px-2.5 py-1 rounded-full">
                           ~{r.hours_reclaimed_weekly} hrs/wk reclaimed
                         </span>
@@ -507,22 +505,12 @@ The more context you give, the more specific and actionable your audit results w
                         )}
                       </div>
                       {r.how_to && (
-                        <div className="mt-auto">
-                          <button
-                            onClick={() => setExpandedRecs(prev => {
-                              const next = new Set(prev)
-                              next.has(i) ? next.delete(i) : next.add(i)
-                              return next
-                            })}
-                            className="text-xs font-bold text-gray-400 hover:text-gray-700 transition-colors flex items-center gap-1"
-                          >
-                            {isExpanded ? '▲ Hide' : '▼ How to do this'}
-                          </button>
-                          {isExpanded && (
-                            <p className="text-xs text-gray-600 leading-relaxed mt-2 pt-2 border-t border-gray-100">
-                              {r.how_to}
-                            </p>
-                          )}
+                        <div
+                          className="rounded-lg px-3 py-3 mt-1"
+                          style={{ borderLeft: '3px solid #22c55e', backgroundColor: '#f0fdf4' }}
+                        >
+                          <p className="text-xs font-semibold text-green-700 uppercase tracking-wide mb-1.5">Do this now</p>
+                          <p className="text-xs text-green-900 leading-relaxed">{r.how_to}</p>
                         </div>
                       )}
                     </div>
