@@ -162,6 +162,7 @@ export async function POST(request: NextRequest) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  console.log('Extract route hit — user:', user.id, 'mode: ops')
 
   // 2. Parse body
   const body = await request.json()
@@ -259,6 +260,7 @@ export async function POST(request: NextRequest) {
     })
 
     const rawText = completion.choices[0]?.message?.content ?? ''
+    console.log('OpenAI response received — parsing...')
     const cleaned = rawText.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim()
     parsed = JSON.parse(cleaned)
   } catch {
@@ -285,12 +287,16 @@ export async function POST(request: NextRequest) {
   }
 
   // 7. Save to extraction history
-  await supabase.from('extractions').insert({
+  const { error: insertError } = await supabase.from('extractions').insert({
     user_id: user.id,
     transcript_excerpt: transcript.slice(0, 200),
     result: parsed,
     mode,
   })
+  if (insertError) {
+    console.error('Extractions insert failed:', insertError)
+  }
+  console.log('Extraction saved — user:', user.id, 'insert error:', insertError ?? null)
 
   return NextResponse.json(parsed)
 }
