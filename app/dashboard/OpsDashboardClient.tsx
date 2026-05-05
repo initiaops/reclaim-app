@@ -15,13 +15,16 @@ interface RiskSignal {
 interface Recommendation {
   action: string
   hours_reclaimed_weekly: number
+  dollar_impact_monthly?: number
   priority: 'immediate' | 'this_week' | 'this_month'
+  how_to?: string
 }
 
 interface TaxBreakdown {
   category: string
   pct_of_team_time: number
   automatable: boolean
+  plain_english_fix?: string
 }
 
 interface OpsResult {
@@ -95,6 +98,7 @@ export default function OpsDashboardClient({
   const [result, setResult]           = useState<OpsResult | null>(null)
   const [copied, setCopied]           = useState(false)
   const [sessionCount, setSessionCount] = useState(0)
+  const [expandedRecs, setExpandedRecs] = useState<Set<number>>(new Set())
 
   const totalOpsCount = opsUsageCount + sessionCount
   const totalLimit = auditLimit + topupAudits
@@ -468,15 +472,42 @@ The more context you give, the more specific and actionable your audit results w
               <div className="grid sm:grid-cols-3 gap-4">
                 {result.reallocation_recommendations.map((r, i) => {
                   const cfg = priorityConfig[r.priority] ?? priorityConfig.this_month
+                  const isExpanded = expandedRecs.has(i)
                   return (
-                    <div key={i} className="bg-white rounded-2xl border border-gray-200 p-5">
-                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full mb-3 inline-block ${cfg.bg} ${cfg.text}`}>
+                    <div key={i} className="bg-white rounded-2xl border border-gray-200 p-5 flex flex-col">
+                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full mb-3 inline-block w-fit ${cfg.bg} ${cfg.text}`}>
                         {cfg.label}
                       </span>
                       <p className="font-bold text-gray-900 text-sm mb-3">{r.action}</p>
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-green-700 bg-green-100 px-2.5 py-1 rounded-full">
-                        ~{r.hours_reclaimed_weekly} hrs/wk reclaimed
-                      </span>
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className="inline-flex items-center gap-1 text-xs font-bold text-green-700 bg-green-100 px-2.5 py-1 rounded-full">
+                          ~{r.hours_reclaimed_weekly} hrs/wk reclaimed
+                        </span>
+                        {r.dollar_impact_monthly != null && r.dollar_impact_monthly > 0 && (
+                          <span className="inline-flex items-center gap-1 text-xs font-bold text-green-700 bg-green-50 border border-green-200 px-2.5 py-1 rounded-full">
+                            ~${r.dollar_impact_monthly.toLocaleString()}/mo saved
+                          </span>
+                        )}
+                      </div>
+                      {r.how_to && (
+                        <div className="mt-auto">
+                          <button
+                            onClick={() => setExpandedRecs(prev => {
+                              const next = new Set(prev)
+                              next.has(i) ? next.delete(i) : next.add(i)
+                              return next
+                            })}
+                            className="text-xs font-bold text-gray-400 hover:text-gray-700 transition-colors flex items-center gap-1"
+                          >
+                            {isExpanded ? '▲ Hide' : '▼ How to do this'}
+                          </button>
+                          {isExpanded && (
+                            <p className="text-xs text-gray-600 leading-relaxed mt-2 pt-2 border-t border-gray-100">
+                              {r.how_to}
+                            </p>
+                          )}
+                        </div>
+                      )}
                     </div>
                   )
                 })}
@@ -525,6 +556,9 @@ The more context you give, the more specific and actionable your audit results w
                         }}
                       />
                     </div>
+                    {item.plain_english_fix && (
+                      <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">{item.plain_english_fix}</p>
+                    )}
                   </div>
                 ))}
               </div>
