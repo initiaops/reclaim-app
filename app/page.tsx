@@ -63,7 +63,7 @@ export default function Home() {
               className="w-1.5 h-1.5 rounded-full animate-pulse inline-block"
               style={{ backgroundColor: '#B45309' }}
             />
-            Early Access — 35 spots, $19 lifetime
+            Early Access — $19 lifetime access · Limited spots
           </span>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 leading-[1.06] tracking-tight max-w-4xl mx-auto mb-6">
@@ -484,7 +484,7 @@ export default function Home() {
             <Link href="/pricing" className="block rounded-2xl border-2 border-amber-400 p-6 hover:bg-amber-50 transition-all group">
               <div className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-3">Early Access — Limited</div>
               <div className="text-2xl font-black text-gray-900 mb-1">$19</div>
-              <div className="text-sm font-semibold text-gray-500 mb-4">one-time · 35 spots</div>
+              <div className="text-sm font-semibold text-gray-500 mb-4">one-time · limited spots remaining</div>
               <ul className="space-y-1.5 text-sm text-gray-500 mb-6">
                 <li>10 audits/month forever</li>
                 <li>Audit history</li>

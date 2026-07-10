@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
@@ -39,22 +38,6 @@ export default async function PricingPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  let ltdRemaining = 35
-  let ltdSold = 0
-  try {
-    const admin = createAdminClient()
-    const { count } = await admin
-      .from('subscriptions')
-      .select('*', { count: 'exact', head: true })
-      .eq('plan', 'founder')
-    ltdSold = count ?? 0
-    ltdRemaining = Math.max(0, 35 - ltdSold)
-  } catch {}
-
-  const pctFilled = Math.round((ltdSold / 35) * 100)
-  const barColor = ltdRemaining < 10 ? '#EF4444' : ltdRemaining < 25 ? '#F59E0B' : '#22C55E'
-  const spotBadgeBg = ltdRemaining < 10 ? '#FEE2E2' : '#FEF3C7'
-  const spotBadgeText = ltdRemaining < 10 ? '#991B1B' : '#92400E'
 
   return (
     <div className="bg-white min-h-screen">
@@ -107,9 +90,9 @@ export default async function PricingPage() {
           <div className="bg-white rounded-2xl border-2 border-amber-400 p-7 flex flex-col relative">
             <div
               className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap"
-              style={{ backgroundColor: spotBadgeBg, color: spotBadgeText }}
+              style={{ backgroundColor: '#FEF3C7', color: '#92400E' }}
             >
-              Closes when Pro launches — {ltdRemaining} of 35 spots left
+              Limited availability
             </div>
             <div className="mb-auto">
               <p className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-3">Early Access</p>
@@ -117,14 +100,7 @@ export default async function PricingPage() {
                 <span className="text-4xl font-black text-gray-900">$19</span>
               </div>
               <p className="text-sm text-gray-400 mb-1">one-time — yours forever</p>
-              {/* Urgency bar */}
-              <div className="w-full bg-gray-100 rounded-full h-1.5 mb-5 mt-3">
-                <div
-                  className="h-1.5 rounded-full transition-all"
-                  style={{ width: `${pctFilled}%`, backgroundColor: barColor }}
-                />
-              </div>
-              <p className="text-sm text-gray-600 mb-5">Lock in before this closes permanently.</p>
+              <p className="text-sm text-gray-600 mb-5 mt-3">Lock in before this closes permanently.</p>
               <div className="space-y-2.5 mb-6">
                 <Feature>Everything in Free</Feature>
                 <Feature>10 AI audits per month</Feature>
