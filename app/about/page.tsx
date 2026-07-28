@@ -42,13 +42,13 @@ export default function AboutPage() {
             <p className="text-gray-600 text-lg leading-relaxed mb-6">
               Most organizations have no quantified view of where their team&apos;s time actually
               goes. Leaders rely on gut feel, anecdotal evidence, and quarterly surveys to make
-              resourcing decisions worth millions of dollars. The result: burnout, misaligned
-              priorities, and headcount requests that can&apos;t be defended with data.
+              decisions about where their team&apos;s time should go. The result: burnout, misaligned
+              priorities, and wasted hours that quietly compound every week.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed">
-              RECLAIM&apos;s mission is to give every ops leader a clear, quantified, real-time
-              view of their team&apos;s capacity — so they can make resourcing decisions with
-              confidence instead of instinct.
+              RECLAIM&apos;s mission is to give every small business owner a clear, quantified view
+              of where their time actually goes — so they can make better decisions with
+              data instead of instinct.
             </p>
           </div>
         </div>

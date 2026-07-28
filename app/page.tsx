@@ -86,19 +86,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── TRUST BAR ─────────────────────────────────────────────────────── */}
-      <section className="py-10 px-4 border-y border-gray-100 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">
-            Built for ops teams in
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-4">
-            {['Aerospace & Defense', 'BizOps Leaders', 'Program Operations', 'Manufacturing', 'B2B SaaS'].map(label => (
-              <span key={label} className="text-sm font-semibold text-gray-400">{label}</span>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── PROBLEM SECTION ───────────────────────────────────────────────── */}
       <section className="py-24 px-4 bg-white">
@@ -108,8 +95,8 @@ export default function Home() {
               Your team&apos;s capacity is invisible
             </h2>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-              Most ops leaders make resourcing decisions worth millions of dollars using gut
-              feel, quarterly surveys, and spreadsheets that don&apos;t survive Monday morning.
+              Most small business owners make decisions about where to spend their time
+              using gut feel and guesswork — with no clear picture of what overhead is actually costing them.
             </p>
           </div>
 
