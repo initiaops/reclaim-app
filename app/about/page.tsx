@@ -187,7 +187,7 @@ export default function AboutPage() {
             Ready to try it?
           </h2>
           <p className="mb-8 text-lg" style={{ color: '#A9A4E0' }}>
-            Start free — 1 audit/month, no card needed. Or grab Early Access ($19) while spots last.
+            Start free — 1 audit/month, no card needed. Upgrade to Pro for unlimited audits and weekly intelligence.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

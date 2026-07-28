@@ -153,7 +153,7 @@ export default function GuidePage() {
               {
                 n: '06',
                 title: 'Re-run monthly',
-                body: 'Capacity patterns shift as projects start and end. Run a new audit each month to track your admin tax trend over time. Free users get 1 audit per month. Early Access members get 10 audits per month. Pro members get unlimited audits plus a weekly ops brief every Monday. Need more audits? Early Access members can buy a top-up pack of 10 additional audits for $15 anytime from your dashboard.',
+                body: 'Capacity patterns shift as projects start and end. Run a new audit each month to track your admin tax trend over time. Free users get 1 audit per month. Pro members get unlimited audits plus a weekly ops brief every Monday.',
                 tag: null,
               },
             ].map(({ n, title, body, tag }) => (
@@ -266,21 +266,17 @@ export default function GuidePage() {
         <section id="plans">
           <h2 className="text-2xl font-black text-gray-900 mb-2">What&apos;s included in each plan</h2>
           <p className="text-gray-500 text-sm mb-8">
-            All plans include the full audit experience. Early Access and Pro unlock more audits, history, and future modules.
+            All plans include the full audit experience. Pro unlocks unlimited audits, history, and a weekly ops brief.
           </p>
 
           <div className="overflow-x-auto rounded-2xl border border-gray-200">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-200" style={{ backgroundColor: '#F8F7FF' }}>
-                  <th className="text-left px-5 py-4 font-semibold text-gray-500">Feature</th>
+                  <th className="text-left px-5 py-4 font-semibold text-gray-500 w-1/2">Feature</th>
                   <th className="px-4 py-4 font-bold text-gray-700 text-center">
                     <div>Free</div>
                     <div className="text-xs font-normal text-gray-400 mt-0.5">$0 forever</div>
-                  </th>
-                  <th className="px-4 py-4 font-bold text-center text-amber-700">
-                    <div>Early Access</div>
-                    <div className="text-xs font-normal text-amber-600 mt-0.5">$19 one-time</div>
                   </th>
                   <th className="px-4 py-4 font-bold text-center" style={{ color: '#534AB7' }}>
                     <div>Pro</div>
@@ -290,31 +286,25 @@ export default function GuidePage() {
               </thead>
               <tbody>
                 {[
-                  { feature: 'Capacity audits per month',        free: '1',              ltd: '10',                pro: 'Unlimited'          },
-                  { feature: 'All 7 audit outputs',              free: true,             ltd: true,                pro: true                 },
-                  { feature: 'AI confidence score',              free: true,             ltd: true,                pro: true                 },
-                  { feature: 'Copy ops brief to clipboard',      free: true,             ltd: true,                pro: true                 },
-                  { feature: 'Google Calendar connection',       free: true,             ltd: true,                pro: true                 },
-                  { feature: 'Calendar Insights panel',          free: true,             ltd: true,                pro: true                 },
-                  { feature: 'Admin tax from real calendar data',free: true,             ltd: true,                pro: true                 },
-                  { feature: 'Meeting category breakdown',       free: true,             ltd: true,                pro: true                 },
-                  { feature: 'Weekly ops brief (every Monday)',  free: false,            ltd: false,               pro: true                 },
-                  { feature: 'Audit history',                    free: 'Session only',   ltd: 'Last 30 audits',    pro: 'Full history'       },
-                  { feature: 'All future modules',               free: false,            ltd: true,                pro: true                 },
-                  { feature: 'Priority support',                 free: false,            ltd: true,                pro: true                 },
-                  { feature: 'Price',                            free: 'Free forever',   ltd: '$19 one-time',      pro: '$29/month'          },
-                ].map(({ feature, free, ltd, pro }, i) => (
+                  { feature: 'Capacity audits per month',        free: '1',            pro: 'Unlimited'    },
+                  { feature: 'All 7 audit outputs',              free: true,           pro: true           },
+                  { feature: 'AI confidence score',              free: true,           pro: true           },
+                  { feature: 'Copy ops brief to clipboard',      free: true,           pro: true           },
+                  { feature: 'Google Calendar connection',       free: true,           pro: true           },
+                  { feature: 'Calendar Insights panel',          free: true,           pro: true           },
+                  { feature: 'Admin tax from real calendar data',free: true,           pro: true           },
+                  { feature: 'Meeting category breakdown',       free: true,           pro: true           },
+                  { feature: 'Weekly ops brief (every Monday)',  free: false,          pro: true           },
+                  { feature: 'Audit history',                    free: 'Session only', pro: 'Full history' },
+                  { feature: 'Priority support',                 free: false,          pro: true           },
+                  { feature: 'Price',                            free: 'Free forever', pro: '$29/month'    },
+                ].map(({ feature, free, pro }, i) => (
                   <tr key={feature} className={`border-t border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
                     <td className="px-5 py-3 text-gray-700 text-sm font-medium">{feature}</td>
                     <td className="px-4 py-3 text-center">
                       {free === true ? <div className="flex justify-center"><Check /></div>
                         : free === false ? <div className="flex justify-center"><Lock /></div>
                         : <span className="text-gray-500 text-sm font-semibold">{free}</span>}
-                    </td>
-                    <td className="px-4 py-3 text-center">
-                      {ltd === true ? <div className="flex justify-center"><Check color="#B45309" /></div>
-                        : ltd === false ? <div className="flex justify-center"><Lock /></div>
-                        : <span className="font-semibold text-sm text-amber-700">{ltd}</span>}
                     </td>
                     <td className="px-4 py-3 text-center">
                       {pro === true ? <div className="flex justify-center"><Check color="#534AB7" /></div>
@@ -328,21 +318,13 @@ export default function GuidePage() {
           </div>
 
           {/* Plan cards */}
-          <div className="grid sm:grid-cols-3 gap-4 mt-6">
+          <div className="grid sm:grid-cols-2 gap-4 mt-6">
             <div className="rounded-xl border border-gray-200 p-5 text-center">
               <p className="font-black text-gray-900 text-lg mb-0.5">Free</p>
               <p className="text-3xl font-black text-gray-900 mb-1">$0</p>
               <p className="text-xs text-gray-400 mb-4">1 audit/month · forever free</p>
               <Link href="/signup" className="block text-center text-sm font-bold py-2.5 rounded-xl border-2 border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50 transition-all">
                 Get started free
-              </Link>
-            </div>
-            <div className="rounded-xl border-2 border-amber-400 bg-amber-50 p-5 text-center">
-              <p className="font-black text-amber-900 text-lg mb-0.5">Early Access</p>
-              <p className="text-3xl font-black text-amber-900 mb-1">$19 <span className="text-base font-normal text-amber-600">one-time</span></p>
-              <p className="text-xs text-amber-700 mb-4">10 audits/month · all future modules · limited to 35 spots</p>
-              <Link href="/pricing" className="block text-center text-sm font-black py-2.5 rounded-xl bg-amber-400 text-amber-900 hover:bg-amber-500 transition-all">
-                Get lifetime access
               </Link>
             </div>
             <div className="rounded-xl border-2 p-5 text-center" style={{ borderColor: '#534AB7', backgroundColor: '#F8F7FF' }}>
@@ -405,8 +387,7 @@ export default function GuidePage() {
               { q: 'Does RECLAIM write anything to my calendar?', a: 'No. RECLAIM only has read-only access to your Google Calendar. It cannot create, edit, or delete events.' },
               { q: 'Can I use RECLAIM without connecting my calendar?', a: 'Yes. The calendar connection is optional. Without it, you\'ll describe your team\'s workload manually in the audit text box. Results will still be high quality — connecting the calendar just adds precision and removes the need for self-reporting.' },
               { q: 'What\'s the difference between the Ops Brief and the Risk Signals?', a: 'Risk Signals are structured data — three individual risks, each with a severity rating and one-sentence impact. The Ops Brief is a narrative — a 3–4 sentence human-readable summary written for leadership consumption. The brief incorporates the risk signals but synthesizes them into a single coherent message.' },
-              { q: 'How do I get the Early Access lifetime deal?', a: 'Go to getreclaimapp.com/pricing and click "Get lifetime access — $19". You\'ll be taken to a Stripe checkout page. Once payment is confirmed, your account is automatically upgraded to 10 audits per month. The offer closes permanently when all 35 spots are filled.' },
-              { q: 'What if I need more than 10 audits in a month?', a: 'You can buy a top-up pack of 10 additional audits for $15 from your dashboard. Top-ups are added instantly and expire at the end of the current month.' },
+              { q: 'How do I upgrade to Pro?', a: 'Go to your billing page and click "Upgrade to Pro". You\'ll be taken to a Stripe checkout page. Once payment is confirmed, your account is immediately upgraded to unlimited audits and the weekly brief starts the following Monday.' },
               { q: 'What is the strategy session?', a: 'A 90-minute 1:1 video call with the founder to review your capacity audit results, identify your top 3 process changes, and build a 30-day implementation plan. A written action plan is delivered within 24 hours. Available to anyone on any plan at $299. Book at calendly.com/initiaops/30min.' },
             ].map(({ q, a }) => (
               <div key={q} className="rounded-xl border border-gray-100 bg-gray-50 px-5 py-4">

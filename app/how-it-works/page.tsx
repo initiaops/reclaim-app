@@ -147,7 +147,7 @@ export default function HowItWorksPage() {
               className="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
               style={{ backgroundColor: '#EEEDFE', color: BRAND }}
             >
-              1 free audit/month — 10/month on Early Access ($19 one-time)
+              1 free audit/month — unlimited on Pro
             </span>
             <h2 className="text-3xl font-black text-gray-900 mt-5 mb-3">The AI Capacity Audit</h2>
             <p className="text-lg text-gray-500 max-w-2xl">
@@ -223,14 +223,14 @@ export default function HowItWorksPage() {
                 </ul>
               </div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: BRAND }}>Early Access — $19 one-time</p>
+                <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: BRAND }}>Pro — $29/month</p>
                 <ul className="space-y-2.5">
                   {[
                     'Everything in free',
-                    '10 capacity audits per month',
-                    'Audit history — last 30 audits',
-                    'All future modules — no extra charge',
-                    'Founding member status',
+                    'Unlimited capacity audits',
+                    'Weekly automated ops brief',
+                    'Full audit history',
+                    'Cancel anytime',
                   ].map(label => (
                     <li key={label} className="flex items-center gap-2.5 text-sm">
                       <span className="font-bold shrink-0" style={{ color: BRAND }}>✓</span>
@@ -255,8 +255,8 @@ export default function HowItWorksPage() {
                 a: "Meeting titles, start/end times, attendee counts, and recurrence patterns from the last 28 days. We never read email content, meeting descriptions, or any personal data. You can disconnect at any time.",
               },
               {
-                q: 'Why get Early Access?',
-                a: "Early Access gives you 10 audits per month instead of 1, plus audit history and all future modules. It\'s a one-time payment of $19 — no subscription, no renewal. Limited to 100 founding members.",
+                q: 'Why upgrade to Pro?',
+                a: "Pro gives you unlimited audits instead of 1 per month, plus a weekly ops brief delivered every Monday morning. It\'s $29/month and you can cancel anytime.",
               },
             ].map(({ q, a }) => (
               <details key={q} className="group bg-gray-50 rounded-xl border border-gray-100 overflow-hidden">
@@ -277,7 +277,7 @@ export default function HowItWorksPage() {
             >
               Start free — no credit card
             </Link>
-            <p className="text-sm text-gray-400">1 free audit/month. 10/month on Early Access — $19 one-time.</p>
+            <p className="text-sm text-gray-400">1 free audit/month. Unlimited on Pro — $29/month.</p>
           </div>
         </div>
       </section>
