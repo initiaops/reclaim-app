@@ -55,17 +55,6 @@ export default function Home() {
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
       <section className="pt-24 pb-28 px-4" style={{ backgroundColor: '#F8F7FF' }}>
         <div className="max-w-5xl mx-auto text-center">
-          <span
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-6 px-4 py-2 rounded-full border"
-            style={{ borderColor: '#F59E0B', color: '#B45309', backgroundColor: '#FEF3C7' }}
-          >
-            <span
-              className="w-1.5 h-1.5 rounded-full animate-pulse inline-block"
-              style={{ backgroundColor: '#B45309' }}
-            />
-            Early Access — $19 lifetime access · Limited spots
-          </span>
-
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 leading-[1.06] tracking-tight max-w-4xl mx-auto mb-6">
             Stop guessing where your{' '}
             <span style={{ color: '#534AB7' }}>team&apos;s time goes</span>
@@ -221,9 +210,6 @@ export default function Home() {
             {/* RIGHT — The AI Audit */}
             <div className="bg-white rounded-2xl border-2 p-8 flex flex-col h-full" style={{ borderColor: '#534AB7' }}>
               <div className="mb-6">
-                <span className="inline-block text-xs font-bold px-3 py-1.5 rounded-full mb-5" style={{ backgroundColor: '#EEEDFE', color: '#534AB7' }}>
-                  1 free audit/month. 10/month on Early Access.
-                </span>
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: '#EEEDFE' }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#534AB7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
@@ -259,7 +245,7 @@ export default function Home() {
                 >
                   Run an AI audit →
                 </Link>
-                <p className="text-center text-xs text-gray-400 mt-3">1 free audit/month. 10/month on Early Access — $19 lifetime.</p>
+                <p className="text-center text-xs text-gray-400 mt-3">1 free audit/month. Unlimited on Pro.</p>
               </div>
             </div>
           </div>
@@ -468,7 +454,7 @@ export default function Home() {
       <section className="py-20 px-4 bg-white border-t border-gray-100">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-black text-gray-900 mb-10 text-center">How to get started</h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-3 gap-5">
             <Link href="/signup" className="block rounded-2xl border-2 border-gray-200 p-6 hover:border-gray-300 hover:bg-gray-50 transition-all group">
               <div className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Free</div>
               <div className="text-2xl font-black text-gray-900 mb-1">$0</div>
@@ -479,18 +465,6 @@ export default function Home() {
                 <li>No card needed</li>
               </ul>
               <span className="text-sm font-bold text-gray-700 group-hover:text-gray-900">Get started free →</span>
-            </Link>
-
-            <Link href="/pricing" className="block rounded-2xl border-2 border-amber-400 p-6 hover:bg-amber-50 transition-all group">
-              <div className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-3">Early Access — Limited</div>
-              <div className="text-2xl font-black text-gray-900 mb-1">$19</div>
-              <div className="text-sm font-semibold text-gray-500 mb-4">one-time · limited spots remaining</div>
-              <ul className="space-y-1.5 text-sm text-gray-500 mb-6">
-                <li>10 audits/month forever</li>
-                <li>Audit history</li>
-                <li>All future modules</li>
-              </ul>
-              <span className="text-sm font-bold text-amber-700 group-hover:text-amber-900">Claim your spot →</span>
             </Link>
 
             <Link href="/pricing" className="block rounded-2xl border-2 p-6 hover:bg-purple-50 transition-all group" style={{ borderColor: '#534AB7' }}>
