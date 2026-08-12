@@ -3,14 +3,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
+  title: 'RECLAIM — Find Out Where Your Time Actually Goes',
   description:
-    "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
+    "Find out how much of your week goes to work that isn't growing your business — and what it's costing you. Free capacity calculator, no signup required.",
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
+    title: 'RECLAIM — Find Out Where Your Time Actually Goes',
     description:
-      "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
+      "Find out how much of your week goes to work that isn't growing your business — and what it's costing you. Free capacity calculator, no signup required.",
     url: 'https://www.getreclaimapp.com',
     siteName: 'RECLAIM',
     type: 'website',
@@ -19,15 +19,15 @@ export const metadata: Metadata = {
         url: 'https://www.getreclaimapp.com/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
+        alt: 'RECLAIM — Find Out Where Your Time Actually Goes',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
+    title: 'RECLAIM — Find Out Where Your Time Actually Goes',
     description:
-      "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
+      "Find out how much of your week goes to work that isn't growing your business — and what it's costing you. Free capacity calculator, no signup required.",
     images: ['https://www.getreclaimapp.com/og-image.png'],
   },
 }
@@ -40,7 +40,7 @@ const jsonLd = {
   operatingSystem: 'Web',
   url: 'https://www.getreclaimapp.com',
   description:
-    'Operational intelligence platform for BizOps and Ops leaders. Capacity audits, administrative tax scoring, and reallocation recommendations grounded in real calendar data.',
+    'Capacity audit tool for small business owners and operators. Find out where your time goes, what admin overhead costs you, and exactly what to fix first.',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
 }
 
@@ -92,30 +92,29 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black text-gray-900 mb-4">
-              Your team&apos;s capacity is invisible
+              Most operators are guessing
             </h2>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-              Most small business owners make decisions about where to spend their time
-              using gut feel and guesswork — with no clear picture of what overhead is actually costing them.
+              Enterprise capacity tools cost $100K and take six months to implement. Spreadsheets go stale by Monday. Most small business owners and ops leaders end up making resourcing decisions on gut feel — because nothing built for their size actually exists.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                stat: '72%',
-                label: 'of team bandwidth goes to low-ROI administrative work',
-                sub: 'Hidden in meetings, status reporting, and manual coordination that could be automated or eliminated.',
+                stat: '3 min',
+                label: 'to get your capacity score',
+                sub: 'No account, no credit card, no AI required. Answer 10 questions and see your result instantly.',
               },
               {
-                stat: '$1M+',
-                label: 'annual cost of misallocated capacity at a 50-person ops team',
-                sub: 'Hidden in plain sight — and fixable.',
+                stat: '60 sec',
+                label: 'to run a full AI audit',
+                sub: 'Once your calendar is connected, the AI reads your real data and returns a full audit with dollar figures.',
               },
               {
-                stat: '0',
-                label: 'tools exist today that show ops leaders actual vs intended capacity allocation',
-                sub: 'Until now.',
+                stat: '$0',
+                label: 'to start',
+                sub: 'The calculator is free forever with no usage limit. No signup, no time limit, no catch.',
               },
             ].map(({ stat, label, sub }) => (
               <div
@@ -246,12 +245,58 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── SCREENSHOTS ───────────────────────────────────────────────────── */}
+      <section className="py-24 px-4 bg-white border-t border-gray-100">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-4xl font-black text-gray-900 mb-4">This is what you actually get</h2>
+            <p className="text-lg text-gray-500">Real output from a real audit. No mockups.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                src: '/screenshots/audit-score.png',
+                alt: 'Capacity audit score and dollar cost breakdown',
+                caption: 'Your score, the dollar cost, and where the time is going',
+              },
+              {
+                src: '/screenshots/recommendations.png',
+                alt: 'Specific recommendations with literal action steps and annual dollar impact',
+                caption: 'Three actions with exact dollar impact — and literally what to do first',
+              },
+              {
+                src: '/screenshots/ops-brief.png',
+                alt: 'Weekly ops brief output in plain English',
+                caption: 'A leadership-ready brief you can send without editing',
+              },
+            ].map(({ src, alt, caption }) => (
+              <div key={src} className="flex flex-col gap-3">
+                <div
+                  className="relative w-full overflow-hidden rounded-xl border border-gray-200 bg-gray-100"
+                  style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}
+                >
+                  <Image
+                    src={src}
+                    alt={alt}
+                    width={800}
+                    height={600}
+                    className="w-full h-auto"
+                    onError={undefined}
+                  />
+                </div>
+                <p className="text-xs text-gray-500 text-center leading-relaxed">{caption}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── FEATURES GRID ─────────────────────────────────────────────────── */}
       <section className="py-24 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-black text-gray-900 mb-4">
-              Built for ops leaders who run on real data
+              What you get
             </h2>
             <p className="text-lg text-gray-500">
               Not another dashboard. Actionable capacity intelligence.
@@ -270,10 +315,10 @@ export default function Home() {
                   <line x1="15" y1="6" x2="15" y2="21"/>
                 </svg>
               </div>
-              <h3 className="font-bold text-gray-900 mb-2">Capacity Intelligence Map</h3>
+              <h3 className="font-bold text-gray-900 mb-2">Capacity Breakdown</h3>
               <p className="text-gray-500 text-sm leading-relaxed">
-                Live view of actual vs intended bandwidth allocation across your team —
-                updated weekly from real calendar and project data.
+                See exactly where your hours go — meetings, admin, coordination, and
+                revenue work — with the percentage and dollar cost attached to each category.
               </p>
             </div>
 
@@ -316,10 +361,13 @@ export default function Home() {
                   <line x1="9" y1="16" x2="15" y2="16"/>
                 </svg>
               </div>
-              <h3 className="font-bold text-gray-900 mb-2">Weekly Ops Brief</h3>
+              <div className="flex items-center gap-2 mb-2">
+                <h3 className="font-bold text-gray-900">Weekly Ops Brief</h3>
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">Automated delivery — coming soon</span>
+              </div>
               <p className="text-gray-500 text-sm leading-relaxed">
-                Monday morning leadership report — auto-generated, written in plain English,
-                ready to share. No manual prep required.
+                A plain-English leadership summary generated with every audit — state of the team, top
+                risk, and the one action to take this week. Copy and send in one click.
               </p>
             </div>
 

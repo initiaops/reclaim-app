@@ -11,15 +11,15 @@ const inter = Inter({ subsets: ['latin'], display: 'swap' })
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.getreclaimapp.com'),
   title: {
-    default: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
+    default: 'RECLAIM — Find Out Where Your Time Actually Goes',
     template: '%s',
   },
   description:
-    "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
+    "Find out how much of your week goes to work that isn't growing your business — and what it's costing you. Free capacity calculator, no signup required.",
   openGraph: {
-    title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
+    title: 'RECLAIM — Find Out Where Your Time Actually Goes',
     description:
-      "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
+      "Find out how much of your week goes to work that isn't growing your business — and what it's costing you. Free capacity calculator, no signup required.",
     url: 'https://www.getreclaimapp.com',
     siteName: 'RECLAIM',
     type: 'website',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
         url: 'https://www.getreclaimapp.com/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'RECLAIM — Operational Intelligence',
+        alt: 'RECLAIM — Find Out Where Your Time Actually Goes',
       },
     ],
   },
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'RECLAIM — Operational Intelligence for BizOps & Ops Leaders',
+    title: 'RECLAIM — Find Out Where Your Time Actually Goes',
     description:
-      "Stop guessing where your team's time goes. RECLAIM maps your team's actual capacity, identifies administrative overhead, and tells you exactly where to redirect bandwidth.",
+      "Find out how much of your week goes to work that isn't growing your business — and what it's costing you. Free capacity calculator, no signup required.",
     images: ['https://www.getreclaimapp.com/og-image.png'],
   },
 }
@@ -114,6 +114,9 @@ export default async function RootLayout({
                   <>
                     <Link href="/how-it-works" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
                       How it works
+                    </Link>
+                    <Link href="/build" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
+                      Build
                     </Link>
                     <Link href="/calculator" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors px-2.5 py-2 hidden sm:block">
                       Calculator
